@@ -1,12 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Product } from "./dashboard/product";
+import DashboardLayout from "./dashboard/layout";
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/dashboard" element={<Product />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <DashboardLayout />
+    </>
   );
 };
 

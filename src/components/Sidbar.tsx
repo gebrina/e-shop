@@ -1,12 +1,15 @@
 import { Sidebar } from "primereact/sidebar";
-import { useState } from "react";
+import { FC } from "react";
 
-const Sidbar = () => {
-  const [visible, setVisible] = useState(true);
+type SidebarProps = {
+  visible: boolean;
+  setVisible: () => void;
+};
 
+const Sidbar: FC<SidebarProps> = ({ visible, setVisible }) => {
   return (
     <div>
-      <Sidebar visible={visible} onHide={() => setVisible(false)} fullScreen>
+      <Sidebar visible={visible} onHide={() => setVisible()}>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quia
         laudantium nesciunt dignissimos praesentium expedita id! Obcaecati dicta
         nulla inventore dolorum, aliquid aut iusto eum fuga, ea excepturi sed
