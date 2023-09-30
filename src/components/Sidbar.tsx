@@ -15,7 +15,7 @@ const Sidbar: FC<SidebarProps> = ({ visible, setVisible }) => {
         visible={visible}
         onHide={() => setVisible()}
       >
-        <Navbar />
+        <Navbar setVisible={setVisible} />
       </Sidebar>
     </div>
   );

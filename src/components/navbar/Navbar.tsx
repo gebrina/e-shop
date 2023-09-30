@@ -1,14 +1,19 @@
 import { NavLink } from "react-router-dom";
 import { menus } from "./MenusData";
 import "./Navbar.scss";
-const Navbar = () => {
+import { FC } from "react";
+
+type NavbarProps = {
+  setVisible: () => void;
+};
+const Navbar: FC<NavbarProps> = ({ setVisible }) => {
   return (
     <header>
       <nav>
         <ul>
           {menus.map((menu) => {
             return (
-              <li key={menu.label}>
+              <li onClick={() => setVisible()} key={menu.label}>
                 <NavLink
                   className={({ isActive }) =>
                     isActive ? "active menu-link" : "menu-link"

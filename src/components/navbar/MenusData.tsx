@@ -9,7 +9,7 @@ export const menus: Menu[] = [
   {
     inDashboard: true,
     label: "Dashboard",
-    path: "/dashboard",
+    path: "/dashboard/",
     icon: <FiGrid />,
   },
   {
