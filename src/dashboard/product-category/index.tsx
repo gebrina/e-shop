@@ -1,1 +1,1 @@
-export * as ProductCategory from "./ProductCategory";
+export { default as ProductCategory } from "./ProductCategory";
