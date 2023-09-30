@@ -1,4 +1,3 @@
-import "./ProdcutCategory.scss";
 const ProductCategory = () => {
   return (
     <div>

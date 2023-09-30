@@ -1,15 +1,12 @@
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
-import { ProductCategory } from "./dashboard/product-category";
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Product } from "./dashboard/product";
 const App = () => {
   return (
-    <div>
-      <ProductCategory />
-      <Card style={{ width: "300px" }}>
-        <Button severity="danger">button</Button>
-      </Card>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/dashboard" element={<Product />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
