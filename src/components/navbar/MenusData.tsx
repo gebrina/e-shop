@@ -1,4 +1,10 @@
-import { FiUsers, FiGrid, FiLayers, FiShoppingBag } from "react-icons/fi";
+import {
+  FiUsers,
+  FiGrid,
+  FiLayers,
+  FiShoppingBag,
+  FiSlack,
+} from "react-icons/fi";
 type Menu = {
   inDashboard?: boolean;
   label: string;
@@ -11,6 +17,12 @@ export const menus: Menu[] = [
     label: "Dashboard",
     path: "/dashboard/",
     icon: <FiGrid />,
+  },
+  {
+    inDashboard: true,
+    label: "Product Categories",
+    path: "/dashboard/product-categories",
+    icon: <FiSlack />,
   },
   {
     inDashboard: true,

@@ -6,7 +6,7 @@ import Dashboard from ".";
 import { useState } from "react";
 import Sidbar from "../components/Sidbar";
 import { FiSlack } from "react-icons/fi";
-import { Button } from "primereact/button";
+import { ProductCategory } from "./product-category";
 const DashboardLayout = () => {
   const [visible, setVisible] = useState(true);
 
@@ -28,8 +28,12 @@ const DashboardLayout = () => {
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/products" element={<Product />} />
+          <Route
+            path="/dashboard/product-categories"
+            element={<ProductCategory />}
+          />
           <Route path="/dashboard/orders" element={<Order />} />
-          <Route path="/dashbaord/users" element={<User />} />
+          <Route path="/dashboard/users" element={<User />} />
         </Routes>
       </BrowserRouter>
     </div>
