@@ -8,6 +8,7 @@ import Sidbar from "../components/Sidbar";
 import { FiSlack } from "react-icons/fi";
 import { ProductCategory } from "./product-category";
 import { useEcomContext } from "../context/useEcomContext";
+import { DashboradpageNotFound } from "./not-found";
 const DashboardLayout = () => {
   const { isDashboard } = useEcomContext();
   const [visible, setVisible] = useState(true);
@@ -39,6 +40,7 @@ const DashboardLayout = () => {
               />
               <Route path="/dashboard/orders" element={<Order />} />
               <Route path="/dashboard/users" element={<User />} />
+              <Route path="*" element={<DashboradpageNotFound />} />
             </Routes>
           </BrowserRouter>
         </div>

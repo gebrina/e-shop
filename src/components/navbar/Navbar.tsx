@@ -3,6 +3,7 @@ import { menus } from "./MenusData";
 import "./Navbar.scss";
 import { FC } from "react";
 import { useEcomContext } from "../../context/useEcomContext";
+import { FiShoppingCart } from "react-icons/fi";
 
 type NavbarProps = {
   setVisible?: () => void;
@@ -15,7 +16,7 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
       <nav>
         {isDashboard ? (
           <ul>
-            {menus.map((menu) => {
+            {menus.dashboard?.map((menu) => {
               return (
                 <li onClick={() => setVisible && setVisible()} key={menu.label}>
                   <NavLink
@@ -32,9 +33,17 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
             })}
           </ul>
         ) : (
-          <ul>
-            <h1>Navigation bar</h1>
-          </ul>
+          <div className="d-flex p-2 px-4 align-items-center justify-content-between">
+            <img height={50} src="/logo.png" alt="E shop " />
+            <div className="navbar-menu-links">
+              <NavLink to={"/"}>Home</NavLink>
+              <NavLink to={"/products"}>Products</NavLink>
+              <NavLink to={"user/login"}>Login</NavLink>
+              <NavLink to={"/products/cart"}>
+                <FiShoppingCart />
+              </NavLink>
+            </div>
+          </div>
         )}
       </nav>
     </header>

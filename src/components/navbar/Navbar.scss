@@ -1,25 +1,50 @@
-ul {
-  list-style: none;
-  padding: 20px 0;
-  box-shadow: 0.3px 0.3px 0.3px rgba(0, 0, 0, 0.7);
-  li {
-    .menu-link {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      margin-bottom: 10px;
-      padding: 5px 10px;
-      gap: 10px;
-      color: rgba(0, 0, 0, 0.7);
-      transition: all 0.5s ease;
-      &:hover {
-        color: rgba(255, 255, 255, 1);
-        background-color: rgba(14, 85, 167, 0.7);
+header {
+  nav {
+    color: black;
+    box-shadow: 0.5px 0.5px 0.5px rgba(0, 0, 0, 0.7);
+    margin-bottom: 50px;
+    ul {
+      list-style: none;
+      padding: 20px 0;
+      box-shadow: 0.3px 0.3px 0.3px rgba(0, 0, 0, 0.7);
+      li {
+        .menu-link {
+          display: flex;
+          align-items: center;
+          text-decoration: none;
+          margin-bottom: 10px;
+          padding: 5px 10px;
+          gap: 10px;
+          color: rgba(0, 0, 0, 0.7);
+          transition: all 0.5s ease;
+          &:hover {
+            color: rgba(255, 255, 255, 1);
+            background-color: rgba(14, 85, 167, 0.7);
+          }
+        }
+        .active {
+          color: rgba(255, 255, 255, 1);
+          background-color: rgba(14, 85, 167, 0.7);
+        }
       }
     }
-    .active {
-      color: rgba(255, 255, 255, 1);
-      background-color: rgba(14, 85, 167, 0.7);
+    .navbar-menu-links {
+      display: flex;
+      gap: 20px;
+      a {
+        color: rgba(0, 0, 0, 1);
+        text-decoration: none;
+        border: 1px solid #000;
+        padding: 0px 5px;
+        border-radius: 5px;
+        font-size: 20px;
+        transition: all 0.5s ease;
+        &:hover {
+          font-weight: bold;
+          color: #ffff;
+          background-color: #000;
+        }
+      }
     }
   }
 }
