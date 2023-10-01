@@ -9,6 +9,7 @@ import { registerValidation } from "../../../utils/validations";
 
 const Login = () => {
   const toastRef = useRef<Toast>(null);
+
   const { handleSubmit, values, handleChange, errors, touched } = useFormik({
     initialValues: { username: "", email: "", password: "" },
     validationSchema: registerValidation,
@@ -22,6 +23,7 @@ const Login = () => {
       detail: "You have registered success fully!",
     });
   };
+
   return (
     <main className="container d-flex  justify-content-center align-items-center">
       <Toast ref={toastRef} />
