@@ -1,3 +1,5 @@
+import { useRef } from "react";
+import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
@@ -6,14 +8,23 @@ import { NavLink } from "react-router-dom";
 import { registerValidation } from "../../../utils/validations";
 
 const Login = () => {
+  const toastRef = useRef<Toast>(null);
   const { handleSubmit, values, handleChange, errors, touched } = useFormik({
     initialValues: { username: "", email: "", password: "" },
     validationSchema: registerValidation,
-    onSubmit: () => {},
+    onSubmit: () => handleRegistration(),
   });
 
+  const handleRegistration = () => {
+    toastRef.current?.show({
+      severity: "success",
+      summary: "Registeration",
+      detail: "You have registered success fully!",
+    });
+  };
   return (
     <main className="container d-flex  justify-content-center align-items-center">
+      <Toast ref={toastRef} />
       <section className="col-md-5 col-sm-12">
         <Card title="Register" className="text-center bg-light">
           <form onSubmit={handleSubmit} style={{ textAlign: "left" }}>
