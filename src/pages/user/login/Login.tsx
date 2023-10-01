@@ -15,9 +15,9 @@ const Login = () => {
   return (
     <main className="container d-flex  justify-content-center align-items-center">
       <section className="col-md-5 col-sm-12">
-        <Card title="Login" className="text-center">
-          <form onSubmit={handleSubmit}>
-            <div className="">
+        <Card title="Login" className="text-center bg-light">
+          <form onSubmit={handleSubmit} style={{ textAlign: "left" }}>
+            <div>
               <div className="p-float-label">
                 <InputText
                   id="email"
@@ -32,7 +32,7 @@ const Login = () => {
                 <small className="text-danger">{errors.email}</small>
               )}
             </div>
-            <div className="my-2">
+            <div className="my-4">
               <div className="p-float-label">
                 <InputText
                   id="password"
@@ -48,7 +48,7 @@ const Login = () => {
                 <small className="text-danger">{errors.password}</small>
               )}
             </div>
-            <Button className="btn btn-success w-50 sm:w-100 my-4 mx-auto d-block">
+            <Button className="btn btn-outline-success w-50 sm:w-100 my-4 mx-auto d-block">
               Login
             </Button>
             <p className="text-center">
