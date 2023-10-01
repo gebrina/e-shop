@@ -1,5 +1,5 @@
 import { IUser } from "../types/user";
-import axios from "./config/axios";
+import axios from "./config";
 
 export const findAllUsers = async (): Promise<IUser[]> => {
   return await axios.get("/users");
