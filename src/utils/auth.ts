@@ -1,34 +1,13 @@
-import { Toast } from "primereact/toast";
+import { AuthUser } from "../types/AuthUser";
 
-type ToastMsg = {
-  toast: Toast | null;
-  summary: string;
-  detail: string;
-  sec?: number;
-  handleNavigation?: () => void;
+export const getCurrentUser = (): AuthUser => {
+  const user = localStorage.getItem("user") ?? "{}";
+  return JSON.parse(user);
 };
 
-export const handleSuccess = (msg: ToastMsg) => {
-  const { toast, summary, detail, handleNavigation, sec = 3000 } = msg;
-  toast?.show({
-    severity: "success",
-    summary,
-    detail,
-  });
-
-  let timeout = null;
-  if (timeout) clearTimeout(timeout);
-
-  timeout = setTimeout(() => {
-    handleNavigation && handleNavigation();
-  }, sec);
+export const storeLoggedInUser = (user: AuthUser) => {
+  const stringifiedUser = JSON.stringify(user);
+  localStorage.setItem("user", stringifiedUser);
 };
 
-export const handleError = (msg: ToastMsg) => {
-  const { toast, summary, detail } = msg;
-  toast?.show({
-    severity: "error",
-    summary,
-    detail,
-  });
-};
+export const removeLoggedInUser = () => localStorage.removeItem("user");

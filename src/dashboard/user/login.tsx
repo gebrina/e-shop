@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../api/auth";
 import { useRef } from "react";
 import { Toast } from "primereact/toast";
-import { handleError, handleSuccess } from "../../utils/auth";
+import { handleError, handleSuccess } from "../../utils";
 
 const Login = () => {
   const navigate = useNavigate();
