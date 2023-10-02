@@ -9,6 +9,7 @@ import { FiSlack } from "react-icons/fi";
 import { ProductCategory } from "./product-category";
 import { useEcomContext } from "../context/EcomContext";
 import { DashboradpageNotFound } from "./not-found";
+import ProtectedRoute from "../utils/protectedRoute";
 
 const DashboardLayout = () => {
   const { isDashboard, currentUser } = useEcomContext();
@@ -35,14 +36,39 @@ const DashboardLayout = () => {
           <BrowserRouter>
             <Sidbar visible={visible} setVisible={toggleVisibility} />
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/dashboard/products" element={<Product />} />
               <Route
                 path="/dashboard/product-categories"
-                element={<ProductCategory />}
+                element={
+                  <ProtectedRoute>
+                    <ProductCategory />
+                  </ProtectedRoute>
+                }
               />
-              <Route path="/dashboard/orders" element={<Order />} />
-              <Route path="/dashboard/users" element={<User />} />
+              <Route
+                path="/dashboard/orders"
+                element={
+                  <ProtectedRoute>
+                    <Order />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/users"
+                element={
+                  <ProtectedRoute>
+                    <User />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/dashboard/login" element={<AdminLogin />} />
               <Route path="*" element={<DashboradpageNotFound />} />
             </Routes>
