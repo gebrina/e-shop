@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Product } from "./product";
 import { Order } from "./order";
-import { User } from "./user";
+import { AdminLogin, User } from "./user";
 import Dashboard from ".";
 import { useState } from "react";
 import Sidbar from "../components/Sidbar";
@@ -9,6 +9,7 @@ import { FiSlack } from "react-icons/fi";
 import { ProductCategory } from "./product-category";
 import { useEcomContext } from "../context/useEcomContext";
 import { DashboradpageNotFound } from "./not-found";
+
 const DashboardLayout = () => {
   const { isDashboard } = useEcomContext();
   const [visible, setVisible] = useState(true);
@@ -40,6 +41,7 @@ const DashboardLayout = () => {
               />
               <Route path="/dashboard/orders" element={<Order />} />
               <Route path="/dashboard/users" element={<User />} />
+              <Route path="/dashboard/user/login" element={<AdminLogin />} />
               <Route path="*" element={<DashboradpageNotFound />} />
             </Routes>
           </BrowserRouter>
