@@ -4,11 +4,19 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { registerValidation } from "../../../utils/validations";
+import { useMutation } from "@tanstack/react-query";
+import { createUser } from "../../../api/user";
 
 const Login = () => {
   const toastRef = useRef<Toast>(null);
+  const navigate = useNavigate();
+  const { mutate, isLoading } = useMutation({
+    mutationKey: ["new-user"],
+    mutationFn: createUser,
+    onError: () => handleError(),
+  });
 
   const { handleSubmit, values, handleChange, errors, touched } = useFormik({
     initialValues: { username: "", email: "", password: "" },
@@ -16,12 +24,27 @@ const Login = () => {
     onSubmit: () => handleRegistration(),
   });
 
-  const handleRegistration = () => {
+  const handleError = () => {
+    toastRef.current?.show({
+      severity: "error",
+      summary: "Registration",
+      detail: "Something went wrong try again..",
+    });
+  };
+  const handleSuccess = () => {
     toastRef.current?.show({
       severity: "success",
-      summary: "Registeration",
-      detail: "You have registered success fully!",
+      summary: "Registration",
+      detail: "You have registered succssfully!",
+      life: 3000,
     });
+    setTimeout(() => {
+      navigate("/user/login");
+    }, 3000);
+  };
+
+  const handleRegistration = () => {
+    mutate({ ...values }, { onSuccess: handleSuccess });
   };
 
   return (
@@ -33,6 +56,7 @@ const Login = () => {
             <div className="">
               <div className="p-float-label">
                 <InputText
+                  autoComplete="off"
                   id="username"
                   className={`${errors.username && "p-invalid"} w-100`}
                   value={values.username}
@@ -50,6 +74,7 @@ const Login = () => {
               <div className="p-float-label">
                 <InputText
                   id="email"
+                  autoComplete="false"
                   className={`${errors.email && "p-invalid"} w-100`}
                   value={values.email}
                   name="email"
@@ -78,8 +103,9 @@ const Login = () => {
               )}
             </div>
             <Button className="btn btn-outline-success w-50 sm:w-100 my-4 mx-auto d-block">
-              Register
+              {isLoading ? "Registering..." : "Register"}
             </Button>
+
             <p className="text-center">
               Already have account &nbsp;
               <NavLink className={"text-danger"} to={"/user/login"}>
