@@ -1,30 +1,48 @@
 import { FC, createContext, useContext, useEffect, useState } from "react";
 import { AuthUser } from "../types/AuthUser";
-import { getCurrentUser } from "../utils/auth";
+import {
+  getCurrentUser,
+  removeLoggedInUser,
+  storeLoggedInUser,
+} from "../utils/auth";
 
 type EcomContextType = {
-  isDashboard: boolean;
+  isDashboard?: boolean;
   currentUser?: AuthUser;
   handleUserLogin?: (user: AuthUser) => void;
-  handleLogout?: () => void;
+  handleUserLogout?: () => void;
 };
 
-const EcomContext = createContext<EcomContextType>({
-  isDashboard: false,
-});
+const EcomContext = createContext<EcomContextType>({});
 
 export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [values, setValues] = useState<EcomContextType>({ isDashboard: false });
+  const [values, setValues] = useState<EcomContextType>({});
 
   useEffect(() => {
+    const handleUserLogin = (user: AuthUser) => {
+      storeLoggedInUser(user);
+      setValues({ ...values, currentUser: user });
+    };
+
+    const handleUserLogout = () => {
+      setValues({ isDashboard: false, currentUser: undefined });
+      removeLoggedInUser();
+    };
+
     const pathname = location.pathname;
-    if (pathname.includes("board")) {
+    if (pathname.includes("dashboard")) {
       const currentUser = getCurrentUser();
-      setValues({ ...values, currentUser, isDashboard: true });
+      setValues({
+        handleUserLogin,
+        handleUserLogout,
+        currentUser,
+        isDashboard: true,
+      });
     }
-  }, [values]);
+  }, []);
+
   return <EcomContext.Provider value={values}>{children}</EcomContext.Provider>;
 };
 

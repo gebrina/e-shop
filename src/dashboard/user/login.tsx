@@ -9,10 +9,12 @@ import { Toast } from "primereact/toast";
 import { loginValidtion } from "../../utils/validations";
 import { loginUser } from "../../api/auth";
 import { handleError, handleSuccess } from "../../utils";
-import { storeLoggedInUser } from "../../utils/auth";
+import { useEcomContext } from "../../context/EcomContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { handleUserLogin } = useEcomContext();
+
   const { mutate: authUser, data } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginUser,
@@ -33,7 +35,7 @@ const Login = () => {
       detail: "You have logged in Successfully",
       handleNavigation: () => navigate("/dashboard"),
     });
-    data && storeLoggedInUser(data);
+    data && handleUserLogin && handleUserLogin(data);
   };
 
   const showErrorMsg = () => {

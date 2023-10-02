@@ -11,8 +11,8 @@ import { useEcomContext } from "../context/EcomContext";
 import { DashboradpageNotFound } from "./not-found";
 
 const DashboardLayout = () => {
-  const { isDashboard } = useEcomContext();
-  const [visible, setVisible] = useState(true);
+  const { isDashboard, currentUser } = useEcomContext();
+  const [visible, setVisible] = useState(false);
 
   const toggleVisibility = () => {
     setVisible(!visible);
@@ -23,12 +23,14 @@ const DashboardLayout = () => {
       {isDashboard && (
         <div className="container-fluid px-5 bg-light h-50 py-3 border-info">
           <nav>
-            <button
-              onClick={toggleVisibility}
-              className="btn btn-outline-secondary d-flex"
-            >
-              <FiSlack style={{ fontSize: 20 }} />
-            </button>
+            {currentUser?.access_token && (
+              <button
+                onClick={toggleVisibility}
+                className="btn btn-outline-secondary d-flex"
+              >
+                <FiSlack style={{ fontSize: 20 }} />
+              </button>
+            )}
           </nav>
           <BrowserRouter>
             <Sidbar visible={visible} setVisible={toggleVisibility} />
