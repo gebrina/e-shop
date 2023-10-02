@@ -2,7 +2,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { loginValidtion } from "../../utils/validations";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../api/auth";
@@ -11,6 +11,7 @@ import { Toast } from "primereact/toast";
 import { handleError, handleSuccess } from "../../utils/auth";
 
 const Login = () => {
+  const navigate = useNavigate();
   const { mutate: authUser } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginUser,
@@ -28,6 +29,7 @@ const Login = () => {
       toast: toastRef?.current,
       summary: "Login",
       detail: "You have logged in Successfully",
+      handleNavigation: () => navigate("/dashboard"),
     });
   };
 

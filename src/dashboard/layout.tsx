@@ -41,7 +41,7 @@ const DashboardLayout = () => {
               />
               <Route path="/dashboard/orders" element={<Order />} />
               <Route path="/dashboard/users" element={<User />} />
-              <Route path="/dashboard/user/login" element={<AdminLogin />} />
+              <Route path="/dashboard/login" element={<AdminLogin />} />
               <Route path="*" element={<DashboradpageNotFound />} />
             </Routes>
           </BrowserRouter>
