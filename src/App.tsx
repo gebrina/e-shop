@@ -5,7 +5,7 @@ import { RegisterPage } from "./pages/user/register";
 import { LoginPage } from "./pages/user/login";
 import { PageNotFound } from "./pages/notfound";
 import Navbar from "./components/navbar/Navbar";
-import { useEcomContext } from "./context/useEcomContext";
+import { useEcomContext } from "./context/EcomContext";
 
 const App = () => {
   const { isDashboard } = useEcomContext();

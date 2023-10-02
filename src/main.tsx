@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import App from "./App.tsx";
 import "./index.css";
-import { EcomContextProvider } from "./context/useEcomContext.tsx";
+import { EcomContextProvider } from "./context/EcomContext.tsx";
 
 const client = new QueryClient();
 

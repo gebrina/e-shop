@@ -7,7 +7,7 @@ import { useState } from "react";
 import Sidbar from "../components/Sidbar";
 import { FiSlack } from "react-icons/fi";
 import { ProductCategory } from "./product-category";
-import { useEcomContext } from "../context/useEcomContext";
+import { useEcomContext } from "../context/EcomContext";
 import { DashboradpageNotFound } from "./not-found";
 
 const DashboardLayout = () => {

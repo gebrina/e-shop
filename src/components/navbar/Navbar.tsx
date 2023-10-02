@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { menus } from "./MenusData";
 import "./Navbar.scss";
 import { FC } from "react";
-import { useEcomContext } from "../../context/useEcomContext";
+import { useEcomContext } from "../../context/EcomContext";
 import { FiShoppingCart } from "react-icons/fi";
 
 type NavbarProps = {

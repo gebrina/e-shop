@@ -3,19 +3,21 @@ import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
 import { NavLink, useNavigate } from "react-router-dom";
-import { loginValidtion } from "../../utils/validations";
 import { useMutation } from "@tanstack/react-query";
-import { loginUser } from "../../api/auth";
 import { useRef } from "react";
 import { Toast } from "primereact/toast";
+import { loginValidtion } from "../../utils/validations";
+import { loginUser } from "../../api/auth";
 import { handleError, handleSuccess } from "../../utils";
+import { storeLoggedInUser } from "../../utils/auth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { mutate: authUser } = useMutation({
+  const { mutate: authUser, data } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginUser,
   });
+
   const toastRef = useRef<Toast>(null);
 
   const { handleSubmit, values, handleChange, errors, touched } = useFormik({
@@ -31,6 +33,7 @@ const Login = () => {
       detail: "You have logged in Successfully",
       handleNavigation: () => navigate("/dashboard"),
     });
+    data && storeLoggedInUser(data);
   };
 
   const showErrorMsg = () => {
