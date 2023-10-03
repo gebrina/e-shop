@@ -36,4 +36,4 @@ export const handleError = (msg: ToastMsg) => {
   });
 };
 
-export const jwtDecode = () => jwt_decode(getCurrentUser().access_token);
+export const jwtDecode = (): any => jwt_decode(getCurrentUser().access_token);

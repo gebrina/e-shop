@@ -19,3 +19,7 @@ export const registerValidation = yup.object({
     .min(3, "Password must be greater than 3 characters.")
     .required("Password is required."),
 });
+
+export const productCategoryValidation = yup.object({
+  name: yup.string().required("Product category is required"),
+});
