@@ -1,16 +1,18 @@
 import { Navigate } from "react-router-dom";
 import { useEcomContext } from "../context/EcomContext";
-
+import { jwtDecode } from "../utils";
+import "./Dashboard.scss";
 const Dashboard = () => {
   const { currentUser } = useEcomContext();
-  console.log(Boolean(currentUser?.access_token));
+
+  const decodedJwt: any = jwtDecode();
+  const loggedInUser = decodedJwt?.user;
+
   if (!currentUser?.access_token) {
     return <Navigate to={"/dashboard/login"} />;
-  } else {
-    console.log("not navigate");
   }
 
-  return <div>Dashboard</div>;
+  return <main className="container-fluid"></main>;
 };
 
 export default Dashboard;

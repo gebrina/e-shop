@@ -4,6 +4,7 @@ import {
   FiLayers,
   FiShoppingBag,
   FiSlack,
+  FiLogOut,
 } from "react-icons/fi";
 
 type MenuLinks = {
@@ -11,10 +12,12 @@ type MenuLinks = {
   path: string;
   icon?: React.ReactNode;
 };
+
 type Menu = {
   dashboard?: MenuLinks[];
   default?: MenuLinks[];
 };
+
 export const menus: Menu = {
   dashboard: [
     {
@@ -41,6 +44,11 @@ export const menus: Menu = {
       label: "Orders",
       path: "/dashboard/orders",
       icon: <FiShoppingBag />,
+    },
+    {
+      label: "Log out",
+      path: "/dashboard/login",
+      icon: <FiLogOut />,
     },
   ],
 };

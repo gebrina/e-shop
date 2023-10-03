@@ -8,6 +8,7 @@ import { FiShoppingCart } from "react-icons/fi";
 type NavbarProps = {
   setVisible?: () => void;
 };
+
 const Navbar: FC<NavbarProps> = ({ setVisible }) => {
   const { isDashboard } = useEcomContext();
 

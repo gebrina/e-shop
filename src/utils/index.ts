@@ -1,4 +1,7 @@
+import jwt_decode from "jwt-decode";
+
 import { Toast } from "primereact/toast";
+import { getCurrentUser } from "./auth";
 
 type ToastMsg = {
   toast: Toast | null;
@@ -32,3 +35,5 @@ export const handleError = (msg: ToastMsg) => {
     detail,
   });
 };
+
+export const jwtDecode = () => jwt_decode(getCurrentUser().access_token);

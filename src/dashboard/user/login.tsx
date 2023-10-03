@@ -2,7 +2,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { Toast } from "primereact/toast";
@@ -14,7 +14,7 @@ import { AuthUser } from "../../types/AuthUser";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { handleUserLogin } = useEcomContext();
+  const { handleUserLogin, currentUser } = useEcomContext();
 
   const { mutate: authUser } = useMutation({
     mutationKey: ["login"],
@@ -48,6 +48,8 @@ const Login = () => {
       onError: showErrorMsg,
     });
   };
+
+  if (currentUser?.access_token) return <Navigate to={"/dashboard"} />;
 
   return (
     <main className="container d-flex mt-5 justify-content-center align-items-center">
