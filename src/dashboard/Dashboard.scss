@@ -1,0 +1,61 @@
+.profile {
+  position: fixed;
+  top: 10px;
+  min-width: 200px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .profile-icon {
+    font-size: 30px;
+    width: max-content;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 5px;
+    font-weight: bold;
+    transition: all 0.2s;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(0, 0, 0, 0.1);
+      color: rgba(255, 255, 255, 1);
+
+      & + ul {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        height: 200px;
+        width: 100%;
+      }
+    }
+  }
+
+  ul {
+    display: flex;
+    height: 0px;
+    width: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    font-size: 17px;
+    text-transform: capitalize;
+    font-weight: 500;
+    box-shadow: 0.5px 0.5px 5px 0.5px lightblue;
+    list-style: none;
+    transition: all 0.5s;
+    padding: 0;
+    li:nth-child(2) {
+      text-transform: lowercase;
+    }
+    &:hover {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      height: 200px;
+      width: 100%;
+    }
+  }
+}
