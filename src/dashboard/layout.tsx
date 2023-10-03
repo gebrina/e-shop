@@ -10,7 +10,6 @@ import { ProductCategory } from "./product-category";
 import { useEcomContext } from "../context/EcomContext";
 import { DashboradpageNotFound } from "./not-found";
 import ProtectedRoute from "../utils/protectedRoute";
-import "./Dashboard.scss";
 import { UserProfile } from "./profile";
 const DashboardLayout = () => {
   const { isDashboard, currentUser } = useEcomContext();
