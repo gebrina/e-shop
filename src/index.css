@@ -11,3 +11,21 @@
 body {
   min-height: 100vh;
 }
+
+.center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-items {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.left-items {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
