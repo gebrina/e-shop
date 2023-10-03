@@ -22,7 +22,7 @@ const DashboardLayout = () => {
   return (
     <>
       {isDashboard && (
-        <div className="container-fluid px-5 bg-light h-50 py-3 border-info">
+        <div className="container-fluid px-5 h-50 py-3 border-info">
           <nav>
             {currentUser?.access_token && (
               <button

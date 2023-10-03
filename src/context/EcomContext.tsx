@@ -7,43 +7,52 @@ import {
 } from "../utils/auth";
 
 type EcomContextType = {
-  isDashboard?: boolean;
-  currentUser?: AuthUser;
-  handleUserLogin?: (user: AuthUser) => void;
-  handleUserLogout?: () => void;
+  isDashboard: boolean;
+  currentUser: AuthUser | undefined;
+  handleUserLogin: (user: AuthUser) => void;
+  handleUserLogout: () => void;
 };
 
-const EcomContext = createContext<EcomContextType>({});
+const defaultValues: EcomContextType = {
+  isDashboard: false,
+  currentUser: { access_token: "" },
+  handleUserLogin: () => {},
+  handleUserLogout: () => {},
+};
+
+const EcomContext = createContext<EcomContextType>(defaultValues);
 
 export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [values, setValues] = useState<EcomContextType>({});
+  const [values, setValues] = useState<EcomContextType>(defaultValues);
+
+  const handleUserLogin = (user: AuthUser) => {
+    console.log("handle user login");
+    storeLoggedInUser(user);
+    setValues({ ...values, currentUser: user });
+  };
+
+  const handleUserLogout = () => {
+    setValues({ ...values, isDashboard: false, currentUser: undefined });
+    removeLoggedInUser();
+  };
 
   useEffect(() => {
-    const handleUserLogin = (user: AuthUser) => {
-      storeLoggedInUser(user);
-      setValues({ ...values, currentUser: user });
-    };
-
-    const handleUserLogout = () => {
-      setValues({ isDashboard: false, currentUser: undefined });
-      removeLoggedInUser();
-    };
-
     const pathname = location.pathname;
     if (pathname.includes("dashboard")) {
       const currentUser = getCurrentUser();
-      setValues({
-        handleUserLogin,
-        handleUserLogout,
-        currentUser,
-        isDashboard: true,
-      });
+      setValues((prev) => ({ ...prev, currentUser, isDashboard: true }));
     }
   }, []);
 
-  return <EcomContext.Provider value={values}>{children}</EcomContext.Provider>;
+  return (
+    <EcomContext.Provider
+      value={{ ...values, handleUserLogin, handleUserLogout }}
+    >
+      {children}
+    </EcomContext.Provider>
+  );
 };
 
 export const useEcomContext = () => useContext(EcomContext);

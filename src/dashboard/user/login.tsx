@@ -8,14 +8,15 @@ import { useRef } from "react";
 import { Toast } from "primereact/toast";
 import { loginValidtion } from "../../utils/validations";
 import { loginUser } from "../../api/auth";
-import { handleError, handleSuccess } from "../../utils";
+import { handleError } from "../../utils";
 import { useEcomContext } from "../../context/EcomContext";
+import { AuthUser } from "../../types/AuthUser";
 
 const Login = () => {
   const navigate = useNavigate();
   const { handleUserLogin } = useEcomContext();
 
-  const { mutate: authUser, data } = useMutation({
+  const { mutate: authUser } = useMutation({
     mutationKey: ["login"],
     mutationFn: loginUser,
   });
@@ -28,14 +29,9 @@ const Login = () => {
     onSubmit: () => handleLogin(),
   });
 
-  const showSuccessMsg = () => {
-    handleSuccess({
-      toast: toastRef?.current,
-      summary: "Login",
-      detail: "You have logged in Successfully",
-      handleNavigation: () => navigate("/dashboard"),
-    });
-    data && handleUserLogin && handleUserLogin(data);
+  const showSuccessMsg = (data: AuthUser) => {
+    handleUserLogin(data);
+    navigate("/dashboard");
   };
 
   const showErrorMsg = () => {
@@ -54,7 +50,7 @@ const Login = () => {
   };
 
   return (
-    <main className="container d-flex  justify-content-center align-items-center">
+    <main className="container d-flex mt-5 justify-content-center align-items-center">
       <section className="col-md-5 col-sm-12">
         <Toast ref={toastRef} />
         <Card title="Login" className="text-center bg-light">
