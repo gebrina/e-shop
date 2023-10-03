@@ -1,6 +1,6 @@
 .profile {
   position: fixed;
-  top: 10px;
+  top: 20px;
   width: 200px;
   right: 10px;
   display: flex;
@@ -17,7 +17,7 @@
     border-radius: 50%;
     font-weight: bold;
     transition: all 0.2s;
-
+    color: rgba(0, 0, 0, 0.5);
     &:hover {
       cursor: pointer;
       background-color: rgba(0, 0, 0, 0.1);
@@ -56,5 +56,23 @@
       height: 200px;
       width: 100%;
     }
+  }
+}
+
+.toggle-btn-container {
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  width: max-content;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: bold;
+  transition: all 0.2s;
+  color: rgba(0, 0, 0, 0.5);
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+    color: rgba(255, 255, 255, 1);
   }
 }

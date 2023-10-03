@@ -10,7 +10,7 @@ import { ProductCategory } from "./product-category";
 import { useEcomContext } from "../context/EcomContext";
 import { DashboradpageNotFound } from "./not-found";
 import ProtectedRoute from "../utils/protectedRoute";
-
+import "./Dashboard.scss";
 const DashboardLayout = () => {
   const { isDashboard, currentUser } = useEcomContext();
   const [visible, setVisible] = useState(false);
@@ -23,14 +23,11 @@ const DashboardLayout = () => {
     <>
       {isDashboard && (
         <div className="container-fluid px-5 h-50 py-3 border-info">
-          <nav>
+          <nav className="bg-light px-5 py-2">
             {currentUser?.access_token && (
-              <button
-                onClick={toggleVisibility}
-                className="btn btn-outline-secondary d-flex"
-              >
-                <FiSlack style={{ fontSize: 20 }} />
-              </button>
+              <div className="toggle-btn-container">
+                <FiSlack onClick={toggleVisibility} style={{ fontSize: 20 }} />
+              </div>
             )}
           </nav>
           <BrowserRouter>
