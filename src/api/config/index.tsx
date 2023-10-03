@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCurrentUser } from "../../utils/auth";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_API_URL,
@@ -6,6 +7,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
+    const access_token = getCurrentUser()?.access_token;
+    config.headers.Authorization = `Bearer ${access_token}`;
     return config;
   },
   (error) => {
