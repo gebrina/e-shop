@@ -11,6 +11,11 @@ export const getSingleProduct = async (id: number): Promise<IProduct> => {
   return response.data;
 };
 
+export const createProduct = async (product: IProduct): Promise<IProduct> => {
+  const response = await axios.post("/products", product);
+  return response.data;
+};
+
 export const deleteProduct = async (id: number): Promise<string> => {
   const response = await axios.delete(`/products/${id}`);
   return response.data;
