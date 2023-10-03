@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import { useEcomContext } from "../context/EcomContext";
 import { jwtDecode } from "../utils";
 import "./Dashboard.scss";
@@ -22,7 +22,9 @@ const Dashboard = () => {
         <ul>
           <li>{loggedInUser?.username}</li>
           <li>{loggedInUser?.email}</li>
-          <li></li>
+          <li>
+            <NavLink to={"/user"}>Update Profile</NavLink>
+          </li>
         </ul>
       </section>
     </main>
