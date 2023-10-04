@@ -15,7 +15,12 @@ const ProductCategory = () => {
   };
   return (
     <section className="my-3">
-      <DashButtons text="" action={action} onClick={handleClick} />
+      <DashButtons
+        title="Product Categories"
+        text=""
+        action={action}
+        onClick={handleClick}
+      />
       {action && <PCForm action={action} />}
       <div className="bg-light"></div>
     </section>

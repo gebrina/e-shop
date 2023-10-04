@@ -8,15 +8,18 @@ type DashboardButtonsProps = {
   action: Action;
   text: string;
   onClick: () => void;
+  title: string;
 };
 
 const DashboardButtons: FC<DashboardButtonsProps> = ({
   action,
   onClick,
   text,
+  title,
 }) => {
   return (
     <section className="right-items">
+      <h1 className="text-left text-info fw-bold w-100">{title}</h1>
       {!action ? (
         <Button onClick={onClick} className="btn center-items btn-success">
           {action == "update" ? (
