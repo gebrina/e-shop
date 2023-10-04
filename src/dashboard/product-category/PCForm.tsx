@@ -7,11 +7,15 @@ import { IProductCategory } from "../../types/product-category";
 import { Button } from "primereact/button";
 import { FiSave } from "react-icons/fi";
 import { Action } from "../common/Buttons";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProductCategory } from "../../api/product-category";
 import { productCategoryValidation } from "../../utils/validations";
 import { Toast } from "primereact/toast";
 import { handleError, handleSuccess } from "../../utils";
+import {
+  CREATE_PRODUCT_CATEGORY_KEY,
+  GET_PRODUCT_CATEGORY_KEY,
+} from "../../constants";
 
 export type PCFormProps = {
   action: Action;
@@ -19,16 +23,19 @@ export type PCFormProps = {
 };
 
 const PCForm: FC<PCFormProps> = ({ action }) => {
+  const queryClient = useQueryClient();
+
   const { mutate: createProCategory, isLoading } = useMutation({
-    mutationKey: ["new-pc"],
+    mutationKey: [CREATE_PRODUCT_CATEGORY_KEY],
     mutationFn: createProductCategory,
   });
 
-  const { values, handleChange, handleSubmit, errors, touched } = useFormik({
-    initialValues: { name: "", description: "" },
-    validationSchema: productCategoryValidation,
-    onSubmit: () => handleCreateProductCategory(),
-  });
+  const { values, handleChange, handleSubmit, errors, touched, resetForm } =
+    useFormik({
+      initialValues: { name: "", description: "" },
+      validationSchema: productCategoryValidation,
+      onSubmit: () => handleCreateProductCategory(),
+    });
 
   const toastRef = useRef<Toast>(null);
 
@@ -38,6 +45,8 @@ const PCForm: FC<PCFormProps> = ({ action }) => {
       detail: "Product category created successfully",
       toast: toastRef.current,
     });
+    queryClient.invalidateQueries([GET_PRODUCT_CATEGORY_KEY]);
+    resetForm();
   };
 
   const handleErrorResponse = () => {

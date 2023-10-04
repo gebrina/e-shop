@@ -3,16 +3,16 @@ import PCForm from "./PCForm";
 import { DashButtons } from "../common";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
 import { Action } from "../common/Buttons";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProductCategories } from "../../api/product-category";
 import { FiEdit, FiTrash } from "react-icons/fi";
+import { GET_PRODUCT_CATEGORY_KEY } from "../../constants";
 
 const ProductCategory = () => {
   const [action, setAction] = useState<Action>();
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["get-procat"],
+  const { isLoading, data } = useQuery({
+    queryKey: [GET_PRODUCT_CATEGORY_KEY],
     queryFn: getAllProductCategories,
   });
 
