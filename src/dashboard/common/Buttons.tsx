@@ -15,7 +15,6 @@ const DashboardButtons: FC<DashboardButtonsProps> = ({
   onClick,
   text,
 }) => {
-  console.log("action", action);
   return (
     <section className="right-items">
       {!action ? (
