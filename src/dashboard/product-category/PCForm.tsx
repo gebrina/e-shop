@@ -2,9 +2,11 @@ import { useFormik } from "formik";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { FC } from "react";
+import { IProductCategory } from "../../types/product-category";
 
 export type PCFormProps = {
   action: "update" | "new" | undefined;
+  productCategory?: IProductCategory;
 };
 
 const PCForm: FC<PCFormProps> = ({ action }) => {
@@ -16,7 +18,7 @@ const PCForm: FC<PCFormProps> = ({ action }) => {
   return (
     <section className="center-items">
       <Card
-        title={action == "new" ? "Create Category" : "Update Category"}
+        title={action == "new" ? "New Category" : "Update Category"}
         className="col-md-5"
       >
         <form onSubmit={handleSubmit}>
