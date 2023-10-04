@@ -46,7 +46,7 @@ const ProductCategory = () => {
         "Loading..."
       ) : (
         <div className="bg-light col-md-6 mx-auto">
-          <DataTable paginator rows={5} r value={data}>
+          <DataTable paginator rows={5} value={data}>
             <Column header="Name" filter field="name" />
             <Column header="Description" field={"description"} />
             <Column header={"Action"} colSpan={2} body={actionBodyTemplates} />

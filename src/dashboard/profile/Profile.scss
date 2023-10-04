@@ -1,5 +1,6 @@
 .profile {
   position: fixed;
+  z-index: 1;
   top: 20px;
   width: 200px;
   right: 10px;
@@ -36,6 +37,7 @@
   ul {
     display: flex;
     height: 0px;
+    background-color: rgb(255, 255, 255);
     width: 0;
     overflow: hidden;
     border-radius: 10px;

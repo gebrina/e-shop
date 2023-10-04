@@ -22,4 +22,5 @@ export const registerValidation = yup.object({
 
 export const productCategoryValidation = yup.object({
   name: yup.string().required("Product category is required"),
+  description: yup.string().required("Description is required."),
 });
