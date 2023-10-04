@@ -7,6 +7,7 @@ import { Button } from "primereact/button";
 import { Action } from "../common/Buttons";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProductCategories } from "../../api/product-category";
+import { FiEdit, FiTrash } from "react-icons/fi";
 
 const ProductCategory = () => {
   const [action, setAction] = useState<Action>();
@@ -23,6 +24,15 @@ const ProductCategory = () => {
     }
   };
 
+  const actionBodyTemplates = () => {
+    return (
+      <div className="w-100 d-flex gap-2">
+        <FiEdit className="text-success action-button" />
+        <FiTrash className="text-danger action-button" />
+      </div>
+    );
+  };
+
   return (
     <section className="my-3">
       <DashButtons
@@ -36,9 +46,10 @@ const ProductCategory = () => {
         "Loading..."
       ) : (
         <div className="bg-light col-md-6 mx-auto">
-          <DataTable value={data}>
-            <Column filter field="name" />
-            <Column field="description" />
+          <DataTable paginator rows={5} r value={data}>
+            <Column header="Name" filter field="name" />
+            <Column header="Description" field={"description"} />
+            <Column header={"Action"} colSpan={2} body={actionBodyTemplates} />
           </DataTable>
         </div>
       )}
