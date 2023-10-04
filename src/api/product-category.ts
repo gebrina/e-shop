@@ -1,7 +1,9 @@
 import { IProductCategory } from "../types/product-category";
 import axios from "./config";
 
-export const getAllProducts = async (): Promise<IProductCategory[]> => {
+export const getAllProductCategories = async (): Promise<
+  IProductCategory[]
+> => {
   const response = await axios.get("/product-categories");
   return response.data;
 };
