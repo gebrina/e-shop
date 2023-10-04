@@ -1,22 +1,21 @@
-import { Button } from "primereact/button";
 import { useState } from "react";
-import { FiPlus } from "react-icons/fi";
 import PCForm from "./PCForm";
+import { DashButtons } from "../common";
+import { Action } from "../common/Buttons";
 
 const ProductCategory = () => {
-  const [action, setAction] = useState();
+  const [action, setAction] = useState<Action>();
 
+  const handleClick = () => {
+    if (action) {
+      setAction(undefined);
+    } else {
+      setAction("add");
+    }
+  };
   return (
     <section className="my-3">
-      <div className="right-items">
-        <Button
-          onClick={() => setAction("new")}
-          className="btn btn-success  center-items"
-        >
-          <FiPlus />
-          <span>Category</span>
-        </Button>
-      </div>
+      <DashButtons text="" action={action} onClick={handleClick} />
       {action && <PCForm action={action} />}
       <div className="bg-light"></div>
     </section>
