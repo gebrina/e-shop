@@ -20,7 +20,7 @@ import {
   GET_PRODUCT_CATEGORY_KEY,
 } from "../../constants";
 import { IProductCategory } from "../../types/product-category";
-import { NotificationType } from "../common/Notification";
+import Notification, { NotificationType } from "../common/Notification";
 
 const ProductCategory = () => {
   const [action, setAction] = useState<Action>();
@@ -48,6 +48,7 @@ const ProductCategory = () => {
   };
 
   const handleDeleteProCatgory = (options: any) => {
+    setType(undefined);
     handleDelete(options.id, {
       onError: () => setType("error"),
       onSuccess: () => {
@@ -56,6 +57,7 @@ const ProductCategory = () => {
       },
     });
   };
+
   const handleUpdate = (options: any) => {
     setProductCategory({
       id: options.id,
@@ -72,7 +74,10 @@ const ProductCategory = () => {
           onClick={() => handleUpdate(options)}
           className="text-success action-button"
         />
-        <FiTrash className="text-danger action-button" />
+        <FiTrash
+          onClick={() => handleDeleteProCatgory(options)}
+          className="text-danger action-button"
+        />
       </div>
     );
   };
@@ -85,6 +90,7 @@ const ProductCategory = () => {
         action={action}
         onClick={handleClick}
       />
+      {type && <Notification type={type} title="Product Category" />}
       {action && <PCForm productCategory={productCategory} action={action} />}
       {isLoading ? (
         "Loading..."
