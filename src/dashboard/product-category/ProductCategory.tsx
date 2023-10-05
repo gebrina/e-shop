@@ -1,6 +1,11 @@
 import { useState } from "react";
 import PCForm from "./PCForm";
-import { DashButtons } from "../common";
+import {
+  DashButtons,
+  filterApply,
+  filterClear,
+  filterElement,
+} from "../common";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Action } from "../common/Buttons";
@@ -47,7 +52,16 @@ const ProductCategory = () => {
       ) : (
         <div className="bg-light col-md-6 mx-auto">
           <DataTable paginator rows={5} value={data}>
-            <Column header="Name" filter field="name" />
+            <Column
+              header="Name"
+              showFilterMatchModes={false}
+              filter
+              filterClear={filterClear}
+              filterApply={filterApply}
+              showFilterMenuOptions={false}
+              filterElement={filterElement}
+              field="name"
+            />
             <Column header="Description" field={"description"} />
             <Column header={"Action"} colSpan={2} body={actionBodyTemplates} />
           </DataTable>
