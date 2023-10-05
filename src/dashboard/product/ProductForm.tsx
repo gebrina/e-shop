@@ -13,9 +13,9 @@ type ProductFormProps = {
 const ProductForm: FC<ProductFormProps> = ({ action }) => {
   const initialValues = {
     name: "",
-    price: null,
+    price: undefined,
     description: "",
-    quantity: null,
+    quantity: undefined,
   };
 
   const title = (action == "add" ? "Add" : "Update") + " Product";
