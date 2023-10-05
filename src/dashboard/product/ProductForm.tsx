@@ -17,12 +17,15 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
     description: "",
     quantity: null,
   };
+
   const title = (action == "add" ? "Add" : "Update") + " Product";
+
   const { values, errors, touched, handleChange, handleSubmit, handleReset } =
     useFormik({
       initialValues,
       onSubmit: () => {},
     });
+
   return (
     <section className="col-md-6 mx-auto">
       <Card title={title}>
