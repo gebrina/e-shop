@@ -24,3 +24,10 @@ export const productCategoryValidation = yup.object({
   name: yup.string().required("Product category is required"),
   description: yup.string().required("Description is required."),
 });
+
+export const productValidation = yup.object({
+  name: yup.string().required("Product name is required."),
+  price: yup.number().required("Product price is required."),
+  description: yup.string().required("Description is required."),
+  quantity: yup.number().required("Quantity is required"),
+});
