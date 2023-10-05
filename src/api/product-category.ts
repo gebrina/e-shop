@@ -28,9 +28,11 @@ export const deleteProduct = async (id: number): Promise<string> => {
 };
 
 export const updateProdutCategory = async (
-  id: number,
-  product: IProductCategory
+  productCategory: IProductCategory
 ) => {
-  const response = await axios.put(`/product-categories/${id}`, product);
+  const response = await axios.put(
+    `/product-categories/${productCategory.id}`,
+    productCategory
+  );
   return response.data;
 };

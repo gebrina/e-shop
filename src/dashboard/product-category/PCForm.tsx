@@ -2,19 +2,23 @@ import { useFormik } from "formik";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import { IProductCategory } from "../../types/product-category";
 import { Button } from "primereact/button";
 import { FiSave } from "react-icons/fi";
 import { Action } from "../common/Buttons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createProductCategory } from "../../api/product-category";
+import {
+  createProductCategory,
+  updateProdutCategory,
+} from "../../api/product-category";
 import { productCategoryValidation } from "../../utils/validations";
 import { Toast } from "primereact/toast";
 import { handleError, handleSuccess } from "../../utils";
 import {
   CREATE_PRODUCT_CATEGORY_KEY,
   GET_PRODUCT_CATEGORY_KEY,
+  UPDATE_PRODUCT_CATEGORY_KEY,
 } from "../../constants";
 
 export type PCFormProps = {
@@ -22,7 +26,7 @@ export type PCFormProps = {
   productCategory?: IProductCategory;
 };
 
-const PCForm: FC<PCFormProps> = ({ action }) => {
+const PCForm: FC<PCFormProps> = ({ action, productCategory }) => {
   const queryClient = useQueryClient();
 
   const { mutate: createProCategory, isLoading } = useMutation({
@@ -30,19 +34,31 @@ const PCForm: FC<PCFormProps> = ({ action }) => {
     mutationFn: createProductCategory,
   });
 
-  const { values, handleChange, handleSubmit, errors, touched, resetForm } =
-    useFormik({
-      initialValues: { name: "", description: "" },
-      validationSchema: productCategoryValidation,
-      onSubmit: () => handleCreateProductCategory(),
-    });
+  const { mutate: updateProCategory } = useMutation({
+    mutationKey: [UPDATE_PRODUCT_CATEGORY_KEY],
+    mutationFn: updateProdutCategory,
+  });
+
+  const {
+    values,
+    handleChange,
+    handleSubmit,
+    errors,
+    touched,
+    resetForm,
+    setFieldValue,
+  } = useFormik({
+    initialValues: { name: "", description: "" },
+    validationSchema: productCategoryValidation,
+    onSubmit: () => handleCreateProductCategory(),
+  });
 
   const toastRef = useRef<Toast>(null);
 
   const handleSuccessResponse = () => {
     handleSuccess({
       summary: "Product Category",
-      detail: "Product category created successfully",
+      detail: "Operation performed successfully!",
       toast: toastRef.current,
     });
     queryClient.invalidateQueries([GET_PRODUCT_CATEGORY_KEY]);
@@ -57,12 +73,36 @@ const PCForm: FC<PCFormProps> = ({ action }) => {
     });
   };
 
-  const handleCreateProductCategory = () => {
-    createProCategory(values, {
-      onSuccess: handleSuccessResponse,
-      onError: handleErrorResponse,
-    });
+  const handleUpdateProCategory = () => {
+    updateProCategory(
+      {
+        id: productCategory?.id,
+        ...values,
+      },
+      {
+        onSuccess: handleSuccessResponse,
+        onError: handleErrorResponse,
+      }
+    );
   };
+
+  const handleCreateProductCategory = () => {
+    if (!productCategory?.id) {
+      createProCategory(values, {
+        onSuccess: handleSuccessResponse,
+        onError: handleErrorResponse,
+      });
+    } else {
+      handleUpdateProCategory();
+    }
+  };
+
+  useEffect(() => {
+    if (productCategory?.id) {
+      setFieldValue("name", productCategory.name);
+      setFieldValue("description", productCategory.description);
+    }
+  }, [productCategory, setFieldValue]);
 
   return (
     <section className="center-items">

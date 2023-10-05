@@ -7,12 +7,13 @@ import {
   filterElement,
 } from "../common";
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import { Column, ColumnBodyOptions } from "primereact/column";
 import { Action } from "../common/Buttons";
 import { useQuery } from "@tanstack/react-query";
 import { getAllProductCategories } from "../../api/product-category";
 import { FiEdit, FiTrash } from "react-icons/fi";
 import { GET_PRODUCT_CATEGORY_KEY } from "../../constants";
+import { IProductCategory } from "../../types/product-category";
 
 const ProductCategory = () => {
   const [action, setAction] = useState<Action>();
@@ -20,6 +21,7 @@ const ProductCategory = () => {
     queryKey: [GET_PRODUCT_CATEGORY_KEY],
     queryFn: getAllProductCategories,
   });
+  const [productCategory, setProductCategory] = useState<IProductCategory>({});
 
   const handleClick = () => {
     if (action) {
@@ -29,10 +31,22 @@ const ProductCategory = () => {
     }
   };
 
-  const actionBodyTemplates = () => {
+  const handleUpdate = (options: ColumnBodyOptions) => {
+    setProductCategory({
+      id: options.id,
+      name: options.name,
+      description: options.description,
+    });
+    setAction("update");
+  };
+
+  const actionBodyTemplates = (options: ColumnBodyOptions) => {
     return (
       <div className="w-100 d-flex gap-2">
-        <FiEdit className="text-success action-button" />
+        <FiEdit
+          onClick={() => handleUpdate(options)}
+          className="text-success action-button"
+        />
         <FiTrash className="text-danger action-button" />
       </div>
     );
@@ -46,7 +60,7 @@ const ProductCategory = () => {
         action={action}
         onClick={handleClick}
       />
-      {action && <PCForm action={action} />}
+      {action && <PCForm productCategory={productCategory} action={action} />}
       {isLoading ? (
         "Loading..."
       ) : (
