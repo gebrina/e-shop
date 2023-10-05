@@ -22,7 +22,7 @@ export const createProductCategory = async (
   return response.data;
 };
 
-export const deleteProduct = async (id: number): Promise<string> => {
+export const deleteProductCategory = async (id: string): Promise<string> => {
   const response = await axios.delete(`/product-categories/${id}`);
   return response.data;
 };

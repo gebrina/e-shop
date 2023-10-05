@@ -11,6 +11,7 @@ import { useEcomContext } from "../context/EcomContext";
 import { DashboradpageNotFound } from "./not-found";
 import ProtectedRoute from "../utils/protectedRoute";
 import { UserProfile } from "./profile";
+
 const DashboardLayout = () => {
   const { isDashboard, currentUser } = useEcomContext();
   const [visible, setVisible] = useState(false);

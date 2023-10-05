@@ -9,19 +9,35 @@ import {
 import { DataTable } from "primereact/datatable";
 import { Column, ColumnBodyOptions } from "primereact/column";
 import { Action } from "../common/Buttons";
-import { useQuery } from "@tanstack/react-query";
-import { getAllProductCategories } from "../../api/product-category";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  deleteProductCategory,
+  getAllProductCategories,
+} from "../../api/product-category";
 import { FiEdit, FiTrash } from "react-icons/fi";
-import { GET_PRODUCT_CATEGORY_KEY } from "../../constants";
+import {
+  DELETE_PRODUCT_CATEGORY_KEY,
+  GET_PRODUCT_CATEGORY_KEY,
+} from "../../constants";
 import { IProductCategory } from "../../types/product-category";
+import { NotificationType } from "../common/Notification";
 
 const ProductCategory = () => {
   const [action, setAction] = useState<Action>();
+  const [type, setType] = useState<NotificationType>();
   const { isLoading, data } = useQuery({
     queryKey: [GET_PRODUCT_CATEGORY_KEY],
     queryFn: getAllProductCategories,
   });
-  const [productCategory, setProductCategory] = useState<IProductCategory>({});
+
+  const queryClient = useQueryClient();
+
+  const { mutate: handleDelete } = useMutation({
+    mutationKey: [DELETE_PRODUCT_CATEGORY_KEY],
+    mutationFn: deleteProductCategory,
+  });
+
+  const [productCategory, setProductCategory] = useState<IProductCategory>();
 
   const handleClick = () => {
     if (action) {
@@ -31,7 +47,16 @@ const ProductCategory = () => {
     }
   };
 
-  const handleUpdate = (options: ColumnBodyOptions) => {
+  const handleDeleteProCatgory = (options: any) => {
+    handleDelete(options.id, {
+      onError: () => setType("error"),
+      onSuccess: () => {
+        setType("success");
+        queryClient.invalidateQueries([GET_PRODUCT_CATEGORY_KEY]);
+      },
+    });
+  };
+  const handleUpdate = (options: any) => {
     setProductCategory({
       id: options.id,
       name: options.name,
