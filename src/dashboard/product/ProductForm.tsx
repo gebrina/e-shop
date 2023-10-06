@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useFormik } from "formik";
 import { Card } from "primereact/card";
 import { Action } from "../common/Buttons";
@@ -6,6 +6,14 @@ import { InputText } from "primereact/inputtext";
 import { Editor } from "primereact/editor";
 import { Button } from "primereact/button";
 import { FiSave } from "react-icons/fi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { CREATE_PRODUCT_KEY, GET_PRODUCT_CATEGORY_KEY } from "../../constants";
+import { createProduct } from "../../api/product";
+import Notification, { NotificationType } from "../common/Notification";
+import { productValidation } from "../../utils/validations";
+import { getAllProductCategories } from "../../api/product-category";
+import { Dropdown } from "primereact/dropdown";
+import { IProductCategory } from "../../types/product-category";
 
 type ProductFormProps = {
   action: Action;
@@ -17,18 +25,41 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
     price: undefined,
     description: "",
     quantity: undefined,
+    category: "",
   };
 
-  const title = (action == "add" ? "Add" : "Update") + " Product";
+  const { data, isLoading } = useQuery({
+    queryKey: [GET_PRODUCT_CATEGORY_KEY],
+    queryFn: getAllProductCategories,
+  });
 
   const { values, errors, touched, handleChange, handleSubmit, handleReset } =
     useFormik({
       initialValues,
-      onSubmit: () => {},
+      validationSchema: productValidation,
+      onSubmit: () => handleCreateProduct(),
     });
+
+  const { mutate: createNewProduct } = useMutation({
+    mutationKey: [CREATE_PRODUCT_KEY],
+    mutationFn: createProduct,
+  });
+
+  const [type, setType] = useState<NotificationType>();
+  const [category, setCategory] = useState<IProductCategory>();
+
+  const title = (action == "add" ? "Add" : "Update") + " Product";
+
+  const handleCreateProduct = () => {
+    createNewProduct(values, {
+      onError: () => setType("error"),
+      onSuccess: () => setType("success"),
+    });
+  };
 
   return (
     <section className="col-md-8 mx-auto">
+      {type && <Notification type={type} title="Product" />}
       <Card title={title}>
         <form onSubmit={handleSubmit} className="row">
           <div className="col-md-6">
@@ -85,11 +116,32 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
                 </small>
               )}
             </div>
+            <div>
+              <span className="p-float-label">
+                <Dropdown
+                  name="category"
+                  inputId="dd-category"
+                  value={values.category}
+                  onChange={handleChange}
+                  options={data}
+                  optionLabel="name"
+                  className="w-100"
+                />
+                <label htmlFor="dd-category">
+                  {isLoading ? "Loading..." : "Product Category"}
+                </label>
+              </span>
+              {touched.category && errors.category && (
+                <small className="text-center text-danger">
+                  {errors.category}
+                </small>
+              )}
+            </div>
           </div>
           <div className="col-md-6">
             <Editor
               name="description"
-              style={{ height: 65 }}
+              style={{ height: 138 }}
               id="description"
               value={values.description}
               onChange={handleChange}

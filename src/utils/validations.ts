@@ -30,4 +30,5 @@ export const productValidation = yup.object({
   price: yup.number().required("Product price is required."),
   description: yup.string().required("Description is required."),
   quantity: yup.number().required("Quantity is required"),
+  category: yup.object().required("Product category is required."),
 });
