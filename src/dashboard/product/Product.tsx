@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Column } from "primereact/column";
+import { Column, ColumnBodyOptions } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useQuery } from "@tanstack/react-query";
 import { Action } from "../common/Buttons";
@@ -29,9 +29,13 @@ const Product = () => {
     }
   };
 
-  const handleDelete = (id: string) => {};
+  const handleDelete = (value: ColumnBodyOptions) => {
+    console.log(value);
+  };
 
-  const handleUpdate = (value: any) => {};
+  const handleUpdate = (value: ColumnBodyOptions) => {
+    console.log(value);
+  };
 
   return (
     <section className="mt-2">
@@ -77,12 +81,12 @@ const Product = () => {
           />
           <Column
             header="Action"
-            body={
+            body={(options: ColumnBodyOptions) => (
               <ActionButtons
-                handleDelete={handleDelete}
-                handleUpdate={handleUpdate}
+                handleDelete={() => handleDelete(options)}
+                handleUpdate={() => handleUpdate(options)}
               />
-            }
+            )}
           />
         </DataTable>
       )}
