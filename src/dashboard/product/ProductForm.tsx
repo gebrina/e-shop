@@ -6,8 +6,12 @@ import { InputText } from "primereact/inputtext";
 import { Editor, EditorTextChangeEvent } from "primereact/editor";
 import { Button } from "primereact/button";
 import { FiSave } from "react-icons/fi";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { CREATE_PRODUCT_KEY, GET_PRODUCT_CATEGORY_KEY } from "../../constants";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  CREATE_PRODUCT_KEY,
+  GET_PRODUCT_CATEGORY_KEY,
+  GET_PRODUCT_KEY,
+} from "../../constants";
 import { createProduct } from "../../api/product";
 import Notification, { NotificationType } from "../common/Notification";
 import { productValidation } from "../../utils/validations";
@@ -40,12 +44,14 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
     setFieldValue,
     handleChange,
     handleSubmit,
-    handleReset,
+    resetForm,
   } = useFormik({
     initialValues,
     validationSchema: productValidation,
     onSubmit: () => handleCreateProduct(),
   });
+
+  const client = useQueryClient();
 
   const { mutate: createNewProduct } = useMutation({
     mutationKey: [CREATE_PRODUCT_KEY],
@@ -56,13 +62,20 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
 
   const title = (action == "add" ? "Add" : "Update") + " Product";
 
+  const handleSuccess = () => {
+    setType("success");
+    client.invalidateQueries([GET_PRODUCT_KEY]);
+    resetForm();
+  };
+
   const handleCreateProduct = () => {
     const newProduct = Object.assign({}, values, {
       category: values.category?.id,
     });
+
     createNewProduct(newProduct, {
       onError: () => setType("error"),
-      onSuccess: () => setType("success"),
+      onSuccess: handleSuccess,
     });
   };
 
