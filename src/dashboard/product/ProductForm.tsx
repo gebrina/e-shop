@@ -12,8 +12,9 @@ import {
   CREATE_PRODUCT_KEY,
   GET_PRODUCT_CATEGORY_KEY,
   GET_PRODUCT_KEY,
+  UPDATE_PRODUCT_KEY,
 } from "../../constants";
-import { createProduct } from "../../api/product";
+import { createProduct, updateProduct } from "../../api/product";
 import Notification, { NotificationType } from "../common/Notification";
 import { productValidation } from "../../utils/validations";
 import { getAllProductCategories } from "../../api/product-category";
@@ -49,7 +50,8 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
   } = useFormik({
     initialValues,
     validationSchema: productValidation,
-    onSubmit: () => handleCreateProduct(),
+    onSubmit: () =>
+      action == "add" ? handleCreateProduct() : handleUpdateProduct(),
   });
 
   const client = useQueryClient();
@@ -57,6 +59,11 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
   const { mutate: createNewProduct } = useMutation({
     mutationKey: [CREATE_PRODUCT_KEY],
     mutationFn: createProduct,
+  });
+
+  const { mutate: handleUpdate } = useMutation({
+    mutationKey: [UPDATE_PRODUCT_KEY],
+    mutationFn: updateProduct,
   });
 
   const [type, setType] = useState<NotificationType>();
@@ -67,6 +74,16 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     setType("success");
     client.invalidateQueries([GET_PRODUCT_KEY]);
     resetForm();
+  };
+
+  const handleUpdateProduct = () => {
+    handleUpdate(
+      { id: product?.id, ...values },
+      {
+        onError: () => setType("error"),
+        onSuccess: handleSuccess,
+      }
+    );
   };
 
   const handleCreateProduct = () => {
@@ -161,7 +178,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
                   value={values.category}
                   onChange={handleChange}
                   options={data}
-                  optionValue="id"
+                  optionValue={"id"}
                   optionLabel="name"
                   className="w-100"
                 />

@@ -36,5 +36,5 @@ export const productValidation = yup.object({
     .number()
     .required("Quantity is required.")
     .min(1, "Product price must be greater than 0"),
-  category: yup.object().required("Product category is required."),
+  category: yup.string().required("Product category is required."),
 });

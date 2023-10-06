@@ -34,6 +34,7 @@ const Product = () => {
   });
 
   const handleClick = () => {
+    setProduct(undefined);
     if (action) {
       setAction(undefined);
     } else {
@@ -54,7 +55,6 @@ const Product = () => {
   };
 
   const handleUpdate = (value: ColumnBodyOptions) => {
-    console.log(value);
     setAction("update");
     setProduct(value as IProduct);
   };
