@@ -26,9 +26,9 @@ type ProductFormProps = {
 const ProductForm: FC<ProductFormProps> = ({ action }) => {
   const initialValues = {
     name: "",
-    price: undefined,
+    price: 0,
     description: "",
-    quantity: undefined,
+    quantity: 0,
     category: "",
   };
 
@@ -104,7 +104,7 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
             <div className="mb-4">
               <div className="p-float-label">
                 <InputText
-                  type="number"
+                  type={"number"}
                   id="price"
                   className={`${errors.price && "p-invalid"} w-100`}
                   value={values.price}
