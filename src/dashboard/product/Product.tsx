@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Column, ColumnBodyOptions } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Action } from "../common/Buttons";
 import ProductForm from "./ProductForm";
-import { GET_PRODUCT_KEY } from "../../constants";
-import { getAllProducts } from "../../api/product";
+import { DELETE_PRODUCT_KEY, GET_PRODUCT_KEY } from "../../constants";
+import { deleteProduct, getAllProducts } from "../../api/product";
 import {
   DashButtons,
   filterApply,
@@ -13,12 +13,22 @@ import {
   filterElement,
 } from "../common";
 import ActionButtons from "../common/ActionButtons";
+import Notification, { NotificationType } from "../common/Notification";
 
 const Product = () => {
   const [action, setAction] = useState<Action>();
-  const { data, isLoading, isError } = useQuery({
+  const [type, setType] = useState<NotificationType>();
+
+  const client = useQueryClient();
+
+  const { data, isLoading } = useQuery({
     queryKey: [GET_PRODUCT_KEY],
     queryFn: getAllProducts,
+  });
+
+  const { mutate: handleDeleteProduct } = useMutation({
+    mutationKey: [DELETE_PRODUCT_KEY],
+    mutationFn: deleteProduct,
   });
 
   const handleClick = () => {
@@ -29,13 +39,19 @@ const Product = () => {
     }
   };
 
-  const handleDelete = (value: ColumnBodyOptions) => {
-    console.log(value);
+  const handleSuccess = () => {
+    setType("success");
+    client.refetchQueries([GET_PRODUCT_KEY]);
   };
 
-  const handleUpdate = (value: ColumnBodyOptions) => {
-    console.log(value);
+  const handleDelete = (value: ColumnBodyOptions) => {
+    handleDeleteProduct(value.id, {
+      onSuccess: handleSuccess,
+      onError: () => setType("error"),
+    });
   };
+
+  const handleUpdate = (value: ColumnBodyOptions) => {};
 
   return (
     <section className="mt-2">
@@ -46,6 +62,7 @@ const Product = () => {
         onClick={handleClick}
       />
       {action && <ProductForm action={action} />}
+      <Notification type={type} title="Product" />
       {isLoading ? (
         "Loading..."
       ) : (
