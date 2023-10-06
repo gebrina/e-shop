@@ -10,6 +10,7 @@ import { FiSave } from "react-icons/fi";
 type ProductFormProps = {
   action: Action;
 };
+
 const ProductForm: FC<ProductFormProps> = ({ action }) => {
   const initialValues = {
     name: "",
@@ -27,63 +28,68 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
     });
 
   return (
-    <section className="col-md-6 mx-auto">
+    <section className="col-md-8 mx-auto">
       <Card title={title}>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <div className="p-float-label">
-              <InputText
-                id="name"
-                className={`${errors.name && "p-invalid"} w-100`}
-                value={values.name}
-                name="name"
-                onChange={handleChange}
-              />
-              <label htmlFor="name">Name</label>
+        <form onSubmit={handleSubmit} className="row">
+          <div className="col-md-6">
+            <div className="mb-4">
+              <div className="p-float-label">
+                <InputText
+                  id="name"
+                  className={`${errors.name && "p-invalid"} w-100`}
+                  value={values.name}
+                  name="name"
+                  onChange={handleChange}
+                />
+                <label htmlFor="name">Name</label>
+              </div>
+              {errors.name && touched.name && (
+                <small className="text-center text-danger">{errors.name}</small>
+              )}
             </div>
-            {errors.name && touched.name && (
-              <small className="text-center text-danger">{errors.name}</small>
-            )}
-          </div>
 
-          <div className="mb-4">
-            <div className="p-float-label">
-              <InputText
-                type="number"
-                id="price"
-                className={`${errors.price && "p-invalid"} w-100`}
-                value={values.price}
-                name="price"
-                onChange={handleChange}
-              />
-              <label htmlFor="name">Price</label>
+            <div className="mb-4">
+              <div className="p-float-label">
+                <InputText
+                  type="number"
+                  id="price"
+                  className={`${errors.price && "p-invalid"} w-100`}
+                  value={values.price}
+                  name="price"
+                  onChange={handleChange}
+                />
+                <label htmlFor="name">Price</label>
+              </div>
+              {errors.price && touched.price && (
+                <small className="text-center text-danger">
+                  {errors.price}
+                </small>
+              )}
             </div>
-            {errors.price && touched.price && (
-              <small className="text-center text-danger">{errors.price}</small>
-            )}
-          </div>
 
-          <div className="mb-4">
-            <div className="p-float-label">
-              <InputText
-                id="quantity"
-                type={"number"}
-                className={`${errors.quantity && "p-invalid"} w-100`}
-                value={values.quantity}
-                name="quantity"
-                onChange={handleChange}
-              />
-              <label htmlFor="quantity">Quantity</label>
+            <div className="mb-4">
+              <div className="p-float-label">
+                <InputText
+                  id="quantity"
+                  type={"number"}
+                  className={`${errors.quantity && "p-invalid"} w-100`}
+                  value={values.quantity}
+                  name="quantity"
+                  onChange={handleChange}
+                />
+                <label htmlFor="quantity">Quantity</label>
+              </div>
+              {errors.quantity && touched.quantity && (
+                <small className="text-center text-danger">
+                  {errors.quantity}
+                </small>
+              )}
             </div>
-            {errors.quantity && touched.quantity && (
-              <small className="text-center text-danger">
-                {errors.quantity}
-              </small>
-            )}
           </div>
-          <div>
+          <div className="col-md-6">
             <Editor
               name="description"
+              style={{ height: 65 }}
               id="description"
               value={values.description}
               onChange={handleChange}
@@ -93,11 +99,12 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
                 {errors.description}
               </small>
             )}
+
+            <Button className="btn btn-outline-success mt-4 w-100">
+              <FiSave />
+              &nbsp; Save
+            </Button>
           </div>
-          <Button className="btn btn-outline-success mt-4 w-100">
-            <FiSave />
-            &nbsp; Save
-          </Button>
         </form>
       </Card>
     </section>
