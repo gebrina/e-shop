@@ -13,11 +13,11 @@ const ActionButtons: FC<ActionButtonsProps> = ({
   return (
     <div>
       <FiEdit
-        className="text-success"
+        className="text-success action-button"
         onClick={(value: any) => handleUpdate(value)}
       />
       <FiTrash
-        className="text-danger"
+        className="text-danger action-button"
         onClick={(value: any) => handleDelete(value.id)}
       />
     </div>
