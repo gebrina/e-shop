@@ -14,10 +14,12 @@ import {
 } from "../common";
 import ActionButtons from "../common/ActionButtons";
 import Notification, { NotificationType } from "../common/Notification";
+import { IProduct } from "../../types/product";
 
 const Product = () => {
   const [action, setAction] = useState<Action>();
   const [type, setType] = useState<NotificationType>();
+  const [product, setProduct] = useState<IProduct>();
 
   const client = useQueryClient();
 
@@ -51,7 +53,11 @@ const Product = () => {
     });
   };
 
-  const handleUpdate = (value: ColumnBodyOptions) => {};
+  const handleUpdate = (value: ColumnBodyOptions) => {
+    console.log(value);
+    setAction("update");
+    setProduct(value as IProduct);
+  };
 
   return (
     <section className="mt-2">
@@ -61,7 +67,7 @@ const Product = () => {
         text=""
         onClick={handleClick}
       />
-      {action && <ProductForm action={action} />}
+      {action && <ProductForm action={action} product={product} />}
       <Notification type={type} title="Product" />
       {isLoading ? (
         "Loading..."

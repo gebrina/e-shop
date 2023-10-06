@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Card } from "primereact/card";
 import { Action } from "../common/Buttons";
@@ -7,6 +7,7 @@ import { Editor, EditorTextChangeEvent } from "primereact/editor";
 import { Button } from "primereact/button";
 import { FiSave } from "react-icons/fi";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Dropdown } from "primereact/dropdown";
 import {
   CREATE_PRODUCT_KEY,
   GET_PRODUCT_CATEGORY_KEY,
@@ -16,14 +17,14 @@ import { createProduct } from "../../api/product";
 import Notification, { NotificationType } from "../common/Notification";
 import { productValidation } from "../../utils/validations";
 import { getAllProductCategories } from "../../api/product-category";
-import { Dropdown } from "primereact/dropdown";
-import { IProductCategory } from "../../types/product-category";
+import { IProduct } from "../../types/product";
 
 type ProductFormProps = {
   action: Action;
+  product?: IProduct;
 };
 
-const ProductForm: FC<ProductFormProps> = ({ action }) => {
+const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
   const initialValues = {
     name: "",
     price: 0,
@@ -79,8 +80,22 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
     });
   };
 
+  useEffect(() => {
+    if (product) {
+      setFieldValue("name", product?.name ?? "");
+      setFieldValue("price", product?.price ?? 0);
+      setFieldValue("quantity", product?.quantity);
+      setFieldValue("category", product?.category?.id);
+
+      //wait until editor renders fully
+      setTimeout(() => {
+        setFieldValue("description", product?.description);
+      }, 200);
+    }
+  }, [product, setFieldValue]);
+
   return (
-    <section className="col-md-8 mx-auto">
+    <section className="col-md-8 my-5 mx-auto">
       {type && <Notification type={type} title="Product" />}
       <Card title={title}>
         <form onSubmit={handleSubmit} className="row">
@@ -146,6 +161,7 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
                   value={values.category}
                   onChange={handleChange}
                   options={data}
+                  optionValue="id"
                   optionLabel="name"
                   className="w-100"
                 />
@@ -168,7 +184,7 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
               id="description"
               value={values.description}
               onTextChange={(e: EditorTextChangeEvent) =>
-                setFieldValue("description", e.textValue)
+                setFieldValue("description", e.htmlValue)
               }
             />
             {errors.description && touched.description && (
