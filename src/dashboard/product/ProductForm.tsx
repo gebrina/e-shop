@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { Card } from "primereact/card";
 import { Action } from "../common/Buttons";
 import { InputText } from "primereact/inputtext";
-import { Editor } from "primereact/editor";
+import { Editor, EditorTextChangeEvent } from "primereact/editor";
 import { Button } from "primereact/button";
 import { FiSave } from "react-icons/fi";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -33,12 +33,19 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
     queryFn: getAllProductCategories,
   });
 
-  const { values, errors, touched, handleChange, handleSubmit, handleReset } =
-    useFormik({
-      initialValues,
-      validationSchema: productValidation,
-      onSubmit: () => handleCreateProduct(),
-    });
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    handleChange,
+    handleSubmit,
+    handleReset,
+  } = useFormik({
+    initialValues,
+    validationSchema: productValidation,
+    onSubmit: () => handleCreateProduct(),
+  });
 
   const { mutate: createNewProduct } = useMutation({
     mutationKey: [CREATE_PRODUCT_KEY],
@@ -46,12 +53,14 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
   });
 
   const [type, setType] = useState<NotificationType>();
-  const [category, setCategory] = useState<IProductCategory>();
 
   const title = (action == "add" ? "Add" : "Update") + " Product";
 
   const handleCreateProduct = () => {
-    createNewProduct(values, {
+    const newProduct = Object.assign({}, values, {
+      category: values.category?.id,
+    });
+    createNewProduct(newProduct, {
       onError: () => setType("error"),
       onSuccess: () => setType("success"),
     });
@@ -138,13 +147,16 @@ const ProductForm: FC<ProductFormProps> = ({ action }) => {
               )}
             </div>
           </div>
+
           <div className="col-md-6">
             <Editor
               name="description"
               style={{ height: 138 }}
               id="description"
               value={values.description}
-              onChange={handleChange}
+              onTextChange={(e: EditorTextChangeEvent) =>
+                setFieldValue("description", e.textValue)
+              }
             />
             {errors.description && touched.description && (
               <small className="text-danger text-center">
