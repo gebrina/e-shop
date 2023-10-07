@@ -40,9 +40,10 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     queryKey: [GET_PRODUCT_CATEGORY_KEY],
     queryFn: getAllProductCategories,
   });
+  const [image, setImage] = useState<File>();
 
-  const onDrop = useCallback((file: any) => {
-    console.log(file);
+  const onDrop = useCallback((files: File[]) => {
+    setImage(files[0]);
   }, []);
 
   const { getInputProps, getRootProps, isDragActive } = useDropzone({ onDrop });
@@ -124,7 +125,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
       {type && <Notification type={type} title="Product" />}
       <Card title={title}>
         <form onSubmit={handleSubmit} className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 mb-2">
             <div className="mb-4">
               <div className="p-float-label">
                 <InputText
@@ -206,10 +207,11 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
               className="my-2 center-items uplopd-container"
             >
               <InputText {...getInputProps()} />
+              {image && <img src={URL.createObjectURL(image)} />}
               {isDragActive ? (
-                <p>Drop Here</p>
+                <p>Drop here</p>
               ) : (
-                <p>Drag and drop prodcut image here or select.</p>
+                <p>Drag and drop file here or select</p>
               )}
             </div>
           </div>
@@ -217,7 +219,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
           <div className="col-md-6">
             <Editor
               name="description"
-              style={{ height: 138 }}
+              style={{ height: 270 }}
               id="description"
               value={values.description}
               onTextChange={(e: EditorTextChangeEvent) =>

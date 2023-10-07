@@ -1,10 +1,26 @@
 .uplopd-container {
   padding: 5px 10px;
-  height: 100px;
+  height: 130px;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 5px;
+  overflow: hidden;
+  position: relative;
   &:hover {
     cursor: pointer;
     background-color: rgba(0, 0, 0, 0.05);
+  }
+  img {
+    width: 100%;
+    object-fit: contain;
+  }
+  p {
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+    font-weight: 500;
+    border-radius: 5px;
+    padding: 5px;
   }
 }
