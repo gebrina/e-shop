@@ -21,6 +21,7 @@ import { getAllProductCategories } from "../../api/product-category";
 import { IProduct } from "../../types/product";
 import { useDropzone } from "react-dropzone";
 import "./Product.scss";
+import { InputNumber } from "primereact/inputnumber";
 
 type ProductFormProps = {
   action: Action;
@@ -40,7 +41,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     queryKey: [GET_PRODUCT_CATEGORY_KEY],
     queryFn: getAllProductCategories,
   });
-  const [image, setImage] = useState<File>();
+  const [image, setImage] = useState<File | string>("");
 
   const onDrop = useCallback((files: File[]) => {
     setImage(files[0]);
@@ -83,17 +84,22 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     setType("success");
     client.invalidateQueries([GET_PRODUCT_KEY]);
     resetForm();
-    setImage(undefined);
+    setImage("");
   };
 
   const handleUpdateProduct = () => {
-    handleUpdate(
-      { id: product?.id, ...values },
-      {
-        onError: () => setType("error"),
-        onSuccess: handleSuccess,
-      }
-    );
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("id", product?.id);
+    formData.append("name", values.name);
+    formData.append("quantity", values.quantity);
+    formData.append("category", values.category);
+    formData.append("price", values.price);
+    formData.append("description", values.description);
+    handleUpdate(formData, {
+      onError: () => setType("error"),
+      onSuccess: handleSuccess,
+    });
   };
 
   const handleCreateProduct = () => {
@@ -105,7 +111,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     formData.append("price", values.price);
     formData.append("description", values.description);
 
-    createNewProduct(formData, {
+    createNewProduct(formData as IProduct, {
       onError: () => setType("error"),
       onSuccess: handleSuccess,
     });
@@ -118,12 +124,21 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
       setFieldValue("quantity", product?.quantity);
       setFieldValue("category", product?.category?.id);
 
+      product.image &&
+        setImage(
+          import.meta.env.VITE_APP_API_URL + product?.image.replace("//", "/")
+        );
       //wait until editor renders fully
       setTimeout(() => {
         setFieldValue("description", product?.description);
       }, 200);
     }
   }, [product, setFieldValue]);
+
+  const getImage = () => {
+    if (typeof image === "string") return image;
+    return URL.createObjectURL(image);
+  };
 
   return (
     <section className="col-md-8 my-5 mx-auto">
@@ -149,8 +164,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
 
             <div className="mb-4">
               <div className="p-float-label">
-                <InputText
-                  type={"number"}
+                <InputNumber
                   id="price"
                   className={`${errors.price && "p-invalid"} w-100`}
                   value={values.price}
@@ -168,9 +182,8 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
 
             <div className="mb-4">
               <div className="p-float-label">
-                <InputText
+                <InputNumber
                   id="quantity"
-                  type={"number"}
                   className={`${errors.quantity && "p-invalid"} w-100`}
                   value={values.quantity}
                   name="quantity"
@@ -211,8 +224,8 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
               {...getRootProps()}
               className="my-2 center-items uplopd-container"
             >
-              <InputText {...getInputProps()} />
-              {image && <img src={URL.createObjectURL(image)} />}
+              <input {...getInputProps()} />
+              {image && <img src={getImage()} />}
               {isDragActive ? (
                 <p>Drop here</p>
               ) : (
