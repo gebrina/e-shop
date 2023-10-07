@@ -10,7 +10,8 @@ const UserProfile = () => {
     queryKey: [GET_USER_KEY],
     queryFn: () => getOneUser(user?.id),
   });
-  if (error) return <ErrorPage />;
+
+  if (error) return <ErrorPage error={error?.message} />;
 
   return (
     <section className="my-5 mx-5">
