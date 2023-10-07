@@ -42,5 +42,4 @@ export const productValidation = yup.object({
 export const userValidation = yup.object({
   username: yup.string().required("Username is required."),
   email: yup.string().email("Enter valid email").required("Email is required."),
-  password: yup.string().required("Password is required"),
 });

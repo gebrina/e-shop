@@ -1,23 +1,107 @@
+import { useFormik } from "formik";
 import { useQuery } from "@tanstack/react-query";
 import { GET_USER_KEY } from "../../../constants";
 import { getOneUser } from "../../../api/user";
 import { jwtDecode } from "../../../utils";
 import ErrorPage from "../../../components/error";
 import Loader from "../../../components/loader";
-
+import { useEffect } from "react";
+import { IUser } from "../../../types/user";
+import { Card } from "primereact/card";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { FiSave } from "react-icons/fi";
+import { userValidation } from "../../../utils/validations";
 const UserProfile = () => {
   const user = jwtDecode()?.user;
   const { isLoading, error, data } = useQuery({
     queryKey: [GET_USER_KEY],
     queryFn: () => getOneUser(user?.id),
   });
-
+  const {
+    values,
+    errors,
+    touched,
+    setFieldValue,
+    handleSubmit,
+    handleChange,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+      email: "",
+    },
+    validationSchema: userValidation,
+    onSubmit: () => {},
+  });
+  useEffect(() => {
+    const user = data as IUser;
+    if (user) {
+      setFieldValue("email", user.email);
+      setFieldValue("username", user.username);
+    }
+  }, [data, setFieldValue]);
   if (isLoading) return <Loader />;
   if (error) return <ErrorPage error={error?.message} />;
 
   return (
-    <section className="my-5 mx-5">
-      <h1>Update your profile</h1>
+    <section className="my-5 mx-auto">
+      <Card className="col-md-5 mx-auto" title="Update profile">
+        <form onSubmit={handleSubmit}>
+          <div className="mb-2">
+            <div className="p-float-label">
+              <InputText
+                id="username"
+                className={`${errors.username && "p-invalid"} w-100`}
+                value={values.username}
+                name="username"
+                onChange={handleChange}
+              />
+              <label htmlFor="name">Username</label>
+            </div>
+            {errors.username && touched.username && (
+              <small className="text-danger">{errors.username}</small>
+            )}
+          </div>
+
+          <div className="my-4">
+            <div className="p-float-label">
+              <InputText
+                id="email"
+                className={`${errors.email && "p-invalid"} w-100`}
+                value={values.email}
+                name="email"
+                onChange={handleChange}
+              />
+              <label htmlFor="name">Email</label>
+            </div>
+            {errors.email && touched.email && (
+              <small className="text-danger">{errors.email}</small>
+            )}
+          </div>
+
+          <div className="mb-2">
+            <div className="p-float-label">
+              <InputText
+                id="username"
+                type="password"
+                className={`${errors.password && "p-invalid"} w-100`}
+                value={values.password}
+                name="password"
+                onChange={handleChange}
+              />
+              <label htmlFor="name">Password</label>
+            </div>
+            {errors.password && touched.password && (
+              <small className="text-danger">{errors.password}</small>
+            )}
+          </div>
+          <Button className="btn btn-outline-success w-100 mt-3">
+            <FiSave /> Save
+          </Button>
+        </form>
+      </Card>
     </section>
   );
 };
