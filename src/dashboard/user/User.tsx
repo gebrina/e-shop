@@ -3,13 +3,14 @@ import { GET_USER_KEY } from "../../constants";
 import { getAllUsers } from "../../api/user";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import ErrorPage from "../../components/error";
 
 const User = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: [GET_USER_KEY],
     queryFn: getAllUsers,
   });
-  if (error) return <h1 className="my-5 text-danger text-center">{error}</h1>;
+  if (error) return <ErrorPage />;
 
   return (
     <section className="my-3 bg-light mx-auto col-md-6">
