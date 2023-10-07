@@ -3,6 +3,7 @@ import { GET_USER_KEY } from "../../../constants";
 import { getOneUser } from "../../../api/user";
 import { jwtDecode } from "../../../utils";
 import ErrorPage from "../../../components/error";
+import Loader from "../../../components/loader";
 
 const UserProfile = () => {
   const user = jwtDecode()?.user;
@@ -11,6 +12,7 @@ const UserProfile = () => {
     queryFn: () => getOneUser(user?.id),
   });
 
+  if (isLoading) return <Loader />;
   if (error) return <ErrorPage error={error?.message} />;
 
   return (
