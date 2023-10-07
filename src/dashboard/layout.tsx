@@ -13,6 +13,8 @@ import ProtectedRoute from "../utils/protectedRoute";
 import LoggedInUserProfile from "./user/profile";
 import { UserProfile } from "./profile";
 
+import "./Dashboard.scss";
+
 const DashboardLayout = () => {
   const { isDashboard, currentUser } = useEcomContext();
   const [visible, setVisible] = useState(false);
@@ -25,7 +27,7 @@ const DashboardLayout = () => {
     <>
       {isDashboard && (
         <div className="container-fluid px-5 h-50 py-3 border-info">
-          <nav className="bg-light px-5 py-2">
+          <nav className="bg-light px-5 nav-container py-2">
             {currentUser?.access_token && (
               <div className="toggle-btn-container">
                 <FiSlack onClick={toggleVisibility} style={{ fontSize: 20 }} />
