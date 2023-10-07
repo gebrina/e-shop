@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Card } from "primereact/card";
 import { Action } from "../common/Buttons";
@@ -19,6 +19,8 @@ import Notification, { NotificationType } from "../common/Notification";
 import { productValidation } from "../../utils/validations";
 import { getAllProductCategories } from "../../api/product-category";
 import { IProduct } from "../../types/product";
+import { useDropzone } from "react-dropzone";
+import "./Product.scss";
 
 type ProductFormProps = {
   action: Action;
@@ -38,6 +40,12 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     queryKey: [GET_PRODUCT_CATEGORY_KEY],
     queryFn: getAllProductCategories,
   });
+
+  const onDrop = useCallback((file: any) => {
+    console.log(file);
+  }, []);
+
+  const { getInputProps, getRootProps, isDragActive } = useDropzone({ onDrop });
 
   const {
     values,
@@ -190,6 +198,18 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
                 <small className="text-center text-danger">
                   {errors.category}
                 </small>
+              )}
+            </div>
+
+            <div
+              {...getRootProps()}
+              className="my-2 center-items uplopd-container"
+            >
+              <InputText {...getInputProps()} />
+              {isDragActive ? (
+                <p>Drop Here</p>
+              ) : (
+                <p>Drag and drop prodcut image here or select.</p>
               )}
             </div>
           </div>

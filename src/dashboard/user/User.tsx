@@ -9,9 +9,10 @@ const User = () => {
     queryKey: [GET_USER_KEY],
     queryFn: getAllUsers,
   });
-  console.log(data);
+  if (error) return <h1 className="my-5 text-danger text-center">{error}</h1>;
+
   return (
-    <section>
+    <section className="my-3 bg-light mx-auto col-md-6">
       {!isLoading && (
         <DataTable value={data} paginator rows={5}>
           <Column field="username" header="Name" />
