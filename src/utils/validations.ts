@@ -38,3 +38,9 @@ export const productValidation = yup.object({
     .min(1, "Product price must be greater than 0"),
   category: yup.string().required("Product category is required."),
 });
+
+export const userValidation = yup.object({
+  username: yup.string().required("Username is required."),
+  email: yup.string().email("Enter valid email").required("Email is required."),
+  password: yup.string().required("Password is required"),
+});
