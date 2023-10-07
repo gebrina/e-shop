@@ -10,6 +10,7 @@ import { ProductCategory } from "./product-category";
 import { useEcomContext } from "../context/EcomContext";
 import { DashboradpageNotFound } from "./not-found";
 import ProtectedRoute from "../utils/protectedRoute";
+import LoggedInUserProfile from "./user/profile";
 import { UserProfile } from "./profile";
 
 const DashboardLayout = () => {
@@ -43,7 +44,15 @@ const DashboardLayout = () => {
                   </ProtectedRoute>
                 }
               />
-              <Route path="/dashboard/products" element={<Product />} />
+              <Route
+                path="/dashboard/products"
+                element={
+                  <ProtectedRoute>
+                    <Product />
+                  </ProtectedRoute>
+                }
+              />
+
               <Route
                 path="/dashboard/product-categories"
                 element={
@@ -65,6 +74,14 @@ const DashboardLayout = () => {
                 element={
                   <ProtectedRoute>
                     <User />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/user/profile"
+                element={
+                  <ProtectedRoute>
+                    <LoggedInUserProfile />
                   </ProtectedRoute>
                 }
               />

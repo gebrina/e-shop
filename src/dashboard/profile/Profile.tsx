@@ -14,7 +14,7 @@ const Profile = () => {
         <li>{loggedInUser?.username}</li>
         <li>{loggedInUser?.email}</li>
         <li>
-          <NavLink to={"/user"}>Update Profile</NavLink>
+          <NavLink to={"/dashboard/user/profile"}>Update Profile</NavLink>
         </li>
       </ul>
     </section>
