@@ -15,3 +15,8 @@ export const createUser = async (user: IUser): Promise<IUser> => {
   const response = await axios.post("/users", user);
   return response.data;
 };
+
+export const updateUser = async (user: IUser): Pomise<IUser> => {
+  const response = await axios.put(`/users/${user.id}`, user);
+  return response.data;
+};

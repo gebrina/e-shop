@@ -1,40 +1,41 @@
 import { useFormik } from "formik";
-import { useQuery } from "@tanstack/react-query";
-import { GET_USER_KEY } from "../../../constants";
-import { getOneUser } from "../../../api/user";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { GET_USER_KEY, UPDATE_USER_KEY } from "../../../constants";
+import { getOneUser, updateUser } from "../../../api/user";
 import { jwtDecode } from "../../../utils";
 import ErrorPage from "../../../components/error";
 import Loader from "../../../components/loader";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IUser } from "../../../types/user";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { FiSave } from "react-icons/fi";
 import { userValidation } from "../../../utils/validations";
+import Notification, { NotificationType } from "../../common/Notification";
 const UserProfile = () => {
   const user = jwtDecode()?.user;
-  const { isLoading, error, data } = useQuery({
+  const [type, setType] = useState<NotificationType>();
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: [GET_USER_KEY],
     queryFn: () => getOneUser(user?.id),
   });
-  const {
-    values,
-    errors,
-    touched,
-    setFieldValue,
-    handleSubmit,
-    handleChange,
-    resetForm,
-  } = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-      email: "",
-    },
-    validationSchema: userValidation,
-    onSubmit: () => {},
+  const { values, errors, touched, setFieldValue, handleSubmit, handleChange } =
+    useFormik({
+      initialValues: {
+        username: "",
+        password: "",
+        email: "",
+      },
+      validationSchema: userValidation,
+      onSubmit: () => handleUpdateUserProfile(),
+    });
+
+  const { mutate: handleUpdateUser } = useMutation({
+    mutationKey: [UPDATE_USER_KEY],
+    mutationFn: updateUser,
   });
+
   useEffect(() => {
     const user = data as IUser;
     if (user) {
@@ -42,11 +43,28 @@ const UserProfile = () => {
       setFieldValue("username", user.username);
     }
   }, [data, setFieldValue]);
+
   if (isLoading) return <Loader />;
   if (error) return <ErrorPage error={error?.message} />;
 
+  const handleSuccess = () => {
+    setType("success");
+    refetch();
+  };
+  const handleEror = () => {
+    setType("error");
+  };
+  const handleUpdateUserProfile = () => {
+    const user = Object.assign({}, data, { ...values });
+    handleUpdateUser(user, {
+      onSuccess: handleSuccess,
+      onError: handleEror,
+    });
+  };
+
   return (
     <section className="my-5 mx-auto">
+      <Notification type={type} />
       <Card className="col-md-5 mx-auto" title="Update profile">
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
@@ -97,8 +115,8 @@ const UserProfile = () => {
               <small className="text-danger">{errors.password}</small>
             )}
           </div>
-          <Button className="btn btn-outline-success w-100 mt-3">
-            <FiSave /> Save
+          <Button className="btn center-items btn-outline-success w-100 mt-3">
+            <FiSave /> &nbsp; Save
           </Button>
         </form>
       </Card>
