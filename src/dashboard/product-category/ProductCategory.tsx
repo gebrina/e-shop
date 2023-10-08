@@ -7,7 +7,7 @@ import {
   filterElement,
 } from "../common";
 import { DataTable } from "primereact/datatable";
-import { Column, ColumnBodyOptions } from "primereact/column";
+import { Column } from "primereact/column";
 import { Action } from "../common/Buttons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -21,11 +21,14 @@ import {
 } from "../../constants";
 import { IProductCategory } from "../../types/product-category";
 import Notification, { NotificationType } from "../common/Notification";
+import Loader from "../../components/loader";
+import ErrorPage from "../../components/error";
+import { AxiosError } from "axios";
 
 const ProductCategory = () => {
   const [action, setAction] = useState<Action>();
   const [type, setType] = useState<NotificationType>();
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, error } = useQuery({
     queryKey: [GET_PRODUCT_CATEGORY_KEY],
     queryFn: getAllProductCategories,
   });
@@ -47,9 +50,9 @@ const ProductCategory = () => {
     }
   };
 
-  const handleDeleteProCatgory = (options: any) => {
+  const handleDeleteProCatgory = (options: IProductCategory) => {
     setType(undefined);
-    handleDelete(options.id, {
+    handleDelete(options.id as string, {
       onError: () => setType("error"),
       onSuccess: () => {
         setType("success");
@@ -58,7 +61,7 @@ const ProductCategory = () => {
     });
   };
 
-  const handleUpdate = (options: any) => {
+  const handleUpdate = (options: IProductCategory) => {
     setProductCategory({
       id: options.id,
       name: options.name,
@@ -67,7 +70,7 @@ const ProductCategory = () => {
     setAction("update");
   };
 
-  const actionBodyTemplates = (options: ColumnBodyOptions) => {
+  const actionBodyTemplates = (options: IProductCategory) => {
     return (
       <div className="w-100 d-flex gap-2">
         <FiEdit
@@ -81,6 +84,9 @@ const ProductCategory = () => {
       </div>
     );
   };
+  if (isLoading) return <Loader />;
+
+  if (error) return <ErrorPage error={error as AxiosError} />;
 
   return (
     <section className="my-3">
@@ -92,26 +98,23 @@ const ProductCategory = () => {
       />
       {type && <Notification type={type} title="Product Category" />}
       {action && <PCForm productCategory={productCategory} action={action} />}
-      {isLoading ? (
-        "Loading..."
-      ) : (
-        <div className="bg-light col-md-6 mx-auto">
-          <DataTable paginator rows={5} value={data}>
-            <Column
-              header="Name"
-              showFilterMatchModes={false}
-              filter
-              filterClear={filterClear}
-              filterApply={filterApply}
-              showFilterMenuOptions={false}
-              filterElement={filterElement}
-              field="name"
-            />
-            <Column header="Description" field={"description"} />
-            <Column header={"Action"} colSpan={2} body={actionBodyTemplates} />
-          </DataTable>
-        </div>
-      )}
+
+      <div className="bg-light col-md-6 mx-auto">
+        <DataTable paginator rows={5} value={data}>
+          <Column
+            header="Name"
+            showFilterMatchModes={false}
+            filter
+            filterClear={filterClear}
+            filterApply={filterApply}
+            showFilterMenuOptions={false}
+            filterElement={filterElement}
+            field="name"
+          />
+          <Column header="Description" field={"description"} />
+          <Column header={"Action"} colSpan={2} body={actionBodyTemplates} />
+        </DataTable>
+      </div>
     </section>
   );
 };

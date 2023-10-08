@@ -14,7 +14,7 @@ const User = () => {
   });
 
   if (isLoading) return <Loader />;
-  if (error) return <ErrorPage error={(error as AxiosError).message} />;
+  if (error) return <ErrorPage error={error as AxiosError} />;
 
   return (
     <section className="my-3 bg-light mx-auto col-md-6">

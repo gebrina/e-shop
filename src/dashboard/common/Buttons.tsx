@@ -18,7 +18,7 @@ const DashboardButtons: FC<DashboardButtonsProps> = ({
   title,
 }) => {
   return (
-    <section className="right-items">
+    <section className="right-items my-3">
       <h1 className="text-left text-info fw-bold w-100">{title}</h1>
       {!action ? (
         <Button onClick={onClick} className="btn center-items btn-success">

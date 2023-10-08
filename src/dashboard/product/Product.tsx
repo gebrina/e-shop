@@ -47,14 +47,14 @@ const Product = () => {
     client.refetchQueries([GET_PRODUCT_KEY]);
   };
 
-  const handleDelete = (value: ColumnBodyOptions) => {
-    handleDeleteProduct(value.id, {
+  const handleDelete = (value: IProduct) => {
+    handleDeleteProduct(value.id as string, {
       onSuccess: handleSuccess,
       onError: () => setType("error"),
     });
   };
 
-  const handleUpdate = (value: ColumnBodyOptions) => {
+  const handleUpdate = (value: IProduct) => {
     setAction("update");
     setProduct(value as IProduct);
   };
@@ -104,10 +104,10 @@ const Product = () => {
           />
           <Column
             header="Action"
-            body={(options: ColumnBodyOptions) => (
+            body={(data: IProduct) => (
               <ActionButtons
-                handleDelete={() => handleDelete(options)}
-                handleUpdate={() => handleUpdate(options)}
+                handleDelete={() => handleDelete(data)}
+                handleUpdate={() => handleUpdate(data)}
               />
             )}
           />

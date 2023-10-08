@@ -38,7 +38,7 @@ const Order = () => {
   const [orderStatus, setOrderStatus] = useState<OrderStatus>();
 
   if (isLoading) return <Loader />;
-  if (error) return <ErrorPage error={(error as AxiosError)?.message} />;
+  if (error) return <ErrorPage error={error as AxiosError} />;
 
   const handleDeleteOrder = (id: string) => {
     setType(undefined);
