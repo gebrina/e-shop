@@ -15,7 +15,7 @@ const Notification: FC<NotificationProps> = ({ type, title }) => {
     if (type) {
       if (type === "success") {
         toastedRef.current += 1;
-        if (toastedRef.current === 1) {
+        if (toastedRef.current >= 1) {
           handleSuccess({
             toast: toastRef.current,
             summary: title || "Success",
@@ -24,7 +24,7 @@ const Notification: FC<NotificationProps> = ({ type, title }) => {
         }
       } else {
         toastedRef.current += 1;
-        if (toastedRef.current === 1) {
+        if (toastedRef.current >= 1) {
           handleError({
             toast: toastRef.current,
             summary: title || "Error",
