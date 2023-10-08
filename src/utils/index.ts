@@ -36,7 +36,14 @@ export const handleError = (msg: ToastMsg) => {
   });
 };
 
-export const jwtDecode = (): any => jwt_decode(getCurrentUser().access_token);
+export const jwtDecode = () => {
+  try {
+    const token = jwt_decode(getCurrentUser().access_token);
+    return token;
+  } catch (err) {
+    return {};
+  }
+};
 
 export const getFormatedDate = (strigifiedDate: string): string => {
   const date = new Date(strigifiedDate);

@@ -34,7 +34,7 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
   };
 
   const handleUserLogout = () => {
-    setValues({ ...values, isDashboard: false, currentUser: undefined });
+    setValues({ ...values, isDashboard: true, currentUser: undefined });
     removeLoggedInUser();
   };
 

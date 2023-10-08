@@ -5,7 +5,7 @@ import { Card } from "primereact/card";
 
 const Dashboard = () => {
   const { currentUser } = useEcomContext();
-
+  console.log("current user", currentUser);
   if (!currentUser?.access_token) {
     return <Navigate to={"/dashboard/login"} />;
   }

@@ -10,7 +10,7 @@ type NavbarProps = {
 };
 
 const Navbar: FC<NavbarProps> = ({ setVisible }) => {
-  const { isDashboard } = useEcomContext();
+  const { isDashboard, handleUserLogout } = useEcomContext();
 
   return (
     <header>
@@ -19,7 +19,13 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
           <ul>
             {menus.dashboard?.map((menu) => {
               return (
-                <li onClick={() => setVisible && setVisible()} key={menu.label}>
+                <li
+                  onClick={() => {
+                    setVisible && setVisible();
+                    menu.label === "Log out" && handleUserLogout();
+                  }}
+                  key={menu.label}
+                >
                   <NavLink
                     className={({ isActive }) =>
                       isActive ? "active menu-link" : "menu-link"
