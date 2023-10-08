@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Column, ColumnBodyOptions } from "primereact/column";
+import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Action } from "../common/Buttons";
