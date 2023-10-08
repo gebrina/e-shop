@@ -15,6 +15,9 @@ import {
 import ActionButtons from "../common/ActionButtons";
 import Notification, { NotificationType } from "../common/Notification";
 import { IProduct } from "../../types/product";
+import Loader from "../../components/loader";
+import ErrorPage from "../../components/error";
+import { AxiosError } from "axios";
 
 const Product = () => {
   const [action, setAction] = useState<Action>();
@@ -23,7 +26,7 @@ const Product = () => {
 
   const client = useQueryClient();
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: [GET_PRODUCT_KEY],
     queryFn: getAllProducts,
   });
@@ -58,6 +61,10 @@ const Product = () => {
     setAction("update");
     setProduct(value as IProduct);
   };
+
+  if (isLoading) return <Loader />;
+
+  if (error) return <ErrorPage error={error as AxiosError} />;
 
   return (
     <section className="mt-2">
