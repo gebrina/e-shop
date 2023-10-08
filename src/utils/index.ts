@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-
+import { format } from "date-fns";
 import { Toast } from "primereact/toast";
 import { getCurrentUser } from "./auth";
 
@@ -37,3 +37,8 @@ export const handleError = (msg: ToastMsg) => {
 };
 
 export const jwtDecode = (): any => jwt_decode(getCurrentUser().access_token);
+
+export const getFormatedDate = (strigifiedDate: string): string => {
+  const date = new Date(strigifiedDate);
+  return format(date, "yyyy MMM dd hh:mm:ss");
+};
