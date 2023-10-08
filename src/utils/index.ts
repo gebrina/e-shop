@@ -40,5 +40,5 @@ export const jwtDecode = (): any => jwt_decode(getCurrentUser().access_token);
 
 export const getFormatedDate = (strigifiedDate: string): string => {
   const date = new Date(strigifiedDate);
-  return format(date, "yyyy MMM dd hh:mm:ss");
+  return format(date, "yyyy-MMM-dd hh:mm:ss");
 };

@@ -33,7 +33,7 @@ const Order = () => {
     setOrderStatus({ id, status });
   };
 
-  const orderStatusBody = (data: IOrder, options: ColumnBodyOptions) => {
+  const orderStatusBody = (data: IOrder) => {
     return (
       <Dropdown
         value={orderStatus?.id == data.id ? orderStatus?.status : data.status}
@@ -45,20 +45,27 @@ const Order = () => {
     );
   };
 
+  const dateColumnBody = (date: string | undefined) => (
+    <span>{getFormatedDate(date)}</span>
+  );
   return (
     <section className="my-5">
       <h1 className="text-info">Orders</h1>
       <DataTable paginator rows={5} className="col-md-10 mx-auto" value={data}>
         <Column
           header="Order Date"
-          body={(data: IOrder) => (
-            <span>{getFormatedDate(data?.orderDate)}</span>
-          )}
+          body={(data: IOrder) => dateColumnBody(data.orderDate)}
         />
         <Column field="productPrice" header="Price" />
         <Column header="Order Status" body={orderStatusBody} />
-        <Column field="requestedDate" header="Requested Date" />
-        <Column field="shippedDate" header="Shipped Date" />
+        <Column
+          header="Requested Date"
+          body={(data: IOrder) => dateColumnBody(data.requestedDate)}
+        />
+        <Column
+          header="Shipped Date"
+          body={(data: IOrder) => dateColumnBody(data.shippedDate)}
+        />
         <Column header="Delete" body={deleteOrderBody} />
       </DataTable>
     </section>
