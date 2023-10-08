@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FiUser } from "react-icons/fi";
+import { FiEdit2, FiMail, FiUser } from "react-icons/fi";
 import { jwtDecode } from "../../utils";
 import "./Profile.scss";
 
@@ -11,10 +11,15 @@ const Profile = () => {
         <FiUser />
       </div>
       <ul>
-        <li>{loggedInUser?.username}</li>
-        <li>{loggedInUser?.email}</li>
         <li>
-          <NavLink to={"/dashboard/user/profile"}>Update Profile</NavLink>
+          <FiUser /> <span>{loggedInUser?.username}</span>
+        </li>
+        <li>
+          <FiMail /> <span>{loggedInUser?.email}</span>
+        </li>
+        <li>
+          <FiEdit2 />
+          <NavLink to={"/dashboard/user/profile"}> Update Profile</NavLink>
         </li>
       </ul>
     </section>
