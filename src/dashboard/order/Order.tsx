@@ -1,4 +1,4 @@
-import { Column, ColumnBodyOptions } from "primereact/column";
+import { Column } from "primereact/column";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FiTrash } from "react-icons/fi";
@@ -11,6 +11,7 @@ import { IOrder } from "../../types/Order";
 import { Dropdown } from "primereact/dropdown";
 import { OrderStatus, statusOptions } from "./OrderStatus";
 import { getFormatedDate } from "../../utils";
+import { AxiosError } from "axios";
 
 const Order = () => {
   const { isLoading, error, data } = useQuery({
@@ -21,7 +22,7 @@ const Order = () => {
   const [orderStatus, setOrderStatus] = useState<OrderStatus>();
 
   if (isLoading) return <Loader />;
-  if (error) return <ErrorPage error={error?.message} />;
+  if (error) return <ErrorPage error={(error as AxiosError)?.message} />;
 
   const handleDelete = () => {};
 
@@ -37,7 +38,7 @@ const Order = () => {
     return (
       <Dropdown
         value={orderStatus?.id == data.id ? orderStatus?.status : data.status}
-        onChange={(e) => handleChangeOrderStatus(data.id, e.value)}
+        onChange={(e) => handleChangeOrderStatus(data?.id as string, e.value)}
         className="px-0 center-items"
         optionLabel="label"
         options={statusOptions}
@@ -46,7 +47,7 @@ const Order = () => {
   };
 
   const dateColumnBody = (date: string | undefined) => (
-    <span>{getFormatedDate(date)}</span>
+    <span>{getFormatedDate(date as string)}</span>
   );
   return (
     <section className="my-5">
