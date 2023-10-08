@@ -1,6 +1,5 @@
-import React from "react";
-
 const Order = () => {
+  const {} = u;
   return <div>Order</div>;
 };
 

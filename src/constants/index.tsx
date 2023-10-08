@@ -11,8 +11,13 @@ export const DELETE_PRODUCT_KEY = "delete_product";
 export const UPDATE_PRODUCT_KEY = "updated_produt";
 
 //User KEYS
-
 export const GET_USER_KEY = "user";
 export const CREATE_USER_KEY = "create_user";
 export const DELETE_USER_KEY = "delete_user";
 export const UPDATE_USER_KEY = "update_user";
+
+//Order KEYS
+export const GET_ORDER_KEY = "order";
+export const CREATE_ORDER_KEY = "create_order";
+export const DELETE_ORDER_KEY = "delete_order";
+export const UPDATE_ORDER_KEY = "update_order";
