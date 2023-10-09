@@ -41,7 +41,9 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
           </ul>
         ) : (
           <div className="d-flex p-2 px-4 align-items-center justify-content-between">
-            <img height={50} src="/logo.png" alt="E shop " />
+            <NavLink to="/">
+              <img height={50} src="/logo.png" alt="E shop " />
+            </NavLink>
             <div className="navbar-menu-links">
               <NavLink to={"/"}>Home</NavLink>
               <NavLink to={"/products"}>Products</NavLink>

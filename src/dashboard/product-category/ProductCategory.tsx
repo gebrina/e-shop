@@ -47,6 +47,7 @@ const ProductCategory = () => {
       setAction(undefined);
     } else {
       setAction("add");
+      setProductCategory(undefined);
     }
   };
 
