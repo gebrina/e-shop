@@ -1,9 +1,9 @@
 .hero-section {
-  background: linear-gradient(45deg, rgba(155, 128, 128, 0.3), rgb(35, 56, 35)),
+  background: fixed
+      linear-gradient(45deg, rgba(155, 128, 128, 0.3), rgb(35, 56, 35)),
     url("../../assets/ip.jpg");
-  height: 100vh;
   background-size: cover;
-  background-attachment: fixed;
+  height: 100vh;
   overflow: hidden;
   .hero {
     position: relative;
@@ -15,6 +15,22 @@
     }
     h1 {
       font-size: 7rem;
+    }
+  }
+  & button {
+    border: none;
+    background-color: rgb(190, 45, 69);
+    padding: 5px 15px;
+    font-size: 20px;
+    border-radius: 5px;
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0.3px 0.3px 0.3px 0.5px rgba(255, 255, 255);
+    transition: all 0.5s ease;
+    text-align: center;
+    &:hover {
+      box-shadow: 0.3px 0.3px 0.3px 1.5px rgba(255, 255, 255);
+      background-color: rgb(255, 255, 255);
+      color: rgb(190, 45, 69);
     }
   }
 }
