@@ -85,6 +85,9 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     client.invalidateQueries([GET_PRODUCT_KEY]);
     resetForm();
     setImage("");
+    setTimeout(() => {
+      setType(undefined);
+    }, 3000);
   };
 
   const handleUpdateProduct = () => {
