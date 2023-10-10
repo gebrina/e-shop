@@ -29,13 +29,15 @@ export const productValidation = yup.object({
   name: yup.string().required("Product name is required."),
   price: yup
     .number()
-    .required("Product price is required.")
-    .min(1, "Product price must be greater than 0"),
-  description: yup.string().required("Description is required."),
+    .typeError("Price must be in numeric format.")
+    .moreThan(0, "Price must be greater than 0.")
+    .required("Product price is required."),
   quantity: yup
     .number()
-    .required("Quantity is required.")
-    .min(1, "Product Quantiy must be greater than 0"),
+    .typeError("Quanity must be in numeric format.")
+    .moreThan(0, "Quantity must be greater than 0.")
+    .required("Quantity is required."),
+  description: yup.string().required("Description is required."),
   category: yup.string().required("Product category is required."),
 });
 

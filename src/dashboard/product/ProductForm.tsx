@@ -167,10 +167,10 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
 
             <div className="mb-4">
               <div className="p-float-label">
-                <InputNumber
+                <InputText
                   id="price"
                   className={`${errors.price && "p-invalid"} w-100`}
-                  value={values.price}
+                  value={values.price.toString()}
                   name="price"
                   onChange={handleChange}
                 />
@@ -185,10 +185,10 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
 
             <div className="mb-4">
               <div className="p-float-label">
-                <InputNumber
+                <InputText
                   id="quantity"
                   className={`${errors.quantity && "p-invalid"} w-100`}
-                  value={values.quantity}
+                  value={values.quantity.toString()}
                   name="quantity"
                   onChange={handleChange}
                 />
