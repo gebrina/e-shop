@@ -4,6 +4,8 @@
     url("../../assets/ip.jpg");
   background-size: cover;
   height: 100vh;
+  position: fixed;
+  width: 100vw;
   overflow: hidden;
   .hero {
     position: relative;
