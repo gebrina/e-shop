@@ -2,7 +2,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
-import { NavLink, Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
 import { Toast } from "primereact/toast";
@@ -91,13 +91,6 @@ const Login = () => {
             <Button className="btn btn-outline-success w-50 sm:w-100 my-4 mx-auto d-block">
               Login
             </Button>
-            <p className="text-center">
-              Don't have account &nbsp;
-              <NavLink className={"text-danger"} to={"/user/register"}>
-                register
-              </NavLink>
-              !
-            </p>
           </form>
         </Card>
       </section>
