@@ -97,7 +97,9 @@ const ProductCategory = () => {
         action={action}
         onClick={handleClick}
       />
-      {type && <Notification type={type} title="Product Category" />}
+      {type && (
+        <Notification setType={setType} type={type} title="Product Category" />
+      )}
       {action && <PCForm productCategory={productCategory} action={action} />}
 
       <div className="bg-light col-md-6 mx-auto">

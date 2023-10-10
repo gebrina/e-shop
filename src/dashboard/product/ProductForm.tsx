@@ -85,9 +85,6 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
     client.invalidateQueries([GET_PRODUCT_KEY]);
     resetForm();
     setImage("");
-    setTimeout(() => {
-      setType(undefined);
-    }, 3000);
   };
 
   const handleUpdateProduct = () => {
@@ -145,7 +142,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
 
   return (
     <section className="col-md-8 my-5 mx-auto">
-      {type && <Notification type={type} title="Product" />}
+      {type && <Notification setType={setType} type={type} title="Product" />}
       <Card title={title}>
         <form onSubmit={handleSubmit} className="row">
           <div className="col-md-6 mb-2">

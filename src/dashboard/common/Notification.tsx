@@ -5,17 +5,20 @@ import { handleError, handleSuccess } from "../../utils";
 export type NotificationType = undefined | "error" | "success";
 type NotificationProps = {
   type: NotificationType;
+  setType: (type: NotificationType) => void;
   title: string;
 };
 
-const Notification: FC<NotificationProps> = ({ type, title }) => {
+const Notification: FC<NotificationProps> = ({ type, title, setType }) => {
   const toastRef = useRef<Toast>(null);
   const toastedRef = useRef<number>(0);
+
   useEffect(() => {
     if (type) {
+      toastedRef.current += 1;
       if (type === "success") {
-        toastedRef.current += 1;
-        if (toastedRef.current > 1) {
+        console.log(toastedRef.current);
+        if (toastedRef.current === 1) {
           handleSuccess({
             toast: toastRef.current,
             summary: title || "Success",
@@ -23,8 +26,7 @@ const Notification: FC<NotificationProps> = ({ type, title }) => {
           });
         }
       } else {
-        toastedRef.current += 1;
-        if (toastedRef.current >= 1) {
+        if (toastedRef.current === 1) {
           handleError({
             toast: toastRef.current,
             summary: title || "Error",
@@ -33,7 +35,10 @@ const Notification: FC<NotificationProps> = ({ type, title }) => {
         }
       }
     }
-  }, [type, title]);
+    const timeout = setTimeout(() => setType(undefined), 3000);
+
+    return () => clearTimeout(timeout);
+  }, [type, title, setType]);
 
   return <Toast ref={toastRef} />;
 };

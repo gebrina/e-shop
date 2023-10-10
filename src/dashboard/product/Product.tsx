@@ -75,7 +75,7 @@ const Product = () => {
         onClick={handleClick}
       />
       {action && <ProductForm action={action} product={product} />}
-      <Notification type={type} title="Product" />
+      {type && <Notification type={type} setType={setType} title="Product" />}
       {isLoading ? (
         "Loading..."
       ) : (
