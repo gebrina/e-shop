@@ -1,3 +1,16 @@
 section {
   outline: 1px solid dodgerblue;
+
+  .products {
+    .pro-card {
+      img {
+        max-height: 300px;
+        object-position: top;
+        object-fit: cover;
+      }
+      &:hover {
+        box-shadow: 0.3px 0.3px 3px 3px rgba(0, 0, 255, 0.2);
+      }
+    }
+  }
 }

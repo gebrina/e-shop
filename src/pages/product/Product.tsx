@@ -52,7 +52,7 @@ export const Product = () => {
   };
 
   const productCard = (product: IProduct) => (
-    <div key={product.id} className="col-md-4 text-center  my-3">
+    <div key={product.id} className="col-md-4  text-center  my-3">
       <ProductCard product={product} />
     </div>
   );
