@@ -7,7 +7,7 @@ import Loader from "../../components/loader";
 import ErrorPage from "../../components/error";
 import { AxiosError } from "axios";
 import { Dropdown } from "primereact/dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IProduct } from "../../types/product";
 import { IProductCategory } from "../../types/product-category";
 import { Card } from "primereact/card";
@@ -33,12 +33,21 @@ export const Product = () => {
 
   const [categoryId, setCategoryId] = useState<string>("");
 
+  useEffect(() => {
+    setCategorisedProducts(products);
+  }, [products]);
+
   if (isLoading) return <Loader />;
 
   if (error) return <ErrorPage error={error as AxiosError} />;
 
   const handleCategoryChange = (value: string) => {
     setCategoryId(value);
+
+    const filteredProducts = products?.filter(
+      (product) => product.category?.id === value
+    );
+    setCategorisedProducts(filteredProducts);
   };
 
   const productCard = (product: IProduct) => (
@@ -59,7 +68,7 @@ export const Product = () => {
       />
 
       <section className="products row">
-        {products?.map((product) => productCard(product))}
+        {categorizedProducts?.map((product) => productCard(product))}
       </section>
     </section>
   );
