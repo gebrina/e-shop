@@ -9,8 +9,7 @@ import { AxiosError } from "axios";
 import { Dropdown } from "primereact/dropdown";
 import { useEffect, useState } from "react";
 import { IProduct } from "../../types/product";
-import { IProductCategory } from "../../types/product-category";
-import { Card } from "primereact/card";
+import ProductCard from "./ProductCard";
 
 export const Product = () => {
   const { data: productCategories } = useQuery({
@@ -51,11 +50,12 @@ export const Product = () => {
   };
 
   const productCard = (product: IProduct) => (
-    <div className="col-md-4 text-center  my-3">
-      <Card title={product.name} />
+    <div key={product.id} className="col-md-4 text-center  my-3">
+      <ProductCard product={product} />
     </div>
   );
 
+  console.log(products);
   return (
     <section className="container">
       <Dropdown
