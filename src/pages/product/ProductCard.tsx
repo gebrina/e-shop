@@ -20,9 +20,13 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   const footer = () => (
     <div className="footer d-flex justify-content-between align-items-end">
-      <span>Price: {price}</span>
-      <span>Quantity: {quantity}</span>
-      <Button className="btn center-items btn-light">
+      <span className="bg-light rounded border text-black px-2 py-1">
+        Price: ${price}
+      </span>
+      <span className="bg-light rounded text-black border px-2 py-1">
+        Quantity: {quantity}
+      </span>
+      <Button className="btn text-success border py-1 center-items btn-light">
         <FiPlus />
         &nbsp; Add
       </Button>
@@ -34,7 +38,11 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       header={header}
       footer={footer}
       subTitle={category?.name}
-      title={name}
+      title={
+        <NavLink className="link" to={`products/${id}`}>
+          {name}
+        </NavLink>
+      }
     ></Card>
   );
 };

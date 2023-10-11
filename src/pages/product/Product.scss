@@ -3,13 +3,27 @@ section {
 
   .products {
     .pro-card {
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      &:hover {
+        box-shadow: 0.3px 0.3px 3px 3px rgba(0, 0, 200, 0.2);
+      }
+
       img {
         max-height: 300px;
+        border-radius: 10px;
         object-position: top;
         object-fit: cover;
       }
-      &:hover {
-        box-shadow: 0.3px 0.3px 3px 3px rgba(0, 0, 255, 0.2);
+
+      .link {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.8);
+        padding: 0px 10px;
+        text-transform: capitalize;
+        &:hover {
+          box-shadow: 0.3px 0.3px 3px 0.5px;
+        }
       }
     }
   }
