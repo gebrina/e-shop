@@ -1,9 +1,9 @@
 import { FC } from "react";
-import { IProduct } from "../../types/product";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { NavLink } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
+import { IProduct } from "../../types/product";
 
 type ProductCardProps = {
   product: IProduct;
