@@ -3,7 +3,7 @@ import { IProduct } from "../../types/product";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { NavLink } from "react-router-dom";
-import { FiPlus, FiShoppingCart } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 
 type ProductCardProps = {
   product: IProduct;
@@ -32,6 +32,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       </Button>
     </div>
   );
+
   return (
     <Card
       className="pro-card"
