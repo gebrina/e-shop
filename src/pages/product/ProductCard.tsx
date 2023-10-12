@@ -39,7 +39,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       footer={footer}
       subTitle={category?.name}
       title={
-        <NavLink className="link" to={`products/${id}`}>
+        <NavLink className="link" to={`/products/${id}`}>
           {name}
         </NavLink>
       }
