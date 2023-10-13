@@ -51,8 +51,20 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
   };
 
   const handleAddToCart = (product: IProduct) => {
+    const productsInCartIndex = values.productsInCart?.findIndex(
+      (cart) => cart.product.id == product.id
+    );
+
     const productsInCart = values.productsInCart;
-    productsInCart?.push({ product, quantity: 1 });
+    if (typeof productsInCartIndex === "number" && productsInCartIndex !== -1) {
+      productsInCart?.splice(productsInCartIndex, 1, {
+        product,
+        quantity: productsInCart[productsInCartIndex].quantity + 1,
+      });
+    } else {
+      productsInCart?.push({ product, quantity: 1 });
+    }
+
     setValues({ ...values, productsInCart });
     saveCartProducts(productsInCart ?? []);
   };
