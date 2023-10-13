@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { Toast } from "primereact/toast";
 import { getCurrentUser } from "./auth";
 import { IProduct } from "../types/product";
+import { CartProduct } from "../context/EcomContext";
 
 type ToastMsg = {
   toast: Toast | null;
@@ -54,4 +55,9 @@ export const getFormatedDate = (strigifiedDate: string): string => {
 export const saveCartProducts = (product: IProduct[]) => {
   const strigifiedProducts = JSON.stringify(product);
   localStorage.setItem("cart", strigifiedProducts);
+};
+
+export const getProductsAddedtoCart = (): CartProduct[] => {
+  const products = localStorage.getItem("cart") ?? "{}";
+  return JSON.parse(products);
 };

@@ -6,9 +6,9 @@ import {
   storeLoggedInUser,
 } from "../utils/auth";
 import { IProduct } from "../types/product";
-import { saveCartProducts } from "../utils";
+import { getProductsAddedtoCart, saveCartProducts } from "../utils";
 
-type CartProduct = {
+export type CartProduct = {
   product: IProduct;
   quantity: number;
 };
@@ -74,13 +74,25 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
       (cart) => cart.product.id !== id
     );
     setValues({ ...values, productsInCart });
+    saveCartProducts(productsInCart ?? []);
   };
 
   useEffect(() => {
     const pathname = location.pathname;
     if (pathname.includes("dashboard")) {
       const currentUser = getCurrentUser();
-      setValues((prev) => ({ ...prev, currentUser, isDashboard: true }));
+      setValues((prev) => ({
+        ...prev,
+        currentUser,
+        isDashboard: true,
+      }));
+    } else {
+      const productsInCart = getProductsAddedtoCart();
+      setValues((prev) => ({
+        ...prev,
+        productsInCart,
+        isDashboard: false,
+      }));
     }
   }, []);
 

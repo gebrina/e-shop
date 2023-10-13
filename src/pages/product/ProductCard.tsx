@@ -50,7 +50,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       ) : (
         <Button
           onClick={removeProductFromCart}
-          className="btn text-danger border py-1 center-items btn-light"
+          className="btn text-danger border  py-1 center-items btn-light"
         >
           <FiTrash />
           &nbsp; Remove
