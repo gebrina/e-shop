@@ -1,17 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import "./Product.scss";
+import { AxiosError } from "axios";
+import { Dropdown } from "primereact/dropdown";
+import { Button } from "primereact/button";
+import { FiX } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { IProduct } from "../../types/product";
+import ProductCard from "./ProductCard";
 import { GET_PRODUCT_CATEGORY_KEY, GET_PRODUCT_KEY } from "../../constants";
 import { getAllProducts } from "../../api/product";
+import "./Product.scss";
 import { getAllProductCategories } from "../../api/product-category";
 import Loader from "../../components/loader";
 import ErrorPage from "../../components/error";
-import { AxiosError } from "axios";
-import { Dropdown } from "primereact/dropdown";
-import { useEffect, useState } from "react";
-import { IProduct } from "../../types/product";
-import ProductCard from "./ProductCard";
-import { Button } from "primereact/button";
-import { FiX } from "react-icons/fi";
 
 export const Product = () => {
   const { data: productCategories } = useQuery({
@@ -51,10 +52,16 @@ export const Product = () => {
     setCategorisedProducts(filteredProducts);
   };
 
-  const productCard = (product: IProduct) => (
-    <div key={product.id} className="col-md-4  text-center  my-3">
+  const productCard = (product: IProduct, index: number) => (
+    <motion.div
+      initial={{ x: index % 2 == 0 ? -80 : 80, y: index % 2 == 0 ? -80 : 80 }}
+      animate={{ x: 0, y: 0 }}
+      transition={{ duration: 0.5 }}
+      key={product.id}
+      className="col-md-4  text-center  my-3"
+    >
       <ProductCard product={product} />
-    </div>
+    </motion.div>
   );
 
   const handleResetProducts = () => {
@@ -84,7 +91,9 @@ export const Product = () => {
         )}
       </div>
       <section className="products row">
-        {categorizedProducts?.map((product) => productCard(product))}
+        {categorizedProducts?.map((product, index) =>
+          productCard(product, index)
+        )}
       </section>
     </section>
   );

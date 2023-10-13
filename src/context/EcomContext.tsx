@@ -5,12 +5,16 @@ import {
   removeLoggedInUser,
   storeLoggedInUser,
 } from "../utils/auth";
+import { IProduct } from "../types/product";
 
 type EcomContextType = {
   isDashboard: boolean;
   currentUser: AuthUser | undefined;
   handleUserLogin: (user: AuthUser) => void;
   handleUserLogout: () => void;
+  handleAddToCart?: (product: IProduct) => void;
+  handleRemoveFromCart?: (id: string) => void;
+  productsInCart?: IProduct[];
 };
 
 const defaultValues: EcomContextType = {
@@ -18,6 +22,9 @@ const defaultValues: EcomContextType = {
   currentUser: { access_token: "" },
   handleUserLogin: () => {},
   handleUserLogout: () => {},
+  handleAddToCart: () => {},
+  handleRemoveFromCart: () => {},
+  productsInCart: [],
 };
 
 const EcomContext = createContext<EcomContextType>(defaultValues);
@@ -28,7 +35,6 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
   const [values, setValues] = useState<EcomContextType>(defaultValues);
 
   const handleUserLogin = (user: AuthUser) => {
-    console.log("handle user login");
     storeLoggedInUser(user);
     setValues({ ...values, currentUser: user });
   };
@@ -37,6 +43,10 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
     setValues({ ...values, isDashboard: true, currentUser: undefined });
     removeLoggedInUser();
   };
+
+  const handleAddToCart = (product: IProduct) => {};
+
+  const handleRemoveFromCart = (id: string) => {};
 
   useEffect(() => {
     const pathname = location.pathname;
@@ -48,7 +58,13 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
 
   return (
     <EcomContext.Provider
-      value={{ ...values, handleUserLogin, handleUserLogout }}
+      value={{
+        ...values,
+        handleAddToCart,
+        handleRemoveFromCart,
+        handleUserLogin,
+        handleUserLogout,
+      }}
     >
       {children}
     </EcomContext.Provider>
