@@ -8,6 +8,11 @@ import {
 import { IProduct } from "../types/product";
 import { saveCartProducts } from "../utils";
 
+type CartProduct = {
+  product: IProduct;
+  quantity: number;
+};
+
 type EcomContextType = {
   isDashboard: boolean;
   currentUser: AuthUser | undefined;
@@ -15,7 +20,7 @@ type EcomContextType = {
   handleUserLogout: () => void;
   handleAddToCart?: (product: IProduct) => void;
   handleRemoveFromCart?: (id: string) => void;
-  productsInCart?: IProduct[];
+  productsInCart?: CartProduct[];
 };
 
 const defaultValues: EcomContextType = {
@@ -47,14 +52,14 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
 
   const handleAddToCart = (product: IProduct) => {
     const productsInCart = values.productsInCart;
-    productsInCart?.push(product);
+    productsInCart?.push({ product, quantity: 1 });
     setValues({ ...values, productsInCart });
     saveCartProducts(productsInCart ?? []);
   };
 
   const handleRemoveFromCart = (id: string) => {
     const productsInCart = values.productsInCart?.filter(
-      (product) => product.id !== id
+      (product) => product.product.id !== id
     );
     setValues({ ...values, productsInCart });
   };

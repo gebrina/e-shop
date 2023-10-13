@@ -11,7 +11,7 @@ type ProductCardProps = {
 };
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const { handleAddToCart, handleRemoveFromCart } = useEcomContext();
+  const { handleAddToCart } = useEcomContext();
   const { name, price, quantity, id, category, image } = product;
 
   const header = () => (
