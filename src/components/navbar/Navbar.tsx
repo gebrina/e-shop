@@ -10,7 +10,7 @@ type NavbarProps = {
 };
 
 const Navbar: FC<NavbarProps> = ({ setVisible }) => {
-  const { isDashboard, handleUserLogout } = useEcomContext();
+  const { isDashboard, handleUserLogout, productsInCart } = useEcomContext();
 
   return (
     <header>
@@ -48,8 +48,9 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
               <NavLink to={"/"}>Home</NavLink>
               <NavLink to={"/products"}>Products</NavLink>
               <NavLink to={"user/login"}>Login</NavLink>
-              <NavLink to={"/products/cart"}>
+              <NavLink className={"cart"} to={"/products/cart"}>
                 <FiShoppingCart />
+                <span>{productsInCart?.length}</span>
               </NavLink>
             </div>
           </div>

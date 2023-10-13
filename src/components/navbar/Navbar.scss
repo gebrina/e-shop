@@ -49,6 +49,21 @@ header {
           color: #ffff;
           background-color: #000;
         }
+        &.cart {
+          position: relative;
+          span {
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 20px;
+            font-weight: bold;
+          }
+          &:hover {
+            span {
+              color: rgba(0, 0, 0, 0.7);
+            }
+          }
+        }
       }
     }
   }
