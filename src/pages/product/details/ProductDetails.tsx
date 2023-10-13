@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import DOMPurirify from "dompurify";
-import { useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
+import { NavLink, useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { GET_SINGLE_PRODUCT_KEY } from "../../../constants";
 import { getSingleProduct } from "../../../api/product";
@@ -9,7 +9,7 @@ import ErrorPage from "../../../components/error";
 import "./ProductDetais.scss";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiSkipBack } from "react-icons/fi";
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -57,12 +57,21 @@ export const ProductDetails = () => {
           />
         </Card>
 
-        <div className="col-md-6">
+        <div className="col-md-6 bg-light">
+          <h1 className="text-center mb-5 mt-2">{product?.name}</h1>
+
           <div
             dangerouslySetInnerHTML={{
-              __html: DOMPurirify.sanitize(product?.description ?? ""),
+              __html: DOMPurify.sanitize(product?.description ?? ""),
             }}
           />
+
+          <NavLink to="/products">
+            <Button className="btn center-items btn-outline-success">
+              <FiSkipBack />
+              &nbsp; Back to Products
+            </Button>
+          </NavLink>
         </div>
       </div>
     </section>
