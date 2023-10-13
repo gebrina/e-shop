@@ -2,6 +2,7 @@ import jwt_decode from "jwt-decode";
 import { format } from "date-fns";
 import { Toast } from "primereact/toast";
 import { getCurrentUser } from "./auth";
+import { IProduct } from "../types/product";
 
 type ToastMsg = {
   toast: Toast | null;
@@ -48,4 +49,9 @@ export const jwtDecode = () => {
 export const getFormatedDate = (strigifiedDate: string): string => {
   const date = new Date(strigifiedDate);
   return format(date, "yyyy-MMM-dd hh:mm:ss");
+};
+
+export const saveCartProducts = (product: IProduct[]) => {
+  const strigifiedProducts = JSON.stringify(product);
+  localStorage.setItem("cart", strigifiedProducts);
 };

@@ -4,12 +4,14 @@ import { Button } from "primereact/button";
 import { NavLink } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 import { IProduct } from "../../types/product";
+import { useEcomContext } from "../../context/EcomContext";
 
 type ProductCardProps = {
   product: IProduct;
 };
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
+  const { handleAddToCart, handleRemoveFromCart } = useEcomContext();
   const { name, price, quantity, id, category, image } = product;
 
   const header = () => (
@@ -17,6 +19,8 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <img src={import.meta.env.VITE_APP_API_URL + image} alt={name} />
     </NavLink>
   );
+
+  const addToCart = () => handleAddToCart && handleAddToCart(product);
 
   const footer = () => (
     <div className="footer d-flex justify-content-between align-items-end">
@@ -26,7 +30,10 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <span className="bg-light rounded text-black border px-2 py-1">
         Quantity: {quantity}
       </span>
-      <Button className="btn text-success border py-1 center-items btn-light">
+      <Button
+        onClick={addToCart}
+        className="btn text-success border py-1 center-items btn-light"
+      >
         <FiPlus />
         &nbsp; Add
       </Button>

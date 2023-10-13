@@ -6,6 +6,7 @@ import {
   storeLoggedInUser,
 } from "../utils/auth";
 import { IProduct } from "../types/product";
+import { saveCartProducts } from "../utils";
 
 type EcomContextType = {
   isDashboard: boolean;
@@ -44,9 +45,19 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
     removeLoggedInUser();
   };
 
-  const handleAddToCart = (product: IProduct) => {};
+  const handleAddToCart = (product: IProduct) => {
+    const productsInCart = values.productsInCart;
+    productsInCart?.push(product);
+    setValues({ ...values, productsInCart });
+    saveCartProducts(productsInCart ?? []);
+  };
 
-  const handleRemoveFromCart = (id: string) => {};
+  const handleRemoveFromCart = (id: string) => {
+    const productsInCart = values.productsInCart?.filter(
+      (product) => product.id !== id
+    );
+    setValues({ ...values, productsInCart });
+  };
 
   useEffect(() => {
     const pathname = location.pathname;
