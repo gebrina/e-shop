@@ -1,8 +1,8 @@
 .pro-card {
   overflow: hidden;
-  max-height: 80vh;
   .pro-img {
     width: 100%;
     object-fit: cover;
+    max-height: 500px;
   }
 }

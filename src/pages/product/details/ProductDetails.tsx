@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-
+import DOMPurirify from "dompurify";
 import { useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { GET_SINGLE_PRODUCT_KEY } from "../../../constants";
@@ -8,6 +8,8 @@ import Loader from "../../../components/loader";
 import ErrorPage from "../../../components/error";
 import "./ProductDetais.scss";
 import { Card } from "primereact/card";
+import { Button } from "primereact/button";
+import { FiPlus } from "react-icons/fi";
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -27,9 +29,15 @@ export const ProductDetails = () => {
   if (error) return <ErrorPage error={error as AxiosError} />;
 
   const cardFooter = () => (
-    <div>
-      <p>Price: ${product?.price}</p>
-      <p>Quantity: {product?.quantity}</p>
+    <div className="d-flex  justify-content-between align-items-center ">
+      <p className="bg-light border my-1 py-1 px-3">Price: ${product?.price}</p>
+      <p className="bg-light border my-1 py-1 px-3">
+        Quantity: {product?.quantity}
+      </p>
+
+      <Button className="btn center-items text-success btn-light border">
+        <FiPlus /> <span>Add</span>
+      </Button>
     </div>
   );
 
@@ -40,6 +48,7 @@ export const ProductDetails = () => {
           className="col-md-6 text-center pro-card"
           title={product?.name}
           subTitle={product?.category?.name}
+          footer={cardFooter}
         >
           <img
             className="pro-img"
@@ -50,7 +59,9 @@ export const ProductDetails = () => {
 
         <div className="col-md-6">
           <div
-            dangerouslySetInnerHTML={{ __html: product?.description ?? "" }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurirify.sanitize(product?.description ?? ""),
+            }}
           />
         </div>
       </div>
