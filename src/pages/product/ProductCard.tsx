@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { NavLink } from "react-router-dom";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiTrash } from "react-icons/fi";
 import { IProduct } from "../../types/product";
 import { useEcomContext } from "../../context/EcomContext";
 
@@ -11,7 +11,13 @@ type ProductCardProps = {
 };
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const { handleAddToCart } = useEcomContext();
+  const { handleAddToCart, productsInCart, handleRemoveFromCart } =
+    useEcomContext();
+
+  const productsInCartIndex = productsInCart?.findIndex(
+    (cart) => cart.product.id == product.id
+  );
+
   const { name, price, quantity, id, category, image } = product;
 
   const header = () => (
@@ -22,6 +28,9 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
 
   const addToCart = () => handleAddToCart && handleAddToCart(product);
 
+  const removeProductFromCart = () =>
+    handleRemoveFromCart && handleRemoveFromCart(product.id ?? "");
+
   const footer = () => (
     <div className="footer d-flex justify-content-between align-items-end">
       <span className="bg-light rounded border text-black px-2 py-1">
@@ -30,13 +39,23 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       <span className="bg-light rounded text-black border px-2 py-1">
         Quantity: {quantity}
       </span>
-      <Button
-        onClick={addToCart}
-        className="btn text-success border py-1 center-items btn-light"
-      >
-        <FiPlus />
-        &nbsp; Add
-      </Button>
+      {productsInCartIndex == -1 ? (
+        <Button
+          onClick={addToCart}
+          className="btn text-success border py-1 center-items btn-light"
+        >
+          <FiPlus />
+          &nbsp; Add
+        </Button>
+      ) : (
+        <Button
+          onClick={removeProductFromCart}
+          className="btn text-danger border py-1 center-items btn-light"
+        >
+          <FiTrash />
+          &nbsp; Remove
+        </Button>
+      )}
     </div>
   );
 

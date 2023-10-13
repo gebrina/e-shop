@@ -71,7 +71,7 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
 
   const handleRemoveFromCart = (id: string) => {
     const productsInCart = values.productsInCart?.filter(
-      (product) => product.product.id !== id
+      (cart) => cart.product.id !== id
     );
     setValues({ ...values, productsInCart });
   };
