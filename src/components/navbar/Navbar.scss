@@ -50,26 +50,37 @@ header {
           color: #ffff;
           background-color: #000;
         }
-        &.cart {
-          position: relative;
-          span {
-            position: absolute;
-            top: -20px;
-            right: -10px;
-            font-size: 20px;
-            font-weight: bold;
-          }
-          &:hover {
-            span {
-              color: rgba(0, 0, 0, 0.7);
-            }
-          }
-        }
 
         &.active {
           background-color: rgba(0, 0, 0, 1);
           color: rgba(255, 255, 255, 1);
           font-weight: bold;
+        }
+      }
+
+      .cart {
+        position: relative;
+        border: none;
+        font-size: 24px;
+        padding: 0px 10px;
+
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.9);
+          color: #fff;
+          border-radius: 5px;
+        }
+
+        span {
+          position: absolute;
+          top: -20px;
+          right: -10px;
+          font-size: 20px;
+          font-weight: bold;
+        }
+        &:hover {
+          span {
+            color: rgba(0, 0, 0, 0.7);
+          }
         }
       }
     }

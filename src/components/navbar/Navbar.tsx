@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { menus } from "./MenusData";
 import "./Navbar.scss";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useEcomContext } from "../../context/EcomContext";
 import { FiShoppingCart } from "react-icons/fi";
+import { Cart } from "../cart";
 
 type NavbarProps = {
   setVisible?: () => void;
@@ -11,6 +12,7 @@ type NavbarProps = {
 
 const Navbar: FC<NavbarProps> = ({ setVisible }) => {
   const { isDashboard, handleUserLogout, productsInCart } = useEcomContext();
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <header>
@@ -41,6 +43,7 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
           </ul>
         ) : (
           <div className="d-flex p-2 horizontal-nav mx-auto align-items-center justify-content-between">
+            <Cart open={open} setOpen={setOpen} />
             <NavLink to="/">
               <img height={50} src="/logo.png" alt="E shop " />
             </NavLink>
@@ -48,10 +51,10 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
               <NavLink to={"/"}>Home</NavLink>
               <NavLink to={"/products"}>Products</NavLink>
               <NavLink to={"user/login"}>Login</NavLink>
-              <NavLink className={"cart"} to={"/products/cart"}>
+              <button className={"cart cart-btn"}>
                 <FiShoppingCart />
                 <span>{productsInCart?.length}</span>
-              </NavLink>
+              </button>
             </div>
           </div>
         )}
