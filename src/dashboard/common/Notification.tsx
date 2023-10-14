@@ -7,9 +7,27 @@ type NotificationProps = {
   type: NotificationType;
   setType: (type: NotificationType) => void;
   title: string;
+  succesMsg?: string;
+  errorMsg?: string;
+  position?:
+    | "center"
+    | "top-center"
+    | "top-left"
+    | "top-right"
+    | "bottom-center"
+    | "bottom-left"
+    | "bottom-right"
+    | undefined;
 };
 
-const Notification: FC<NotificationProps> = ({ type, title, setType }) => {
+const Notification: FC<NotificationProps> = ({
+  type,
+  title,
+  setType,
+  succesMsg,
+  errorMsg,
+  position,
+}) => {
   const toastRef = useRef<Toast>(null);
   const toastedRef = useRef<number>(0);
 
@@ -17,12 +35,11 @@ const Notification: FC<NotificationProps> = ({ type, title, setType }) => {
     if (type) {
       toastedRef.current += 1;
       if (type === "success") {
-        console.log(toastedRef.current);
         if (toastedRef.current === 1) {
           handleSuccess({
             toast: toastRef.current,
             summary: title || "Success",
-            detail: "Operation succeded succssfully.",
+            detail: succesMsg || "Operation succeded succssfully.",
           });
         }
       } else {
@@ -30,7 +47,7 @@ const Notification: FC<NotificationProps> = ({ type, title, setType }) => {
           handleError({
             toast: toastRef.current,
             summary: title || "Error",
-            detail: "Operation faild, try again.",
+            detail: errorMsg || "Operation faild, try again.",
           });
         }
       }
@@ -38,9 +55,9 @@ const Notification: FC<NotificationProps> = ({ type, title, setType }) => {
     const timeout = setTimeout(() => setType(undefined), 3000);
 
     return () => clearTimeout(timeout);
-  }, [type, title, setType]);
+  }, [type, title, setType, succesMsg, errorMsg]);
 
-  return <Toast ref={toastRef} />;
+  return <Toast ref={toastRef} position={position} />;
 };
 
 export default Notification;

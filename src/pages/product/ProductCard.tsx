@@ -1,10 +1,13 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { NavLink } from "react-router-dom";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { IProduct } from "../../types/product";
 import { useEcomContext } from "../../context/EcomContext";
+import Notification, {
+  NotificationType,
+} from "../../dashboard/common/Notification";
 
 type ProductCardProps = {
   product: IProduct;
@@ -13,6 +16,9 @@ type ProductCardProps = {
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { handleAddToCart, productsInCart, handleRemoveFromCart } =
     useEcomContext();
+
+  const [type, setType] = useState<NotificationType>();
+  const [message, setMessage] = useState<string>("");
 
   const productsInCartIndex = productsInCart?.findIndex(
     (cart) => cart.product.id == product.id
@@ -26,10 +32,21 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
     </NavLink>
   );
 
-  const addToCart = () => handleAddToCart && handleAddToCart(product);
+  const addToCart = () => {
+    if (handleAddToCart) {
+      handleAddToCart(product);
+      setType("success");
+      setMessage("Product added successfully.");
+    }
+  };
 
-  const removeProductFromCart = () =>
-    handleRemoveFromCart && handleRemoveFromCart(product.id ?? "");
+  const removeProductFromCart = () => {
+    if (handleRemoveFromCart) {
+      handleRemoveFromCart(product.id ?? "");
+      setType("success");
+      setMessage("Product removed successfully.");
+    }
+  };
 
   const footer = () => (
     <div className="footer d-flex justify-content-between align-items-end">
@@ -60,17 +77,28 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   );
 
   return (
-    <Card
-      className="pro-card"
-      header={header}
-      footer={footer}
-      subTitle={category?.name}
-      title={
-        <NavLink className="link" to={`/products/${id}`}>
-          {name}
-        </NavLink>
-      }
-    ></Card>
+    <section>
+      {type && (
+        <Notification
+          title="Products Cart"
+          position="top-right"
+          setType={setType}
+          succesMsg={message}
+          type={type}
+        />
+      )}
+      <Card
+        className="pro-card"
+        header={header}
+        footer={footer}
+        subTitle={category?.name}
+        title={
+          <NavLink className="link" to={`/products/${id}`}>
+            {name}
+          </NavLink>
+        }
+      ></Card>
+    </section>
   );
 };
 

@@ -15,18 +15,21 @@ type ToastMsg = {
 
 export const handleSuccess = (msg: ToastMsg) => {
   const { toast, summary, detail, handleNavigation, sec = 3000 } = msg;
+
   toast?.show({
     severity: "success",
     summary,
     detail,
   });
 
-  let timeout = null;
-  if (timeout) clearTimeout(timeout);
+  if (typeof handleNavigation === "function") {
+    let timeout = null;
+    if (timeout) clearTimeout(timeout);
 
-  timeout = setTimeout(() => {
-    handleNavigation && handleNavigation();
-  }, sec);
+    timeout = setTimeout(() => {
+      handleNavigation();
+    }, sec);
+  }
 };
 
 export const handleError = (msg: ToastMsg) => {
