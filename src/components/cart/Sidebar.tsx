@@ -1,9 +1,11 @@
 import { Sidebar } from "primereact/sidebar";
 import { FC } from "react";
-import { FiXCircle } from "react-icons/fi";
+import { FiPlus, FiXCircle } from "react-icons/fi";
 import { useEcomContext } from "../../context/EcomContext";
 import { CartCard } from "./Card";
 import "./Sidebar.scss";
+import { Button } from "primereact/button";
+import { NavLink } from "react-router-dom";
 type CartSidebarProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -32,6 +34,15 @@ export const CartSidebar: FC<CartSidebarProps> = ({ open, setOpen }) => {
           {productsInCart?.map((cart) => (
             <CartCard cart={cart} />
           ))}
+
+          <NavLink to={"/products"} className={"mt-3 d-block"}>
+            <Button
+              onClick={() => setOpen(false)}
+              className="btn center-items btn-outline-success"
+            >
+              <FiPlus /> <span>Add more products</span>
+            </Button>
+          </NavLink>
         </Sidebar>
       }
     </>

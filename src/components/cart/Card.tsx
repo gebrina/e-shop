@@ -16,7 +16,7 @@ export const CartCard: FC<CardProps> = ({ cart }) => {
   const updateProductQuantity = (value: number) => {};
 
   return (
-    <section className="bg-light shadow">
+    <section className="bg-light shadow mb-3">
       <div className="px-2">
         <h3 className="category">{category?.name}</h3>
         <h5 className="text-success">{name}</h5>
