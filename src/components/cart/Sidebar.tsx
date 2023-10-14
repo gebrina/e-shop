@@ -40,7 +40,7 @@ export const CartSidebar: FC<CartSidebarProps> = ({ open, setOpen }) => {
               onClick={() => setOpen(false)}
               className="btn center-items btn-outline-success"
             >
-              <FiPlus /> <span>Add more products</span>
+              <FiPlus /> <span>Add product</span>
             </Button>
           </NavLink>
         </Sidebar>
