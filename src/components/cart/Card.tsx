@@ -1,6 +1,8 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { CartProduct } from "../../context/EcomContext";
 import { InputNumber } from "primereact/inputnumber";
+import { Button } from "primereact/button";
+import { FiTrash2 } from "react-icons/fi";
 
 type CardProps = {
   cart: CartProduct;
@@ -9,6 +11,9 @@ type CardProps = {
 export const CartCard: FC<CardProps> = ({ cart }) => {
   const { product, quantity: cartQuantity } = cart;
   const { name, category, image, price } = product;
+  const [cartPrice, setCartPrice] = useState(price && price * cartQuantity);
+
+  const updateProductQuantity = (value: number) => {};
 
   return (
     <section className="bg-light shadow">
@@ -19,11 +24,22 @@ export const CartCard: FC<CardProps> = ({ cart }) => {
 
       <section className="product-info">
         <img src={import.meta.env.VITE_APP_API_URL + image} />
-        <div>
-          <p className="border price">$ {price * cartQuantity}</p>
-          <div>
-            <label htmlFor="quantity">Quantity</label>
-            <InputNumber id="quantity" value={cartQuantity} />
+        <div className="price-container">
+          <p className="border price px-2  fw-bold rounded">
+            Price: $ {cartPrice}
+          </p>
+          <div className="quantity">
+            <div className="input-container">
+              <label htmlFor="quantity">Quantity</label>
+              <InputNumber
+                onChange={(e) => updateProductQuantity(e.value)}
+                id="quantity"
+                value={cartQuantity}
+              />
+            </div>
+            <Button className="btn  p-0 mt-3  text-danger fs-4">
+              <FiTrash2 className="action-btn" />
+            </Button>
           </div>
         </div>
       </section>

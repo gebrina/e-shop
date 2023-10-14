@@ -1,12 +1,32 @@
 .product-info {
   display: flex;
   gap: 10px;
-  max-height: 100px;
+  max-height: 200px;
   overflow: hidden;
   width: 100%;
   padding: 5px;
   & img {
     width: 100px;
     object-fit: cover;
+  }
+
+  & .price-container {
+    width: 100%;
+    .price {
+      width: max-content;
+      padding: 0;
+      margin: 0;
+    }
+    & .quantity {
+      display: flex;
+
+      .input-container {
+        max-width: 85%;
+        input {
+          width: 100%;
+          height: 40px;
+        }
+      }
+    }
   }
 }
