@@ -2,8 +2,8 @@ import { Sidebar } from "primereact/sidebar";
 import { FC } from "react";
 import { FiXCircle } from "react-icons/fi";
 import { useEcomContext } from "../../context/EcomContext";
-import { Card } from "./Card";
-
+import { CartCard } from "./Card";
+import "./Sidebar.scss";
 type CartSidebarProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -20,7 +20,7 @@ export const CartSidebar: FC<CartSidebarProps> = ({ open, setOpen }) => {
     <>
       {
         <Sidebar
-          className="col-md-4"
+          className="col-md-4 col-sm-12"
           visible={open}
           header={cartHeader}
           position="right"
@@ -30,7 +30,7 @@ export const CartSidebar: FC<CartSidebarProps> = ({ open, setOpen }) => {
           onHide={() => setOpen(false)}
         >
           {productsInCart?.map((cart) => (
-            <Card cart={cart} />
+            <CartCard cart={cart} />
           ))}
         </Sidebar>
       }
