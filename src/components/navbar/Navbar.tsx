@@ -51,7 +51,7 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
               <NavLink to={"/"}>Home</NavLink>
               <NavLink to={"/products"}>Products</NavLink>
               <NavLink to={"user/login"}>Login</NavLink>
-              <button className={"cart cart-btn"}>
+              <button onClick={() => setOpen(true)} className={"cart"}>
                 <FiShoppingCart />
                 <span>{productsInCart?.length}</span>
               </button>
