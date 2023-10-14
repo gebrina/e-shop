@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { CartProduct } from "../../context/EcomContext";
+import { CartProduct, useEcomContext } from "../../context/EcomContext";
 import { InputNumber } from "primereact/inputnumber";
 import { Button } from "primereact/button";
 import { FiTrash2 } from "react-icons/fi";
@@ -9,8 +9,9 @@ type CardProps = {
 };
 
 export const CartCard: FC<CardProps> = ({ cart }) => {
+  const { handleRemoveFromCart, handleAddToCart } = useEcomContext();
   const { product, quantity: cartQuantity } = cart;
-  const { name, category, image, price } = product;
+  const { name, category, image, price, id } = product;
   const [cartPrice, setCartPrice] = useState(price && price * cartQuantity);
 
   const updateProductQuantity = (value: number) => {};
@@ -32,12 +33,17 @@ export const CartCard: FC<CardProps> = ({ cart }) => {
             <div className="input-container">
               <label htmlFor="quantity">Quantity</label>
               <InputNumber
-                onChange={(e) => updateProductQuantity(e.value)}
+                onChange={(e) => updateProductQuantity(e.value ?? 0)}
                 id="quantity"
                 value={cartQuantity}
               />
             </div>
-            <Button className="btn  p-0 mt-3  text-danger fs-4">
+            <Button
+              onClick={() =>
+                handleRemoveFromCart && handleRemoveFromCart(id ?? "")
+              }
+              className="btn  p-0 mt-3  text-danger fs-4"
+            >
               <FiTrash2 className="action-btn" />
             </Button>
           </div>
