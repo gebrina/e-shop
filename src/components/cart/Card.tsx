@@ -12,9 +12,12 @@ export const CartCard: FC<CardProps> = ({ cart }) => {
   const { handleRemoveFromCart, handleAddToCart } = useEcomContext();
   const { product, quantity: cartQuantity } = cart;
   const { name, category, image, price, id } = product;
-  const [cartPrice, setCartPrice] = useState(price && price * cartQuantity);
 
-  const updateProductQuantity = (value: number) => {};
+  const updateProductQuantity = (value: number) => {
+    if (value > 0) {
+      handleAddToCart && handleAddToCart(product, value);
+    }
+  };
 
   return (
     <section className="bg-light shadow mb-3">
@@ -27,13 +30,14 @@ export const CartCard: FC<CardProps> = ({ cart }) => {
         <img src={import.meta.env.VITE_APP_API_URL + image} />
         <div className="price-container">
           <p className="border price px-2  fw-bold rounded">
-            Price: $ {cartPrice}
+            Price: $ {cartQuantity * (price ?? 0)}
           </p>
           <div className="quantity">
             <div className="input-container">
               <label htmlFor="quantity">Quantity</label>
               <InputNumber
                 onChange={(e) => updateProductQuantity(e.value ?? 0)}
+                placeholder="ex. 1"
                 id="quantity"
                 value={cartQuantity}
               />
