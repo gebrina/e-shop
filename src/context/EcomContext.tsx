@@ -18,7 +18,7 @@ type EcomContextType = {
   currentUser: AuthUser | undefined;
   handleUserLogin: (user: AuthUser) => void;
   handleUserLogout: () => void;
-  handleAddToCart?: (product: IProduct) => void;
+  handleAddToCart?: (product: IProduct, quantity?: number) => void;
   handleRemoveFromCart?: (id: string) => void;
   productsInCart?: CartProduct[];
 };
@@ -50,17 +50,21 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
     removeLoggedInUser();
   };
 
-  const handleAddToCart = (product: IProduct) => {
+  const handleAddToCart = (product: IProduct, quantity?: number) => {
     const productsInCartIndex = values.productsInCart?.findIndex(
       (cart) => cart.product.id == product.id
     );
 
     const productsInCart = values.productsInCart;
     if (typeof productsInCartIndex === "number" && productsInCartIndex !== -1) {
-      productsInCart?.splice(productsInCartIndex, 1, {
-        product,
-        quantity: productsInCart[productsInCartIndex].quantity + 1,
-      });
+      if (quantity) {
+        productsInCart?.splice(productsInCartIndex, 1, { product, quantity });
+      } else {
+        productsInCart?.splice(productsInCartIndex, 1, {
+          product,
+          quantity: productsInCart[productsInCartIndex].quantity + 1,
+        });
+      }
     } else {
       productsInCart?.push({ product, quantity: 1 });
     }
