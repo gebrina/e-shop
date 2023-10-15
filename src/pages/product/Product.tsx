@@ -91,8 +91,14 @@ export const Product = () => {
         )}
       </div>
       <section className="products row">
-        {categorizedProducts?.map((product, index) =>
-          productCard(product, index)
+        {categorizedProducts && categorizedProducts.length > 0 ? (
+          categorizedProducts?.map((product, index) =>
+            productCard(product, index)
+          )
+        ) : (
+          <p className="fs-3 text-center my-5 text-info">
+            There is no products.
+          </p>
         )}
       </section>
     </section>
