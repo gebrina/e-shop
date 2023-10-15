@@ -14,6 +14,7 @@ export const Checkout = () => {
     <section className="container my-5">
       <section className="row">
         <section className="col-md-8 shadow-sm py-2 px-3 rounded mx-auto">
+          <h2 className="text-center  my-3">Picked Products & Prices</h2>
           <table className="table table-striped   text-center table-responsive table-hover">
             <thead>
               <tr>
@@ -44,7 +45,7 @@ export const Checkout = () => {
           <div className="right-items px-2">
             <p
               title={"Sum of sub totals"}
-              className="fs-5 fw-bold bg-info text-white border px-2"
+              className="fs-5 fw-bold bg-info rounded text-white border px-2"
             >
               Total: ${totalCartProducsPrice}
             </p>
