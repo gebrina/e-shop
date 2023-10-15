@@ -1,11 +1,12 @@
 import { Sidebar } from "primereact/sidebar";
 import { FC } from "react";
 import { FiCheck, FiPlus, FiXCircle } from "react-icons/fi";
+import { Button } from "primereact/button";
+import { NavLink } from "react-router-dom";
 import { useEcomContext } from "../../context/EcomContext";
 import { CartCard } from "./Card";
 import "./Sidebar.scss";
-import { Button } from "primereact/button";
-import { NavLink } from "react-router-dom";
+
 type CartSidebarProps = {
   open: boolean;
   setOpen: (open: boolean) => void;
