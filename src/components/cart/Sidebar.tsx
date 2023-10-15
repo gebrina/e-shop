@@ -1,6 +1,6 @@
 import { Sidebar } from "primereact/sidebar";
 import { FC } from "react";
-import { FiPlus, FiXCircle } from "react-icons/fi";
+import { FiCheck, FiPlus, FiXCircle } from "react-icons/fi";
 import { useEcomContext } from "../../context/EcomContext";
 import { CartCard } from "./Card";
 import "./Sidebar.scss";
@@ -35,14 +35,25 @@ export const CartSidebar: FC<CartSidebarProps> = ({ open, setOpen }) => {
             <CartCard cart={cart} />
           ))}
 
-          <NavLink to={"/products"} className={"mt-3 d-block"}>
-            <Button
-              onClick={() => setOpen(false)}
-              className="btn center-items btn-outline-success"
-            >
-              <FiPlus /> <span>Add product</span>
-            </Button>
-          </NavLink>
+          <div className="d-flex justify-content-between">
+            <NavLink to={"/products"} className={"mt-3 d-block"}>
+              <Button
+                onClick={() => setOpen(false)}
+                className="btn center-items btn-outline-success"
+              >
+                <FiPlus /> <span>Add product</span>
+              </Button>
+            </NavLink>
+
+            <NavLink to={"/cart/checkout"} className={"mt-3 d-block"}>
+              <Button
+                onClick={() => setOpen(false)}
+                className="btn center-items btn-outline-primary"
+              >
+                <FiCheck /> <span>Checkout</span>
+              </Button>
+            </NavLink>
+          </div>
         </Sidebar>
       }
     </>

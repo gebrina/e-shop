@@ -40,14 +40,14 @@ export const CartCard: FC<CardProps> = ({ cart }) => {
           type={type}
           setType={setType}
           succesMsg={successMsg}
-          title="Product Cart"
+          title="Products Cart"
           position="top-right"
         />
       )}
       <section className="bg-light shadow mb-3">
         <div className="px-2">
           <h3 className="category">{category?.name}</h3>
-          <h5 className="text-success">{name}</h5>
+          <h5 className="text-success text-capitalize">{name}</h5>
         </div>
 
         <section className="product-info">

@@ -7,6 +7,7 @@ import { PageNotFound } from "./pages/notfound";
 import Navbar from "./components/navbar/Navbar";
 import { useEcomContext } from "./context/EcomContext";
 import { ProductDetail, ProductsPage } from "./pages/product";
+import { CartCheckout } from "./pages/cart/checkout";
 
 const App = () => {
   const { isDashboard } = useEcomContext();
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/user/login" element={<LoginPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/cart/checkout" element={<CartCheckout />} />
           {!isDashboard && <Route path="*" element={<PageNotFound />} />}
         </Routes>
       </BrowserRouter>
