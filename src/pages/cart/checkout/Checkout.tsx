@@ -4,6 +4,12 @@ import "./Checkout.scss";
 export const Checkout = () => {
   const { productsInCart } = useEcomContext();
 
+  let totalCartProducsPrice: number = 0;
+  productsInCart?.forEach((cart) => {
+    totalCartProducsPrice +=
+      (cart.product.quantity && cart.product.price * cart.quantity) || 0;
+  });
+
   return (
     <section className="container my-5">
       <section className="row">
@@ -35,6 +41,14 @@ export const Checkout = () => {
               })}
             </tbody>
           </table>
+          <div className="right-items px-2">
+            <p
+              title={"Sum of sub totals"}
+              className="fs-5 fw-bold bg-info text-white border px-2"
+            >
+              Total: ${totalCartProducsPrice}
+            </p>
+          </div>
         </section>
       </section>
     </section>
