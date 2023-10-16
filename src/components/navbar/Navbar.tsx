@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { menus } from "./MenusData";
 import "./Navbar.scss";
 import { FC, useState } from "react";
@@ -13,6 +13,7 @@ type NavbarProps = {
 const Navbar: FC<NavbarProps> = ({ setVisible }) => {
   const { isDashboard, handleUserLogout, productsInCart } = useEcomContext();
   const [open, setOpen] = useState<boolean>(false);
+  const { pathname } = useLocation();
 
   return (
     <header>
@@ -51,9 +52,16 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
               <NavLink to={"/"}>Home</NavLink>
               <NavLink to={"/products"}>Products</NavLink>
               <NavLink to={"user/login"}>Login</NavLink>
-              <button onClick={() => setOpen(true)} className={"cart"}>
+              <button
+                onClick={() => setOpen(true)}
+                className={`cart ${
+                  pathname.includes("cart") &&
+                  !open &&
+                  "bg-dark rounded text-white"
+                }`}
+              >
                 <FiShoppingCart />
-                <span>{productsInCart?.length}</span>
+                <span className="text-dark">{productsInCart?.length}</span>
               </button>
             </div>
           </div>
