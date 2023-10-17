@@ -30,7 +30,7 @@ export const CartSidebar: FC<CartSidebarProps> = ({ open, setOpen }) => {
         onHide={() => setOpen(false)}
       >
         {productsInCart?.map((cart) => (
-          <CartCard cart={cart} />
+          <CartCard key={cart.product.id} cart={cart} />
         ))}
 
         <div className="d-flex justify-content-between">

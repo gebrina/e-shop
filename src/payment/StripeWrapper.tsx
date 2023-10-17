@@ -14,7 +14,7 @@ export const StripeWrapper: FC = () => {
     const getPublishableKey = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_APP_API_URL}+/payment/public-key`
+          `${import.meta.env.VITE_APP_API_URL}/payment/public-key`
         );
         const stripe = loadStripe(response.data);
         setStripePromise(stripe);
@@ -30,7 +30,7 @@ export const StripeWrapper: FC = () => {
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_APP_API_URL}/payment/intent`,
-          {}
+          { amount: 100 }
         );
         setClientSecret(response.data);
       } catch (e) {
@@ -41,11 +41,15 @@ export const StripeWrapper: FC = () => {
   }, []);
 
   return (
-    <Elements
-      options={{ ...options, clientSecret: clientSecret ?? undefined }}
-      stripe={stripePromise}
-    >
-      <PaymentForm client_secret={clientSecret} />
-    </Elements>
+    <>
+      {clientSecret && (
+        <Elements
+          options={{ ...options, clientSecret: clientSecret ?? undefined }}
+          stripe={stripePromise}
+        >
+          <PaymentForm client_secret={clientSecret} />
+        </Elements>
+      )}
+    </>
   );
 };
