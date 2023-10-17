@@ -45,7 +45,7 @@ export const StripeWrapper: FC = () => {
       options={{ ...options, clientSecret: clientSecret ?? undefined }}
       stripe={stripePromise}
     >
-      <PaymentForm />
+      <PaymentForm client_secret={clientSecret} />
     </Elements>
   );
 };

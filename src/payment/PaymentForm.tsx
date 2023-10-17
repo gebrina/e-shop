@@ -4,12 +4,16 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { Button } from "primereact/button";
-import { FormEvent } from "react";
+import { FC, FormEvent, useState } from "react";
 
-export const PaymentForm = () => {
+type PaymentFormProps = {
+  client_secret: string | null;
+};
+
+export const PaymentForm: FC<PaymentFormProps> = ({ client_secret }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [submitting, setSubmitting] = useStripe(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
