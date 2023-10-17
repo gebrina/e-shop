@@ -1,11 +1,16 @@
 import { Elements } from "@stripe/react-stripe-js";
-import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
+import { Stripe, StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
 import { FC, useEffect, useState } from "react";
 import { PaymentForm } from "./PaymentForm";
 
-export const StripeWrapper: FC = () => {
-  const [stripePromise, setStripePromise] = useState<any>(null);
+type StripeWrapperProps = {
+  amount: number;
+};
+
+export const StripeWrapper: FC<StripeWrapperProps> = ({ amount }) => {
+  const [stripePromise, setStripePromise] =
+    useState<Promise<Stripe | null>>(null);
   const [clientSecret, setClientSecret] = useState(null);
 
   const options: StripeElementsOptions = {};
@@ -30,7 +35,7 @@ export const StripeWrapper: FC = () => {
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_APP_API_URL}/payment/intent`,
-          { amount: 100 }
+          { amount }
         );
         setClientSecret(response.data);
       } catch (e) {
@@ -38,7 +43,7 @@ export const StripeWrapper: FC = () => {
       }
     };
     createPaymentIntent();
-  }, []);
+  }, [amount]);
 
   return (
     <>
@@ -47,7 +52,7 @@ export const StripeWrapper: FC = () => {
           options={{ ...options, clientSecret: clientSecret ?? undefined }}
           stripe={stripePromise}
         >
-          <PaymentForm client_secret={clientSecret} />
+          <PaymentForm />
         </Elements>
       )}
     </>

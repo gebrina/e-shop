@@ -68,7 +68,7 @@ export const Checkout = () => {
         </section>
       </section>
 
-      {pay && <Payment />}
+      {pay && <Payment amount={totalCartProducsPrice} />}
     </section>
   );
 };
