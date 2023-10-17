@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { useEcomContext } from "../../../context/EcomContext";
 import "./Checkout.scss";
+import { Button } from "primereact/button";
+import { FiDollarSign } from "react-icons/fi";
+import { Payment } from "../../../payment";
 
 export const Checkout = () => {
   const { productsInCart } = useEcomContext();
+  const [pay, setPay] = useState(false);
 
   let totalCartProducsPrice: number = 0;
   productsInCart?.forEach((cart) => {
@@ -42,16 +47,28 @@ export const Checkout = () => {
               })}
             </tbody>
           </table>
-          <div className="right-items px-2">
-            <p
+          <div className="d-flex justify-content-end align-items-center  px-2">
+            <button
               title={"Sum of sub totals"}
-              className="fs-5 fw-bold bg-info rounded text-white border px-2"
+              className="fw-bold center-items bg-info mx-3 btn rounded text-white border px-2"
             >
-              Total: ${totalCartProducsPrice}
-            </p>
+              Total: &nbsp;
+              <FiDollarSign />
+              &nbsp;{totalCartProducsPrice}
+            </button>
+
+            <Button
+              onClick={() => setPay(!pay)}
+              className="btn  btn-outline-success center-items"
+            >
+              <FiDollarSign /> &nbsp;{" "}
+              {!pay ? <span>Checkout</span> : <span>Cancel</span>}
+            </Button>
           </div>
         </section>
       </section>
+
+      {pay && <Payment />}
     </section>
   );
 };
