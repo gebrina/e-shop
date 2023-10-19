@@ -59,9 +59,11 @@ export const Checkout = () => {
 
             <Button
               onClick={() => setPay(!pay)}
-              className="btn  btn-outline-success center-items"
+              className={`btn center-items ${
+                pay ? "btn-outline-danger" : "btn-outline-success"
+              }`}
             >
-              <FiDollarSign /> &nbsp;{" "}
+              <FiDollarSign /> &nbsp;
               {!pay ? <span>Checkout</span> : <span>Cancel</span>}
             </Button>
           </div>

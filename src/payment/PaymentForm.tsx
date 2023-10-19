@@ -66,7 +66,10 @@ export const PaymentForm: FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="col-md-4 mx-auto my-5">
+    <form
+      onSubmit={handleSubmit}
+      className="col-md-4 card px-3 py-5 shadow mx-auto my-5"
+    >
       <PaymentElement />
       {message && <p className="text-danger text-center">{message}</p>}
       <Button className="btn w-100 my-3 py-2 btn-outline-success">
