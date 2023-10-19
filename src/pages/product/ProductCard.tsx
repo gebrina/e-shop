@@ -8,6 +8,8 @@ import { useEcomContext } from "../../context/EcomContext";
 import Notification, {
   NotificationType,
 } from "../../dashboard/common/Notification";
+import { useMutation } from "@tanstack/react-query";
+import { ADD_TO_CART_KEY } from "../../constants";
 
 type ProductCardProps = {
   product: IProduct;
@@ -16,6 +18,10 @@ type ProductCardProps = {
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { handleAddToCart, productsInCart, handleRemoveFromCart } =
     useEcomContext();
+
+  const {} = useMutation({
+    mutationKey: [ADD_TO_CART_KEY],
+  });
 
   const [type, setType] = useState<NotificationType>();
   const [message, setMessage] = useState<string>("");
