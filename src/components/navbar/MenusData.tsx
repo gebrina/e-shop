@@ -5,6 +5,7 @@ import {
   FiShoppingBag,
   FiSlack,
   FiLogOut,
+  FiShoppingCart,
 } from "react-icons/fi";
 
 type MenuLinks = {
@@ -44,6 +45,11 @@ export const menus: Menu = {
       label: "Orders",
       path: "/dashboard/orders",
       icon: <FiShoppingBag />,
+    },
+    {
+      label: "Products In Cart",
+      path: "/dashboard/cart",
+      icon: <FiShoppingCart />,
     },
     {
       label: "Log out",

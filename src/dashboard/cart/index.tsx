@@ -1,1 +1,1 @@
-export { default as Cart } from "./Cart";
+export { default as DashboardCart } from "./Cart";

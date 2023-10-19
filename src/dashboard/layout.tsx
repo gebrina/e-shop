@@ -14,6 +14,7 @@ import LoggedInUserProfile from "./user/profile";
 import { UserProfile } from "./profile";
 
 import "./Dashboard.scss";
+import { DashboardCart } from "./cart";
 
 const DashboardLayout = () => {
   const { isDashboard, currentUser } = useEcomContext();
@@ -84,6 +85,14 @@ const DashboardLayout = () => {
                 element={
                   <ProtectedRoute>
                     <LoggedInUserProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/cart"
+                element={
+                  <ProtectedRoute>
+                    <DashboardCart />
                   </ProtectedRoute>
                 }
               />
