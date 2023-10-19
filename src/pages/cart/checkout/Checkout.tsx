@@ -4,9 +4,18 @@ import "./Checkout.scss";
 import { Button } from "primereact/button";
 import { FiDollarSign } from "react-icons/fi";
 import { Payment } from "../../../payment";
+import { useMutation } from "@tanstack/react-query";
+import { CREATE_ORDER_KEY } from "../../../constants";
+import { createOrder } from "../../../api/order";
 
 export const Checkout = () => {
   const { productsInCart } = useEcomContext();
+
+  const { mutate: handleCreateOrder } = useMutation({
+    mutationKey: [CREATE_ORDER_KEY],
+    mutationFn: createOrder,
+  });
+
   const [pay, setPay] = useState(false);
 
   let totalCartProducsPrice: number = 0;
@@ -14,6 +23,11 @@ export const Checkout = () => {
     totalCartProducsPrice +=
       (cart.product.quantity && cart.product.price * cart.quantity) || 0;
   });
+
+  const handleCheckout = () => {
+    console.log(productsInCart);
+    //   setPay(!pay);
+  };
 
   return (
     <section className="container my-5">
@@ -58,7 +72,7 @@ export const Checkout = () => {
             </button>
 
             <Button
-              onClick={() => setPay(!pay)}
+              onClick={handleCheckout}
               className={`btn center-items ${
                 pay ? "btn-outline-danger" : "btn-outline-success"
               }`}
