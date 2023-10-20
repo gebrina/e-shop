@@ -16,13 +16,13 @@ type ProductCardProps = {
 };
 
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
-  const { handleAddToCart, productsInCart, handleRemoveFromCart } =
+  const { handleAddToCart, currentUser, productsInCart, handleRemoveFromCart } =
     useEcomContext();
-
   const {} = useMutation({
     mutationKey: [ADD_TO_CART_KEY],
   });
 
+  console.log(currentUser);
   const [type, setType] = useState<NotificationType>();
   const [message, setMessage] = useState<string>("");
 
