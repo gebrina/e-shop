@@ -2,11 +2,12 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { loginValidtion } from "../../../utils/validations";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../../../api/auth";
 import { useEcomContext } from "../../../context/EcomContext";
+import { useEffect } from "react";
 
 const Login = () => {
   const {
@@ -18,7 +19,9 @@ const Login = () => {
     mutationKey: ["user_login"],
     mutationFn: loginUser,
   });
-  const { handleUserLogin: userLogin } = useEcomContext();
+  const { handleUserLogin: userLogin, currentUser } = useEcomContext();
+
+  const navigate = useNavigate();
 
   const { handleSubmit, values, handleChange, errors, touched } = useFormik({
     initialValues: { email: "", password: "" },
@@ -28,8 +31,16 @@ const Login = () => {
 
   const handleUserLogin = () => {
     handleLogin(values);
-    data && userLogin(data);
   };
+
+  useEffect(() => {
+    if (data) {
+      userLogin(data);
+      navigate("/cart/checkout");
+    }
+  }, [data, userLogin, navigate]);
+
+  if (currentUser?.access_token) return <Navigate to={"/cart/checkout"} />;
 
   return (
     <main className="container d-flex  justify-content-center align-items-center">

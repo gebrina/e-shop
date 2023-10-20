@@ -8,9 +8,10 @@ import { useMutation } from "@tanstack/react-query";
 import { CREATE_ORDER_KEY } from "../../../constants";
 import { createOrder } from "../../../api/order";
 import { EmptyCart } from "../../../components/cart";
+import { Navigate } from "react-router-dom";
 
 export const Checkout = () => {
-  const { productsInCart } = useEcomContext();
+  const { productsInCart, currentUser } = useEcomContext();
 
   const { mutate: handleCreateOrder } = useMutation({
     mutationKey: [CREATE_ORDER_KEY],
@@ -29,6 +30,8 @@ export const Checkout = () => {
     console.log(productsInCart);
     //   setPay(!pay);
   };
+
+  if (!currentUser?.access_token) return <Navigate to={"/user/login"} />;
 
   return (
     <section className="container my-5">

@@ -46,7 +46,7 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
   };
 
   const handleUserLogout = () => {
-    setValues({ ...values, isDashboard: true, currentUser: undefined });
+    setValues({ ...values, isDashboard: false, currentUser: undefined });
     removeLoggedInUser();
   };
 
@@ -84,8 +84,8 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const pathname = location.pathname;
+    const currentUser = getCurrentUser();
     if (pathname.includes("dashboard")) {
-      const currentUser = getCurrentUser();
       setValues((prev) => ({
         ...prev,
         currentUser,
@@ -95,6 +95,7 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
       const productsInCart = getProductsAddedtoCart();
       setValues((prev) => ({
         ...prev,
+        currentUser,
         productsInCart,
         isDashboard: false,
       }));

@@ -1,8 +1,12 @@
 import { AuthUser } from "../types/AuthUser";
 
 export const getCurrentUser = (): AuthUser => {
-  const user = localStorage.getItem("user") ?? "{}";
-  return JSON.parse(user);
+  const user = localStorage.getItem("user") || "{}";
+  if (user !== "undefined") {
+    return JSON.parse(user);
+  }
+
+  return { access_token: "" };
 };
 
 export const storeLoggedInUser = (user: AuthUser) => {

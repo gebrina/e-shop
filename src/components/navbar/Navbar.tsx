@@ -11,9 +11,15 @@ type NavbarProps = {
 };
 
 const Navbar: FC<NavbarProps> = ({ setVisible }) => {
-  const { isDashboard, handleUserLogout, productsInCart } = useEcomContext();
+  const { isDashboard, handleUserLogout, productsInCart, currentUser } =
+    useEcomContext();
+
   const [open, setOpen] = useState<boolean>(false);
   const { pathname } = useLocation();
+
+  const handleLoginStatus = () => {
+    currentUser?.access_token && handleUserLogout();
+  };
 
   return (
     <header>
@@ -51,7 +57,9 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
             <div className="navbar-menu-links">
               <NavLink to={"/"}>Home</NavLink>
               <NavLink to={"/products"}>Products</NavLink>
-              <NavLink to={"user/login"}>Login</NavLink>
+              <NavLink onClick={handleLoginStatus} to={"user/login"}>
+                {currentUser?.access_token ? "Log out" : "Log In"}
+              </NavLink>
               <button
                 onClick={() => setOpen(true)}
                 className={`cart ${
