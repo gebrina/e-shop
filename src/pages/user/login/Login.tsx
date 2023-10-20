@@ -4,15 +4,32 @@ import { InputText } from "primereact/inputtext";
 import { useFormik } from "formik";
 import { NavLink } from "react-router-dom";
 import { loginValidtion } from "../../../utils/validations";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "../../../api/auth";
+import { useEcomContext } from "../../../context/EcomContext";
 
 const Login = () => {
+  const {
+    mutate: handleLogin,
+    data,
+    error,
+    isLoading,
+  } = useMutation({
+    mutationKey: ["user_login"],
+    mutationFn: loginUser,
+  });
+  const { handleUserLogin: userLogin } = useEcomContext();
+
   const { handleSubmit, values, handleChange, errors, touched } = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: loginValidtion,
-    onSubmit: () => {},
+    onSubmit: () => handleUserLogin(),
   });
 
-  const handleUserLogin = () => {};
+  const handleUserLogin = () => {
+    handleLogin(values);
+    data && userLogin(data);
+  };
 
   return (
     <main className="container d-flex  justify-content-center align-items-center">
@@ -50,8 +67,12 @@ const Login = () => {
                 <small className="text-danger">{errors.password}</small>
               )}
             </div>
+            {typeof error !== "undefined" && error && (
+              <p className="text-danger ">Invalid email or password!</p>
+            )}
+
             <Button className="btn btn-outline-success w-50 sm:w-100 my-4 mx-auto d-block">
-              Login
+              {isLoading ? "Logging in" : "Log In"}
             </Button>
             <p className="text-center">
               Don't have account &nbsp;
