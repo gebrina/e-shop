@@ -34,7 +34,6 @@ const Cart = () => {
         <Column header="User" field="user" />
         <Column header="Total Price" field="total" />
         <Column header="Quantity" body={(data) => productsInCartBody(data)} />
-
         <Column header="Delete" body={deleteBody} />
       </DataTable>
     </section>
