@@ -2,6 +2,13 @@ import { NavLink, Navigate } from "react-router-dom";
 import { useEcomContext } from "../context/EcomContext";
 import "./Dashboard.scss";
 import { Card } from "primereact/card";
+import {
+  FiBriefcase,
+  FiPackage,
+  FiShoppingCart,
+  FiTruck,
+  FiUserPlus,
+} from "react-icons/fi";
 
 const Dashboard = () => {
   const { currentUser } = useEcomContext();
@@ -10,31 +17,58 @@ const Dashboard = () => {
     return <Navigate to={"/dashboard/login"} />;
   }
 
+  const cardHeader = (title: string) => (
+    <div className="fs-1">
+      {title == "productsc" && <FiPackage />}
+      {title === "products" && <FiBriefcase />}
+      {title === "carts" && <FiShoppingCart />}
+      {title === "orders" && <FiTruck />}
+      {title === "users" && <FiUserPlus />}
+    </div>
+  );
+
   return (
-    <main className="container-fluid text-center">
+    <main className="container text-center">
       <section className="center-items flex-wrap mt-4">
         <Card
-          className="dashboard-card col-md-5 bg-light m-2"
+          header={() => cardHeader("productsc")}
+          className="dashboard-card col-md-3 bg-light m-2"
           title={"Product Category"}
         >
-          <div></div>
           <NavLink to={"/dashboard/product-categories"}>Manage</NavLink>
         </Card>
 
         <Card
-          className="dashboard-card col-md-5 bg-light m-2"
+          header={() => cardHeader("products")}
+          className="dashboard-card col-md-3 bg-light m-2"
           title={"Products"}
         >
-          <div></div>
           <NavLink to={"/dashboard/products"}>Manage</NavLink>
         </Card>
-        <Card className="dashboard-card col-md-5 bg-light m-2" title={"Users"}>
-          <div></div>
+        <Card
+          header={() => cardHeader("users")}
+          className="dashboard-card col-md-3 bg-light m-2"
+          title={"Users"}
+        >
           <NavLink to={"/dashboard/users"}>Manage</NavLink>
         </Card>
-        <Card className="dashboard-card col-md-5 bg-light m-2" title={"Orders"}>
-          <div></div>
+      </section>
+      <section className="row">
+        <div className="col-md-3"></div>
+        <Card
+          header={() => cardHeader("orders")}
+          className="dashboard-card col-md-3 bg-light m-2"
+          title={"Orders"}
+        >
           <NavLink to={"/dashboard/orders"}>Manage</NavLink>
+        </Card>
+
+        <Card
+          header={() => cardHeader("carts")}
+          className="dashboard-card col-md-3 bg-light m-2"
+          title={"Cart"}
+        >
+          <NavLink to={"/dashboard/cart"}>Details</NavLink>
         </Card>
       </section>
     </main>

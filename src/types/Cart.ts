@@ -6,6 +6,6 @@ export interface ICart {
   id?: string;
   total?: number;
   user?: IUser;
-  product?: IProduct[];
+  products?: IProduct[];
   order?: IOrder[];
 }

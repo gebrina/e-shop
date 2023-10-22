@@ -5,17 +5,26 @@ import { Button } from "primereact/button";
 import { FiDollarSign } from "react-icons/fi";
 import { Payment } from "../../../payment";
 import { useMutation } from "@tanstack/react-query";
-import { CREATE_ORDER_KEY } from "../../../constants";
+import { ADD_TO_CART_KEY, CREATE_ORDER_KEY } from "../../../constants";
 import { createOrder } from "../../../api/order";
 import { EmptyCart } from "../../../components/cart";
 import { Navigate } from "react-router-dom";
+import { createCart } from "../../../api/cart";
+import { jwtDecode } from "../../../utils";
+import { IUser } from "../../../types/user";
 
 export const Checkout = () => {
   const { productsInCart, currentUser } = useEcomContext();
+  const loggedInUser = jwtDecode();
 
   const { mutate: handleCreateOrder } = useMutation({
     mutationKey: [CREATE_ORDER_KEY],
     mutationFn: createOrder,
+  });
+
+  const { mutate: handleCreateCart } = useMutation({
+    mutationKey: [ADD_TO_CART_KEY],
+    mutationFn: createCart,
   });
 
   const [pay, setPay] = useState(false);
@@ -26,9 +35,28 @@ export const Checkout = () => {
       (cart.product.quantity && cart.product.price * cart.quantity) || 0;
   });
 
+  const handleAddProductstoCart = () => {
+    handleCreateCart({
+      total: totalCartProducsPrice,
+      products: productsInCart,
+      user: loggedInUser?.user,
+    });
+  };
+
+  const handleCreateCartOrder = () => {
+    handleCreateOrder({
+      address: "anywhere",
+      orderDate: new Date().toLocaleDateString(),
+      productPrice: totalCartProducsPrice,
+      requestedDate: new Date().toLocaleDateString(),
+      status: 0,
+      user: loggedInUser?.user?.id as IUser,
+    });
+  };
+
   const handleCheckout = () => {
-    console.log(productsInCart);
-    //   setPay(!pay);
+    handleAddProductstoCart();
+    handleCreateCartOrder();
   };
 
   if (!currentUser?.access_token) return <Navigate to={"/user/login"} />;
