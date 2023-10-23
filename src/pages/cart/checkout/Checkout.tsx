@@ -12,6 +12,7 @@ import { Navigate } from "react-router-dom";
 import { createCart } from "../../../api/cart";
 import { jwtDecode } from "../../../utils";
 import { IUser } from "../../../types/user";
+import { IProduct } from "../../../types/product";
 
 export const Checkout = () => {
   const { productsInCart, currentUser } = useEcomContext();
@@ -36,9 +37,14 @@ export const Checkout = () => {
   });
 
   const handleAddProductstoCart = () => {
+    const products: IProduct[] = [];
+    productsInCart?.forEach((cart) => {
+      products.push(cart.product);
+    });
+
     handleCreateCart({
       total: totalCartProducsPrice,
-      products: productsInCart,
+      products: products,
       user: loggedInUser?.user,
     });
   };

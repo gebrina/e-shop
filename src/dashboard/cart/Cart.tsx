@@ -29,7 +29,8 @@ const Cart = () => {
   if (error) return <ErrorPage error={error as AxiosError} />;
 
   const productsInCartBody = (cart: any) => {
-    return <span>{cart.prodcuts?.length}</span>;
+    console.log(cart);
+    return <span>{cart.products?.length}</span>;
   };
 
   const handleSuccess = () => {
