@@ -59,7 +59,6 @@ export const PaymentForm: FC = () => {
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(error?.message);
     } else {
-      console.log(error.message);
       setMessage("Un expected error occured");
     }
     setSubmitting(false);

@@ -23,9 +23,7 @@ export const StripeWrapper: FC<StripeWrapperProps> = ({ amount }) => {
         );
         const stripe = loadStripe(response.data);
         setStripePromise(stripe);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     };
     getPublishableKey();
   }, []);

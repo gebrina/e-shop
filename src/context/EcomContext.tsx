@@ -58,7 +58,6 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
     const productsInCart = values.productsInCart;
     if (typeof productsInCartIndex === "number" && productsInCartIndex !== -1) {
       if (typeof quantity === "number") {
-        console.log(quantity);
         productsInCart?.splice(productsInCartIndex, 1, { product, quantity });
       } else {
         productsInCart?.splice(productsInCartIndex, 1, {
