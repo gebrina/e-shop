@@ -56,12 +56,13 @@ const Cart = () => {
   );
 
   return (
-    <section className="container col-md-6 mx-auto">
+    <section className="container my-5 col-md-6 mx-auto">
+      <h1 className="text-center text-info bg-light">Proudcts in Cart</h1>
       <Notification title="Cart" type={type} setType={setType} />
       <DataTable value={data} rows={5} paginator>
         <Column header="User" field="user.username" />
-        <Column header="$ Total Price" field="total" />
         <Column header="# Quantity" body={(data) => productsInCartBody(data)} />
+        <Column header="$ Total Price" field="total" />
         <Column header="Delete" body={deleteBody} />
       </DataTable>
     </section>
