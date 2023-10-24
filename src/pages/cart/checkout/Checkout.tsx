@@ -57,7 +57,7 @@ export const Checkout = () => {
       requestedDate: new Date(),
       status: 0,
       shippedDate: new Date(),
-      user: loggedInUser?.user?.id as IUser,
+      user: loggedInUser?.user as IUser,
     });
   };
 

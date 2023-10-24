@@ -127,6 +127,7 @@ const Order = () => {
       <Notification setType={setType} type={type} title="Order" />
       <h1 className="text-info">Orders</h1>
       <DataTable paginator rows={5} className="col-md-10 mx-auto" value={data}>
+        <Column sortable header="Email" field="user.email" />
         <Column
           sortable
           header="Order Date"
