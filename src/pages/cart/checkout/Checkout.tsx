@@ -52,11 +52,11 @@ export const Checkout = () => {
   const handleCreateCartOrder = () => {
     handleCreateOrder({
       address: "anywhere",
-      orderDate: new Date().toLocaleDateString(),
+      orderDate: new Date(),
       productPrice: totalCartProducsPrice,
-      requestedDate: new Date().toLocaleDateString(),
+      requestedDate: new Date(),
       status: 0,
-      shippedDate: "",
+      shippedDate: new Date(),
       user: loggedInUser?.user?.id as IUser,
     });
   };

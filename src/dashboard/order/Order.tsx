@@ -39,6 +39,7 @@ const Order = () => {
   const [orderStatus, setOrderStatus] = useState<OrderStatus>();
 
   if (isLoading) return <Loader />;
+
   if (error) return <ErrorPage error={error as AxiosError} />;
 
   const handleDeleteOrder = (id: string) => {
@@ -99,20 +100,27 @@ const Order = () => {
     );
   };
 
-  const dateColumnBody = (date: string | undefined) => (
+  const dateColumnBody = (date?: string | Date) => (
     <span>{getFormatedDate(date as string)}</span>
   );
 
-  const handleDateChange = (date: Date) => {
-    console.log(date);
+  const handleDateChange = (date: Date, data: IOrder) => {
+    const order = Object.assign({}, data, { shippedDate: date });
+    setType(undefined);
+    handleUpdate(order, {
+      onSuccess: handleSuccess,
+      onError: handleError,
+    });
   };
 
-  const shippedDateColumBody = (data: IOrder) => (
-    <Calendar
-      value={new Date(data?.shippedDate)}
-      onChange={(e) => e.value && handleDateChange(e.value)}
-    />
-  );
+  const shippedDateColumBody = (data: IOrder) => {
+    return (
+      <Calendar
+        value={new Date(data.shippedDate as string)}
+        onChange={(e) => e.value && handleDateChange(e.value, data)}
+      />
+    );
+  };
 
   return (
     <section className="my-5">

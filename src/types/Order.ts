@@ -3,9 +3,9 @@ import { IUser } from "./user";
 
 export interface IOrder {
   id?: string;
-  shippedDate?: string;
-  orderDate?: string;
-  requestedDate?: string;
+  shippedDate?: string | Date;
+  orderDate?: string | Date;
+  requestedDate?: string | Date;
   status?: number;
   address?: string;
   productPrice?: number;
