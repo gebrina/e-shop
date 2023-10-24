@@ -17,6 +17,7 @@ import { OrderStatus, statusOptions } from "./OrderStatus";
 import { getFormatedDate } from "../../utils";
 import { AxiosError } from "axios";
 import Notification, { NotificationType } from "../common/Notification";
+import { Calendar } from "primereact/calendar";
 
 const Order = () => {
   const { isLoading, error, data, refetch } = useQuery({
@@ -102,6 +103,17 @@ const Order = () => {
     <span>{getFormatedDate(date as string)}</span>
   );
 
+  const handleDateChange = (date: Date) => {
+    console.log(date);
+  };
+
+  const shippedDateColumBody = (data: IOrder) => (
+    <Calendar
+      value={new Date(data?.shippedDate)}
+      onChange={(e) => e.value && handleDateChange(e.value)}
+    />
+  );
+
   return (
     <section className="my-5">
       <Notification setType={setType} type={type} title="Order" />
@@ -120,7 +132,7 @@ const Order = () => {
         />
         <Column
           header="Shipped Date"
-          body={(data: IOrder) => dateColumnBody(data.shippedDate)}
+          body={(data: IOrder) => shippedDateColumBody(data as IOrder)}
         />
         <Column
           header="Delete"

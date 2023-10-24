@@ -56,6 +56,7 @@ export const Checkout = () => {
       productPrice: totalCartProducsPrice,
       requestedDate: new Date().toLocaleDateString(),
       status: 0,
+      shippedDate: "",
       user: loggedInUser?.user?.id as IUser,
     });
   };
