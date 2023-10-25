@@ -6,7 +6,11 @@ import {
   storeLoggedInUser,
 } from "../utils/auth";
 import { IProduct } from "../types/product";
-import { getProductsAddedtoCart, saveCartProducts } from "../utils";
+import {
+  getProductsAddedtoCart,
+  removeProductsFromCart,
+  saveCartProducts,
+} from "../utils";
 
 export type CartProduct = {
   product: IProduct;
@@ -20,6 +24,7 @@ type EcomContextType = {
   handleUserLogout: () => void;
   handleAddToCart?: (product: IProduct, quantity?: number) => void;
   handleRemoveFromCart?: (id: string) => void;
+  handleResetCart: () => void;
   productsInCart?: CartProduct[];
 };
 
@@ -29,6 +34,7 @@ const defaultValues: EcomContextType = {
   handleUserLogin: () => {},
   handleUserLogout: () => {},
   handleAddToCart: () => {},
+  handleResetCart: () => {},
   handleRemoveFromCart: () => {},
   productsInCart: [],
 };
@@ -43,6 +49,11 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
   const handleUserLogin = (user: AuthUser) => {
     storeLoggedInUser(user);
     setValues({ ...values, currentUser: user });
+  };
+
+  const handleResetCart = () => {
+    removeProductsFromCart();
+    setValues({ ...values, productsInCart: [] });
   };
 
   const handleUserLogout = () => {
@@ -91,7 +102,10 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
         isDashboard: true,
       }));
     } else {
-      const productsInCart = getProductsAddedtoCart();
+      const cartProducts = getProductsAddedtoCart();
+
+      const productsInCart = cartProducts ?? [];
+
       setValues((prev) => ({
         ...prev,
         currentUser,
@@ -109,6 +123,7 @@ export const EcomContextProvider: FC<{ children: React.ReactNode }> = ({
         handleRemoveFromCart,
         handleUserLogin,
         handleUserLogout,
+        handleResetCart,
       }}
     >
       {children}

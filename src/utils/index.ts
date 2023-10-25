@@ -61,6 +61,10 @@ export const saveCartProducts = (product: IProduct[]) => {
 };
 
 export const getProductsAddedtoCart = (): CartProduct[] => {
-  const products = localStorage.getItem("cart") ?? "{}";
+  const products = localStorage.getItem("cart") ?? "[]";
   return JSON.parse(products);
+};
+
+export const removeProductsFromCart = () => {
+  localStorage.removeItem("cart");
 };

@@ -29,9 +29,10 @@ export const CartSidebar: FC<CartSidebarProps> = ({ open, setOpen }) => {
         closeIcon={<FiXCircle className="fs-3 bg-light shadow  text-danger" />}
         onHide={() => setOpen(false)}
       >
-        {productsInCart?.map((cart) => (
-          <CartCard key={cart.product.id} cart={cart} />
-        ))}
+        {productsInCart &&
+          productsInCart?.map((cart) => (
+            <CartCard key={cart.product.id} cart={cart} />
+          ))}
 
         <EmptyCart setOpen={setOpen} />
       </Sidebar>
