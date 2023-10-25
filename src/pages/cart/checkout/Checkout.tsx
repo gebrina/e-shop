@@ -42,11 +42,16 @@ export const Checkout = () => {
       products.push(cart.product);
     });
 
-    handleCreateCart({
-      total: totalCartProducsPrice,
-      products: products,
-      user: loggedInUser?.user,
-    });
+    handleCreateCart(
+      {
+        total: totalCartProducsPrice,
+        products: products,
+        user: loggedInUser?.user,
+      },
+      {
+        onSuccess: () => setPay(true),
+      }
+    );
   };
 
   const handleCreateCartOrder = () => {

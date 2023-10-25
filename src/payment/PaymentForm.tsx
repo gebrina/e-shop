@@ -52,7 +52,7 @@ export const PaymentForm: FC = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: location.origin,
+        return_url: location.origin + "/payment/complete",
       },
     });
 
