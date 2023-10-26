@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useEcomContext } from "../context/EcomContext";
-import paymentcomplete from "../assets/pcomplete.png";
 import "./Payment.scss";
-import { FiArrowLeft, FiCheck, FiSkipBack } from "react-icons/fi";
+import { FiArrowLeft, FiCheck } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 
 export const PaymentComplete = () => {

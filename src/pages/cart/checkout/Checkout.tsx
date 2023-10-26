@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useEcomContext } from "../../../context/EcomContext";
 import "./Checkout.scss";
 import { Button } from "primereact/button";
@@ -27,6 +27,8 @@ export const Checkout = () => {
     mutationKey: [ADD_TO_CART_KEY],
     mutationFn: createCart,
   });
+
+  const payBtnClickedTimes = useRef(0);
 
   const [pay, setPay] = useState(false);
 
@@ -67,8 +69,13 @@ export const Checkout = () => {
   };
 
   const handleCheckout = () => {
-    handleAddProductstoCart();
-    handleCreateCartOrder();
+    payBtnClickedTimes.current += 1;
+    if (payBtnClickedTimes.current === 1) {
+      handleAddProductstoCart();
+      handleCreateCartOrder();
+    } else {
+      setPay(!pay);
+    }
   };
 
   if (!currentUser?.access_token) return <Navigate to={"/user/login"} />;
