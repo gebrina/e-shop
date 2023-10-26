@@ -1,0 +1,14 @@
+.payment-complete {
+  width: 50%;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  gap: 10px;
+  .success-icon {
+    font-size: 140px;
+  }
+  img {
+    height: 300px;
+    width: 50%;
+  }
+}
