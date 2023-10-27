@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const Payment = () => {
-  return <div>Payment</div>;
+  return <section className="container"></section>;
 };

@@ -43,8 +43,8 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
                     }
                     to={menu.path}
                   >
-                    <li>{menu.icon}</li>
-                    {menu.label}
+                    <span>{menu.icon}</span>
+                    <span> {menu.label}</span>
                   </NavLink>
                 </li>
               );

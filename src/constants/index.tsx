@@ -28,3 +28,7 @@ export const ADD_TO_CART_KEY = "add_to_cart";
 export const UPDATE_CART_KEY = "update_cart";
 export const GET_CART_KEY = "get_carts";
 export const DELETE_CART_KEY = "delete_cart";
+
+//PAPYMENT KEY
+export const GET_PAYMENT_KEY = "payment";
+export const DELETE_PAYMENT_KEY = "delete_payment";
