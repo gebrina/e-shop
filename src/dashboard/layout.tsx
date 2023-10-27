@@ -15,6 +15,7 @@ import { UserProfile } from "./profile";
 
 import "./Dashboard.scss";
 import { DashboardCart } from "./cart";
+import { DashboardPayment } from "./payment";
 
 const DashboardLayout = () => {
   const { isDashboard, currentUser } = useEcomContext();
@@ -47,6 +48,7 @@ const DashboardLayout = () => {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/dashboard/products"
                 element={
@@ -64,6 +66,7 @@ const DashboardLayout = () => {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/dashboard/orders"
                 element={
@@ -72,6 +75,7 @@ const DashboardLayout = () => {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/dashboard/users"
                 element={
@@ -80,6 +84,7 @@ const DashboardLayout = () => {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/dashboard/user/profile"
                 element={
@@ -88,11 +93,21 @@ const DashboardLayout = () => {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/dashboard/cart"
                 element={
                   <ProtectedRoute>
                     <DashboardCart />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/dashboard/payment"
+                element={
+                  <ProtectedRoute>
+                    <DashboardPayment />
                   </ProtectedRoute>
                 }
               />
