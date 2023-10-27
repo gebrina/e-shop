@@ -22,7 +22,9 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
   };
 
   return (
-    <header>
+    <header
+      style={{ backgroundColor: isDashboard ? "transparent" : "aliceblue" }}
+    >
       <nav>
         {isDashboard ? (
           <ul>
