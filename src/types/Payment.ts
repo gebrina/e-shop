@@ -3,7 +3,7 @@ import { IUser } from "./user";
 
 export interface IPayment {
   amount: number;
-  createdAt: Date;
+  paymentDate: Date;
   order: IOrder;
   user: IUser;
 }
