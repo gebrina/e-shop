@@ -4,6 +4,7 @@ import "./Dashboard.scss";
 import { Card } from "primereact/card";
 import {
   FiBriefcase,
+  FiCreditCard,
   FiPackage,
   FiShoppingCart,
   FiTruck,
@@ -23,11 +24,15 @@ const Dashboard = () => {
       {title === "carts" && <FiShoppingCart />}
       {title === "orders" && <FiTruck />}
       {title === "users" && <FiUserPlus />}
+      {title === "payment" && <FiCreditCard />}
     </div>
   );
 
   return (
     <main className="container  text-center">
+      <h1 className="fs-1">
+        Welcome to <span className="text-info">Dashboard</span>
+      </h1>
       <section className="mt-4 center-items row">
         <Card
           header={() => cardHeader("productsc")}
@@ -52,8 +57,7 @@ const Dashboard = () => {
           <NavLink to={"/dashboard/users"}>Manage</NavLink>
         </Card>
       </section>
-      <section className="row">
-        <div className="col-md-3 mt-4"></div>
+      <section className="row center-items">
         <Card
           header={() => cardHeader("orders")}
           className="dashboard-card col-md-3 mt-4 bg-light m-2"
@@ -68,6 +72,14 @@ const Dashboard = () => {
           title={"Cart"}
         >
           <NavLink to={"/dashboard/cart"}>Details</NavLink>
+        </Card>
+
+        <Card
+          header={() => cardHeader("payment")}
+          className="dashboard-card col-md-3 mt-4 bg-light m-2"
+          title={"Payment"}
+        >
+          <NavLink to={"/dashboard/payment"}>Details</NavLink>
         </Card>
       </section>
     </main>
