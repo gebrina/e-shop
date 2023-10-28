@@ -13,7 +13,7 @@ import { useState } from "react";
 import Notification, { NotificationType } from "../common/Notification";
 
 export const Payment = () => {
-  const { isLoading, data, error } = useQuery({
+  const { isLoading, data, error, refetch } = useQuery({
     queryKey: [GET_PAYMENT_KEY],
     queryFn: getPayment,
   });
@@ -39,10 +39,12 @@ export const Payment = () => {
 
   const handleSuccess = () => {
     setType("success");
+    refetch();
   };
 
   const handleError = () => {
     setType("error");
+    refetch();
   };
 
   const handleDeletePayment = (id: string) => {
@@ -61,7 +63,7 @@ export const Payment = () => {
 
   return (
     <section className="container my-5">
-      {type && <Notification type={type} setType={setType} title="Payment" />}
+      <Notification type={type} setType={setType} title="Payment" />
       <h1 className="text-info my-4">Payments</h1>
       <DataTable
         paginator
