@@ -8,6 +8,7 @@ import { jwtDecode } from "../utils";
 
 export const PaymentComplete = () => {
   const { handleResetCart, productsInCart } = useEcomContext();
+
   const decodedToken = jwtDecode();
 
   const paymentIntentRef = useRef(0);

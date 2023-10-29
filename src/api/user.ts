@@ -16,7 +16,12 @@ export const createUser = async (user: IUser): Promise<IUser> => {
   return response.data;
 };
 
-export const updateUser = async (user: IUser): Pomise<IUser> => {
+export const updateUser = async (user: IUser): Promise<IUser> => {
   const response = await axios.put(`/users/${user.id}`, user);
+  return response.data;
+};
+
+export const deleteUser = async (id: string): Promise<string> => {
+  const response = await axios.delete(`/users/${id}`);
   return response.data;
 };
