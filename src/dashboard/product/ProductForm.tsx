@@ -142,7 +142,7 @@ const ProductForm: FC<ProductFormProps> = ({ action, product }) => {
 
   return (
     <section className="col-md-8 my-5 mx-auto">
-      {type && <Notification setType={setType} type={type} title="Product" />}
+      <Notification setType={setType} type={type} title="Product" />
       <Card title={title}>
         <form onSubmit={handleSubmit} className="row">
           <div className="col-md-6 mb-2">

@@ -40,7 +40,7 @@ export const PaymentComplete = () => {
   );
 
   useEffect(() => {
-    if (!productsInCart?.length) {
+    if (productsInCart?.length) {
       const retrievePaymentIntent = async () => {
         try {
           const response = await axiosInstance.get(
