@@ -90,7 +90,7 @@ const ProductCategory = () => {
   if (error) return <ErrorPage error={error as AxiosError} />;
 
   return (
-    <section className="my-3">
+    <section className="my-3 container">
       <DashButtons
         title="Product Categories"
         text=""
@@ -102,7 +102,7 @@ const ProductCategory = () => {
       )}
       {action && <PCForm productCategory={productCategory} action={action} />}
 
-      <div className="bg-light col-md-6 mx-auto">
+      <div className="bg-light  my-5 col-md-6 mx-auto">
         <DataTable paginator rows={5} value={data}>
           <Column
             header="Name"

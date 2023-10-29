@@ -9,10 +9,12 @@ import ErrorPage from "../../../components/error";
 import "./ProductDetais.scss";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-import { FiPlus, FiSkipBack } from "react-icons/fi";
+import { FiArrowRight, FiPlus } from "react-icons/fi";
+import { useEcomContext } from "../../../context/EcomContext";
 
 export const ProductDetails = () => {
   const { id } = useParams();
+  const { handleAddToCart } = useEcomContext();
 
   const {
     data: product,
@@ -28,6 +30,10 @@ export const ProductDetails = () => {
 
   if (error) return <ErrorPage error={error as AxiosError} />;
 
+  const handleAddProduct = () => {
+    handleAddToCart && product && handleAddToCart(product);
+  };
+
   const cardFooter = () => (
     <div className="d-flex  justify-content-between align-items-center ">
       <p className="bg-light border my-1 py-1 px-3">Price: ${product?.price}</p>
@@ -35,43 +41,60 @@ export const ProductDetails = () => {
         Quantity: {product?.quantity}
       </p>
 
-      <Button className="btn center-items text-success btn-light border">
+      <Button
+        onClick={handleAddProduct}
+        className="btn center-items text-success btn-light border"
+      >
         <FiPlus /> <span>Add</span>
       </Button>
     </div>
   );
 
   return (
-    <section className="container my-5 py-4">
-      <div className="row">
-        <Card
-          className="col-md-6 text-center pro-card"
-          title={product?.name}
-          subTitle={product?.category?.name}
-          footer={cardFooter}
-        >
-          <img
-            className="pro-img"
-            src={import.meta.env.VITE_APP_API_URL + product?.image}
-            alt={product?.name}
-          />
-        </Card>
+    <section className="container-fluid   my-5 py-4">
+      <div
+        className="bg-img"
+        style={{
+          backgroundImage: `url(${
+            import.meta.env.VITE_APP_API_URL + product?.image
+          })`,
+        }}
+      ></div>
+      <div className="container">
+        <div className="row">
+          <Card
+            style={{ backgroundColor: "transparent" }}
+            className="col-md-6 text-center pro-card shadow-none"
+            title={product?.name}
+            subTitle={product?.category?.name}
+            footer={cardFooter}
+          >
+            <img
+              className="pro-img"
+              src={import.meta.env.VITE_APP_API_URL + product?.image}
+              alt={product?.name}
+            />
+          </Card>
 
-        <div className="col-md-6 bg-light">
-          <h1 className="text-center mb-5 mt-2">{product?.name}</h1>
+          <div className="col-md-6 ">
+            <h1 className="text-center mb-5 mt-2 text-success">
+              {product?.name}
+            </h1>
 
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(product?.description ?? ""),
-            }}
-          />
+            <div
+              className="lh-lg"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(product?.description ?? ""),
+              }}
+            />
 
-          <NavLink to="/products">
-            <Button className="btn center-items btn-outline-success">
-              <FiSkipBack />
-              &nbsp; Back to Products
-            </Button>
-          </NavLink>
+            <NavLink to="/products">
+              <Button className="btn center-items btn-outline-success">
+                More Products &nbsp;
+                <FiArrowRight />
+              </Button>
+            </NavLink>
+          </div>
         </div>
       </div>
     </section>

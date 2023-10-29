@@ -1,3 +1,6 @@
+p > * {
+  background-color: transparent !important;
+}
 .pro-card {
   overflow: hidden;
   .pro-img {
@@ -6,7 +9,16 @@
     max-height: 500px;
   }
 }
-
+.bg-img {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  top: 20px;
+  background-attachment: fixed;
+  position: fixed;
+  width: 100vw;
+  opacity: 0.1;
+}
 a {
   text-decoration: none;
 }
