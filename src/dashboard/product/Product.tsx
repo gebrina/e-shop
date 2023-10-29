@@ -70,7 +70,7 @@ const Product = () => {
     <section className="mt-2">
       <DashButtons
         action={action}
-        title="Product"
+        title="Products"
         text=""
         onClick={handleClick}
       />

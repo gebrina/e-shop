@@ -1,15 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useEcomContext } from "../context/EcomContext";
 import "./Payment.scss";
 import { FiArrowLeft, FiCheck } from "react-icons/fi";
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axiosInstance from "../api/config";
 import { jwtDecode } from "../utils";
+import { IUser } from "../types/user";
 
 export const PaymentComplete = () => {
   const { handleResetCart, productsInCart } = useEcomContext();
 
-  const decodedToken = jwtDecode();
+  const decodedToken: { user: IUser } | undefined = jwtDecode() as
+    | { user: IUser }
+    | undefined;
 
   const paymentIntentRef = useRef(0);
 
@@ -18,21 +21,26 @@ export const PaymentComplete = () => {
     ?.split("&")[0]
     ?.split("=");
 
-  const handleCreatePayment = async (amount: number) => {
-    try {
-      if (paymentIntentRef.current < 1) {
-        await axiosInstance.post("/payment", {
-          amount,
-          user: decodedToken?.user,
-        });
+  const handleCreatePayment = useCallback(
+    async (amount: number) => {
+      try {
+        if (paymentIntentRef.current < 1) {
+          await axiosInstance.post("/payment", {
+            amount,
+            user: decodedToken?.user,
+          });
+        }
+        paymentIntentRef.current += 1;
+        handleResetCart();
+      } catch (e) {
+        console.log(e);
       }
-      paymentIntentRef.current += 1;
-    } catch (e) {}
-  };
+    },
+    [decodedToken, handleResetCart]
+  );
 
   useEffect(() => {
-    if (productsInCart?.length) {
-      handleResetCart();
+    if (!productsInCart?.length) {
       const retrievePaymentIntent = async () => {
         try {
           const response = await axiosInstance.get(
@@ -46,9 +54,7 @@ export const PaymentComplete = () => {
       };
       retrievePaymentIntent();
     }
-  }, []);
-
-  if (!productsInCart?.length) return <Navigate to={"/products"} />;
+  }, [productsInCart, handleCreatePayment, paymentInterArray, handleResetCart]);
 
   return (
     <section className="container center-items my-5">

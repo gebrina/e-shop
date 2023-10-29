@@ -30,7 +30,7 @@ export const Payment = () => {
   if (error) return <ErrorPage error={error as AxiosError} />;
 
   const paymentDateBody = (payment: IPayment) => (
-    <span>{getFormatedDate(payment.paymentDate)}</span>
+    <span>{getFormatedDate(payment.paymentDate.toString())}</span>
   );
 
   const userColumnBody = (payment: IPayment) => (
