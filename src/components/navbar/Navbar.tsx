@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { menus } from "./MenusData";
 import "./Navbar.scss";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { useEcomContext } from "../../context/EcomContext";
 import { FiShoppingCart } from "react-icons/fi";
 import { Cart } from "../cart";
@@ -20,6 +20,14 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
   const handleLoginStatus = () => {
     currentUser?.access_token && handleUserLogout();
   };
+
+  const isMobileRef = useRef(false);
+
+  if (navigator.userAgent.match(/mobile/i)) {
+    isMobileRef.current = true;
+  } else {
+    isMobileRef.current = false;
+  }
 
   return (
     <header
@@ -51,30 +59,62 @@ const Navbar: FC<NavbarProps> = ({ setVisible }) => {
             })}
           </ul>
         ) : (
-          <div className="d-flex p-2  horizontal-nav mx-auto align-items-center justify-content-between">
-            <Cart open={open} setOpen={setOpen} />
-            <NavLink to="/">
-              <img height={50} src="/logo.png" alt="E shop " />
-            </NavLink>
-            <div className="navbar-menu-links">
-              <NavLink to={"/"}>Home</NavLink>
-              <NavLink to={"/products"}>Products</NavLink>
-              <NavLink onClick={handleLoginStatus} to={"user/login"}>
-                {currentUser?.access_token ? "Log out" : "Log In"}
-              </NavLink>
-              <button
-                onClick={() => setOpen(true)}
-                className={`cart ${
-                  pathname.includes("cart") &&
-                  !open &&
-                  "bg-dark rounded text-white"
-                }`}
-              >
-                <FiShoppingCart />
-                <span className="text-dark">{productsInCart?.length}</span>
-              </button>
-            </div>
-          </div>
+          <>
+            {!isMobileRef.current ? (
+              <div className="d-flex p-2  horizontal-nav mx-auto align-items-center justify-content-between">
+                <Cart open={open} setOpen={setOpen} />
+                <NavLink to="/">
+                  <img height={50} src="/logo.png" alt="E shop " />
+                </NavLink>
+                <div className="navbar-menu-links">
+                  <NavLink to={"/"}>Home</NavLink>
+                  <NavLink to={"/products"}>Products</NavLink>
+                  <NavLink onClick={handleLoginStatus} to={"user/login"}>
+                    {currentUser?.access_token ? "Log out" : "Log In"}
+                  </NavLink>
+                  <button
+                    onClick={() => setOpen(true)}
+                    className={`cart ${
+                      pathname.includes("cart") &&
+                      !open &&
+                      "bg-dark rounded text-white"
+                    }`}
+                  >
+                    <FiShoppingCart />
+                    <span className="text-dark">{productsInCart?.length}</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mob-header">
+                <Cart open={open} setOpen={setOpen} />
+                <div className="mob-logo">
+                  <NavLink to="/">
+                    <img height={50} src="/logo.png" alt="E shop " />
+                  </NavLink>
+
+                  <button
+                    onClick={() => setOpen(true)}
+                    className={`cart ${
+                      pathname.includes("cart") &&
+                      !open &&
+                      "bg-dark rounded text-white"
+                    }`}
+                  >
+                    <FiShoppingCart />
+                    <span className="text-dark">{productsInCart?.length}</span>
+                  </button>
+                </div>
+                <div className="mob-menu-links">
+                  <NavLink to={"/"}>Home</NavLink>
+                  <NavLink to={"/products"}>Products</NavLink>
+                  <NavLink onClick={handleLoginStatus} to={"user/login"}>
+                    {currentUser?.access_token ? "Log out" : "Log In"}
+                  </NavLink>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </nav>
     </header>
