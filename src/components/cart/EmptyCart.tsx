@@ -1,6 +1,6 @@
 import { useEcomContext } from "../../context/EcomContext";
 import cart from "../../assets/empty-cart.png";
-import { FiArrowLeft, FiCheck } from "react-icons/fi";
+import { FiCheck, FiPlus } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
 import { Button } from "primereact/button";
 import { FC } from "react";
@@ -35,7 +35,7 @@ export const EmptyCart: FC<EmptyCartProps> = ({ setOpen }) => {
             onClick={() => setOpen && setOpen(false)}
             className="btn center-items btn-outline-success"
           >
-            <FiArrowLeft /> <span>Return to product</span>
+            <FiPlus /> <span> More Products</span>
           </Button>
         </NavLink>
 
