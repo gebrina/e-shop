@@ -8,8 +8,6 @@ import { useEcomContext } from "../../context/EcomContext";
 import Notification, {
   NotificationType,
 } from "../../dashboard/common/Notification";
-import { useMutation } from "@tanstack/react-query";
-import { ADD_TO_CART_KEY } from "../../constants";
 
 type ProductCardProps = {
   product: IProduct;
@@ -18,9 +16,6 @@ type ProductCardProps = {
 const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const { handleAddToCart, productsInCart, handleRemoveFromCart } =
     useEcomContext();
-  const { mutate: addProductToCart } = useMutation({
-    mutationKey: [ADD_TO_CART_KEY],
-  });
 
   const [type, setType] = useState<NotificationType>();
   const [message, setMessage] = useState<string>("");
@@ -54,7 +49,7 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   };
 
   const footer = () => (
-    <div className="footer d-flex justify-content-between align-items-end">
+    <div className="card-footer d-flex justify-content-between align-items-end">
       <span className="bg-light rounded border text-black px-2 py-1">
         Price: ${price}
       </span>
@@ -72,10 +67,9 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
       ) : (
         <Button
           onClick={removeProductFromCart}
-          className="btn text-danger border  py-1 center-items btn-light"
+          className="btn text-danger border py-1 center-items btn-light"
         >
-          <FiTrash />
-          &nbsp; Remove
+          <FiTrash /> &nbsp; Remove
         </Button>
       )}
     </div>
