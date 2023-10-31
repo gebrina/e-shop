@@ -1,27 +1,52 @@
-# React + TypeScript + Vite
+# E-shop APP Built wiz React <span style="color:green;text-decoration:underline;">(Client Side)</span>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Used Technologies
 
-Currently, two official plugins are available:
+1. React - TypeScript
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Bootstrap - Sass
 
-## Expanding the ESLint configuration
+3. React Query + axios for api request.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+4. Stripe for payment Integration.
 
-- Configure the top-level `parserOptions` property like this:
+5. React context for state management.
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## Pages
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+> This React based web app contains a number of pages that can be identified as Dashboard pages and dedicated website page.
+
+> > Dashboard page includes every pages that contains dashboard word as pathname.
+
+> > These pages that can be accessed by every user includes Home, Login, Register, Products and others...
+
+### Features
+
+1. User authentication
+   i. Log in
+   ii. Register( Create Account)
+
+2. Dashboard - for managing everything.
+
+3. Payment integrated.
+
+4. Add products to cart and checkout
+
+### />How to run the project locally</
+
+Inorder to run the project locally you need to clone the backend repo.
+For more info you can click this link  
+[E-shop Backend](https://github.com/gebrina/ecommerce-api)
+
+Then you can follow these stpes
+
+1. clone this repo or download the code
+   `git clone https://github.com/gebrina/e-shop.git`
+
+2. Open your terminal and navigate to projects directory
+
+3. install required dependecies
+   `npm install` | `yarn`
+
+4. run the project
+   `npm run dev` | `yarn dev`
